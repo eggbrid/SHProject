@@ -16,6 +16,7 @@ public class Self extends Player {
     @Override
     public void beAttacked(Skill skill) {
         SubHp(skill.hitHp);
+
     }
 
     @Override
