@@ -49,6 +49,12 @@
         <meta-data
             android:name="TencentMapSDK"
             android:value="YBRBZ-CLYRX-ZHJ4L-7NGTJ-OLXP6-34FJJ"/>
+        <receiver android:name="com.wilddog.client.receiver.WilddogAuthCastReceiver">
+            <intent-filter>
+                <action android:name="com.wilddog.wilddogauth.signinsuccess"/>
+                <action android:name="com.wilddog.wilddogauth.signoutsuccess"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
