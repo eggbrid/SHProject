@@ -10,9 +10,13 @@ import com.shpro.xus.shproject.enums.Skill;
  */
 
 public class Self extends Player {
-    public Self(int mh,int mm,int s1,int s2){
-
+    public Self(int mh, int mm, int s1, int s2) {
+        this.maxHp = mh;
+        this.maxMp = mm;
+        this.Skill1 = s1;
+        this.Skill2 = s2;
     }
+
     @Override
     public void beAttacked(Skill skill) {
         SubHp(skill.hitHp);
@@ -26,7 +30,7 @@ public class Self extends Player {
 
     @Override
     public void died() {
-        Log.e("wangxu","死了");
+        Log.e("wangxu", "死了");
     }
 
     @Override
@@ -37,7 +41,7 @@ public class Self extends Player {
     @Override
     public void SubHp(int hp) {
         nowHp = nowHp - hp;
-        if (nowHp<=0){
+        if (nowHp <= 0) {
             died();
         }
     }

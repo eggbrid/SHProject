@@ -2,6 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <Button
+        android:id="@+id/list"
+        android:layout_width="wrap_content"
+        android:text="列表"
+        android:layout_height="wrap_content" />
     <com.tencent.tencentmap.mapsdk.map.MapView
         android:id="@+id/map"
         android:layout_width="fill_parent"
