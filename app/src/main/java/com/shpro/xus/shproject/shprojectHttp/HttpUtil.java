@@ -13,14 +13,12 @@ import com.wilddog.wilddogcore.WilddogOptions;
 
 public class HttpUtil {
     private static HttpUtil httpUtil;
-   private  SyncReference ref;
 
     public SyncReference getRef() {
-        return ref;
+        return WilddogSync.getInstance().getReference();
     }
-
-    public void setRef(SyncReference ref) {
-        this.ref = ref;
+    public SyncReference getRef(String c) {
+        return WilddogSync.getInstance().getReference(c);
     }
 
     public static HttpUtil getInstance() {
@@ -32,6 +30,5 @@ public class HttpUtil {
     public void init(Context c){
         WilddogOptions options = new WilddogOptions.Builder().setSyncUrl("https://shproject.wilddogio.com").build();
         WilddogApp.initializeApp(c, options);
-        ref=WilddogSync.getInstance().getReference();
     }
 }

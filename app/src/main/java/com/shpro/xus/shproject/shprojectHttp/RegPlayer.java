@@ -3,16 +3,12 @@ package com.shpro.xus.shproject.shprojectHttp;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.shpro.xus.shproject.bean.Player;
 import com.shpro.xus.shproject.people.Self;
-import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.wilddog.client.ChildEventListener;
 import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.Query;
 import com.wilddog.client.SyncError;
 import com.wilddog.client.SyncReference;
-import com.wilddog.client.ValueEventListener;
 import com.wilddog.client.WilddogSync;
 
 /**
@@ -21,7 +17,7 @@ import com.wilddog.client.WilddogSync;
 
 public class RegPlayer {
     public void regPlayer(Self player, Context context){
-        HttpUtil.getInstance().getRef().child("palyer").child(AndroidIDUtil.getID(context)).setValue(player);
+        HttpUtil.getInstance().getRef().child("palyer").child("1").setValue(player);
     }
     public void getPalyList(){
 

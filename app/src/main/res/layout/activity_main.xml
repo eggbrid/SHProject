@@ -5,7 +5,7 @@
     <Button
         android:id="@+id/list"
         android:layout_width="wrap_content"
-        android:text="列表"
+        android:text="登陆"
         android:layout_height="wrap_content" />
     <com.tencent.tencentmap.mapsdk.map.MapView
         android:id="@+id/map"
