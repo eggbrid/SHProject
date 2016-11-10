@@ -3,7 +3,7 @@ package com.shpro.xus.shproject.shprojectHttp;
 import android.content.Context;
 import android.util.Log;
 
-import com.shpro.xus.shproject.people.Self;
+import com.shpro.xus.shproject.bean.people.Self;
 import com.wilddog.client.ChildEventListener;
 import com.wilddog.client.DataSnapshot;
 import com.wilddog.client.Query;

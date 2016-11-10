@@ -19,6 +19,7 @@ public abstract class UserBaseActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(setContentView());
         initView();
+
         getData(WilddogAuth.getInstance());
     }
 }

@@ -1,25 +1,30 @@
-package com.shpro.xus.shproject.people;
+package com.shpro.xus.shproject.bean.people;
 
 import android.util.Log;
 
 import com.shpro.xus.shproject.bean.Player;
-import com.shpro.xus.shproject.enums.Skill;
+import com.shpro.xus.shproject.bean.skill.SkillB;
 
 /**
  * Created by xus on 2016/11/7.
  */
 
 public class Self extends Player {
-    public Self(int mh, int mm, int s1, int s2) {
+
+    public Self(int mh, int mm, int s1, int s2,int attack,int mattack,int defense,int mdefense) {
         this.maxHp = mh;
         this.maxMp = mm;
+        this.attack = attack;
+        this.mattack = mattack;
+        this.defense = defense;
+        this.mdefense = mdefense;
         this.Skill1 = s1;
         this.Skill2 = s2;
     }
 
     @Override
-    public void beAttacked(Skill skill) {
-        SubHp(skill.hitHp);
+    public void beAttacked(SkillB skill) {
+        SubHp(skill.getHitHp());
 
     }
 

@@ -6,11 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
 import com.shpro.xus.shproject.R;
 import com.wilddog.wilddogauth.WilddogAuth;
 import com.wilddog.wilddogauth.core.Task;
 import com.wilddog.wilddogauth.core.listener.OnCompleteListener;
 import com.wilddog.wilddogauth.core.result.AuthResult;
+import com.wilddog.wilddogauth.model.WilddogUser;
 
 /**
  * Created by xus on 2016/11/8.
@@ -62,10 +64,12 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
             @Override
             public void onComplete(Task<AuthResult> var1) {
                 if (var1.isSuccessful()) {
-                    Log.d("success", "Login success!");  // 登录成功
-                    Log.d("Anonymous", String.valueOf(var1.getResult().toString()));
+                    WilddogUser user = var1.getResult().getWilddogUser();
+
+                    Log.e("success", "Login success!");  // 登录成功
+                    Log.e("Anonymous",new Gson().toJson(user) );
                 } else {
-                    Log.d("failure", "reason:" + var1.getException().toString()); // 登录失败及错误信息
+                    Log.e("failure", "reason:" + var1.getException().toString()); // 登录失败及错误信息
                 }
             }
         });
