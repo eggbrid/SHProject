@@ -1,6 +1,7 @@
 package com.shpro.xus.shproject.view.user;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -8,11 +9,17 @@ import android.widget.EditText;
 
 import com.google.gson.Gson;
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.user.Account;
+import com.shpro.xus.shproject.util.ToastUtil;
 import com.wilddog.wilddogauth.WilddogAuth;
 import com.wilddog.wilddogauth.core.Task;
 import com.wilddog.wilddogauth.core.listener.OnCompleteListener;
 import com.wilddog.wilddogauth.core.result.AuthResult;
 import com.wilddog.wilddogauth.model.WilddogUser;
+
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
 
 /**
  * Created by xus on 2016/11/8.
@@ -52,7 +59,7 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
                 login();
                 break;
             case R.id.reg:
-                this.startActivity(new Intent(this,RegActivity.class));
+                this.startActivity(new Intent(this, RegActivity.class));
                 break;
         }
     }
@@ -60,16 +67,31 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
     public void login() {
         String emails = email.getText().toString();
         String passwords = password.getText().toString();
-        res.signInWithEmailAndPassword(emails, passwords).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(Task<AuthResult> var1) {
-                if (var1.isSuccessful()) {
-                    WilddogUser user = var1.getResult().getWilddogUser();
+        if (TextUtils.isEmpty(emails)) {
+            ToastUtil.makeTextShort(this, "请输入邮箱");
+            return;
+        }
+        if (TextUtils.isEmpty(passwords)) {
+            ToastUtil.makeTextShort(this, "请输入密码");
+            return;
+        }
+        Account bu2 = new Account();
+        bu2.setUsername(emails);
+        bu2.setPassword(passwords);
+        bu2.login(new SaveListener<Account>() {
 
-                    Log.e("success", "Login success!");  // 登录成功
-                    Log.e("Anonymous",new Gson().toJson(user) );
+            @Override
+            public void done(Account bmobUser, BmobException e) {
+                if (e == null) {
+                    if (TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())) {
+//完善资料
+                    } else {
+//调至主页
+                    }
+                    //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
+                    //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
                 } else {
-                    Log.e("failure", "reason:" + var1.getException().toString()); // 登录失败及错误信息
+                    ToastUtil.makeTextShort(LoginActivity.this,e.toString());
                 }
             }
         });

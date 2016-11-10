@@ -5,7 +5,12 @@
     android:orientation="vertical">
 
     <include layout="@layout/comment_head" />
+<ImageView
+    android:layout_width="match_parent"
+    android:src="@drawable/icon"
+    android:layout_marginTop="20dp"
 
+    android:layout_height="wrap_content" />
     <com.wrapp.floatlabelededittext.FloatLabeledEditText
         android:layout_width="match_parent"
         android:layout_marginTop="20dp"
