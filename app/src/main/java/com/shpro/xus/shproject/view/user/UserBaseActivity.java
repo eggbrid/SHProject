@@ -12,14 +12,13 @@ import com.wilddog.wilddogauth.WilddogAuth;
  */
 
 public abstract class UserBaseActivity extends BaseActivity{
-    public abstract void getData(WilddogAuth res);
+    public abstract void getData();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setContentView());
         initView();
-
-        getData(WilddogAuth.getInstance());
+        getData();
     }
 }

@@ -1,27 +1,16 @@
 package com.shpro.xus.shproject.view.user;
 
-import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
-import com.wilddog.wilddogauth.WilddogAuth;
-import com.wilddog.wilddogauth.core.Task;
-import com.wilddog.wilddogauth.core.listener.OnCompleteListener;
-import com.wilddog.wilddogauth.core.result.AuthResult;
 
-import cn.bmob.sms.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
-
-import static android.R.attr.id;
 
 /**
  * Created by xus on 2016/11/8.
@@ -35,11 +24,10 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
     private EditText repassword;
 
     private Button reg;
-    private WilddogAuth res;
 
     @Override
-    public void getData(WilddogAuth res) {
-        this.res = res;
+    public void getData() {
+
     }
 
     @Override

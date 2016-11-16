@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.shpro.xus.shproject"
@@ -20,6 +20,8 @@ android {
     packagingOptions {
         exclude 'META-INF/NOTICE' // will not include NOTICE file
         exclude 'META-INF/LICENSE' // will not include LICENSE file
+        exclude 'META-INF/rxjava.properties' // will not include rxjava.properties file
+
     }
 }
 
@@ -34,26 +36,25 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.wilddog.client:wilddog-auth-android:2.0.3'
     compile 'com.j256.ormlite:ormlite-android:5.0'
-    compile 'com.timqi.windrosediagram:library:1.0.5'//https://github.com/timqi/WindRoseDiagramView/
+    compile 'com.timqi.windrosediagram:library:1.0.5'
+    //https://github.com/timqi/WindRoseDiagramView/
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
-
     //以下SDK开发者请根据需要自行选择
     //bmob-sdk：Bmob的android sdk包，包含了Bmob的数据存储、文件等服务，以下是最新的bmob-sdk:
     //3.5.0：请务必查看下面注释[1]
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
-
     //bmob-push：Bmob的推送包
-    compile 'cn.bmob.android:bmob-push:0.8'
-
+    //    compile 'cn.bmob.android:bmob-push:0.8'
     //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
-    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
-    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
-
+    //    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
+    //    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
     //bmob-sms ：Bmob单独为短信服务提供的包
-    compile 'cn.bmob.android:bmob-sms:1.0.1'
-
+    //    compile 'cn.bmob.android:bmob-sms:1.0.1'
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     compile 'cn.bmob.android:http-legacy:1.0'
+    compile 'com.jph.takephoto:takephoto_library:4.0.0'
     //http://www.iconfont.cn/plus/search/index?q=图库
-
+    //    https://github.com/Yalantis/Side-Menu.Android 菜单
+    //https://github.com/Q42/AndroidScrollingImageView 会动的image
+    compile files('libs/universal-image-loader-1.9.5.jar')
 }

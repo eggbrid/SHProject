@@ -30,11 +30,10 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
     private EditText password;
     private Button login;
     private Button reg;
-    private WilddogAuth res;
 
     @Override
-    public void getData(WilddogAuth res) {
-        this.res = res;
+    public void getData() {
+
     }
 
     @Override
