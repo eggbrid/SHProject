@@ -11,6 +11,7 @@ import cn.bmob.v3.BmobObject;
  */
 @DatabaseTable(tableName = "user")
 public class User extends BmobObject {
+
     @DatabaseField(columnName = "type")
     private String type;
     @DatabaseField(columnName = "sex")

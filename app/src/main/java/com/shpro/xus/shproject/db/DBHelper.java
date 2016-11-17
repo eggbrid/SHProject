@@ -36,7 +36,10 @@ public class DBHelper {
     }
 
     public void createUser(User accounts) throws SQLException {
+        user.delete(user.queryForAll());
         user.create(accounts);
     }
-
+    public void delectUser(User accounts) throws SQLException {
+        user.delete(user.queryForAll());
+    }
 }
