@@ -83,7 +83,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         titleText.setText(titles);
     }
 
-    private void initTitleView() {
+    public void initTitleView() {
         titleText = (TextView) findViewById(R.id.title_text);
         left = (ImageButton) findViewById(R.id.left);
         right = (ImageButton) findViewById(R.id.right);

@@ -1,5 +1,7 @@
 package com.shpro.xus.shproject.view;
 
+import android.view.View;
+
 import com.shpro.xus.shproject.R;
 
 /**
@@ -14,6 +16,10 @@ public class SHMainActivity extends CommentActivity {
 
     @Override
     public void initView() {
-        setCommentTitleView("首页");
+        initTitleView();
+        titleText.setText("背包");
+        left.setVisibility(View.VISIBLE);
+        right.setVisibility(View.VISIBLE);
+
     }
 }

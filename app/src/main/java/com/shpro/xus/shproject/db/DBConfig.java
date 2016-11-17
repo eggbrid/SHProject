@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.shpro.xus.shproject.bean.skill.SkillB;
@@ -25,8 +26,6 @@ public class DBConfig extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, User.class);
-            TableUtils.createTable(connectionSource, SkillB.class);
             TableUtils.createTable(connectionSource, Account.class);
 
         } catch (java.sql.SQLException e) {
@@ -38,4 +37,5 @@ public class DBConfig extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
 
     }
+
 }
