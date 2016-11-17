@@ -3,28 +3,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <include layout="@layout/comment_head" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:src="@drawable/icon"
+        android:layout_marginTop="20dp"
 
+        android:layout_height="wrap_content" />
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_height="wrap_content">
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:hint="请输入邮箱" />
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
     <EditText
         android:id="@+id/password"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:hint="密码"
         android:inputType="textPassword" />
-
     <Button
         android:id="@+id/login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:textColor="@color/black_white_txt"
+        android:layout_marginLeft="@dimen/comment_m_left"
+        android:layout_marginRight="@dimen/comment_m_right"
+        android:background="@drawable/white_black_btn"
+        android:textSize="@dimen/comment_text"
         android:text="登陆" />
     <Button
         android:id="@+id/reg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="40dp"
+        android:textColor="@color/black_white_txt"
+        android:layout_marginLeft="@dimen/comment_m_left"
+        android:layout_marginRight="@dimen/comment_m_right"
+        android:background="@drawable/white_black_btn"
+        android:textSize="@dimen/comment_text"
         android:text="注册" />
 </LinearLayout>

@@ -1,5 +1,7 @@
 package com.shpro.xus.shproject.bean.user;
 
+import com.j256.ormlite.table.DatabaseTable;
+
 import cn.bmob.v3.BmobUser;
 
 /**

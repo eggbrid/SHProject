@@ -26,6 +26,7 @@ import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
 import com.shpro.xus.shproject.util.FileUtil;
 import com.shpro.xus.shproject.view.views.PhotoDialog;
+import com.shpro.xus.shproject.view.views.ProLoadingDialog;
 import com.wilddog.client.SyncReference;
 
 import java.io.File;
@@ -43,6 +44,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     protected InvokeParam invokeParam;
     protected TakePhoto takePhoto;
     protected PhotoDialog photoDialog;
+    protected ProLoadingDialog proLoadingDialog;
 
     public abstract int setContentView();
 
@@ -152,7 +154,8 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         });
 
     }
-        private CropOptions getCropOptions() {
+
+    private CropOptions getCropOptions() {
         CropOptions.Builder builder = new CropOptions.Builder();
         builder.setOutputX(200).setOutputY(200);
         builder.setWithOwnCrop(false);
@@ -161,6 +164,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     @Override
     public void takeSuccess(TResult result) {
+        photoDialog.dismiss();
         onFileGet(new File(result.getImage().getPath()));
     }
 
@@ -174,7 +178,21 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         photoDialog.dismiss();
 
     }
-  public void onFileGet(File file){
 
-  }
+    public void onFileGet(File file) {
+
+    }
+
+    public void showPross(String s){
+        if (proLoadingDialog == null) {
+            proLoadingDialog = new ProLoadingDialog(this);
+        }
+        proLoadingDialog.show(s);
+    }
+    public void dissPross(){
+        if (proLoadingDialog != null) {
+            proLoadingDialog.dismiss();
+        }
+    }
+
 }

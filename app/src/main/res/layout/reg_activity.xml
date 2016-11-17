@@ -59,6 +59,12 @@
     <Button
         android:id="@+id/reg"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_height="40dp"
+        android:textColor="@color/black_white_txt"
+        android:layout_marginLeft="@dimen/comment_m_left"
+        android:layout_marginRight="@dimen/comment_m_right"
+        android:background="@drawable/white_black_btn"
+        android:textSize="@dimen/comment_text"
         android:text="注册" />
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -62,6 +63,11 @@ public class TaiJiView extends View  {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        ;
+//        Log.e("wangxu",MeasureSpec.getSize(widthMeasureSpec)+"= = = "+MeasureSpec.getSize(heightMeasureSpec));
+        width=MeasureSpec.getSize(widthMeasureSpec);
+        height=MeasureSpec.getSize(heightMeasureSpec);
+
         setMeasuredDimension(width,height);
         mRectf = new RectF(0,0,width,width);
     }
@@ -121,5 +127,9 @@ public class TaiJiView extends View  {
         rotateAnimation.setDuration(1000);
         rotateAnimation.setInterpolator(new LinearInterpolator());//不停顿
         startAnimation(rotateAnimation);
+    }
+    public void stop(){
+        rotateAnimation.cancel();
+        clearAnimation();
     }
 }

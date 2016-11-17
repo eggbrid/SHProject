@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.util.ToastUtil;
+import com.shpro.xus.shproject.view.SHActivity;
+import com.shpro.xus.shproject.view.SHMainActivity;
 import com.wilddog.wilddogauth.WilddogAuth;
 import com.wilddog.wilddogauth.core.Task;
 import com.wilddog.wilddogauth.core.listener.OnCompleteListener;
@@ -83,10 +85,11 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
             public void done(Account bmobUser, BmobException e) {
                 if (e == null) {
                     if (TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())) {
-//完善资料
+                        LoginActivity.this.startActivity(new Intent(LoginActivity.this,UpdateUserAvtivity.class));
+
                     } else {
-//调至主页
-                    }
+                        Intent intent = new Intent(LoginActivity.this, SHMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        LoginActivity.this.startActivity(intent);                    }
                     //通过BmobUser user = BmobUser.getCurrentUser()获取登录成功后的本地用户信息
                     //如果是自定义用户对象MyUser，可通过MyUser user = BmobUser.getCurrentUser(MyUser.class)获取自定义用户信息
                 } else {

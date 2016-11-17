@@ -46,7 +46,11 @@
 
         </activity>
         <activity android:name=".view.SHActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <!-- 如果您key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
@@ -62,11 +66,11 @@
         <activity android:name=".view.user.LoginActivity"/>
         <activity android:name=".view.user.RegActivity"/>
         <activity android:name=".view.other.ImageActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
+        </activity>
+        <activity android:name=".view.SHMainActivity"/>
+        <activity android:name=".view.user.UpdateUserAvtivity">
 
         </activity>
     </application>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.View;
@@ -47,6 +48,7 @@ public class PhotoDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_photo);
         initView();
+        setCanceledOnTouchOutside(true);
     }
 
     public void show(Activity context, View v) {
@@ -59,6 +61,8 @@ public class PhotoDialog extends Dialog implements View.OnClickListener {
         p.height = v.getHeight();
         p.width = (int) (d.getWidth());    //宽度设置为全屏
         p.y = (int) v.getY();
+        Log.e("wangxu", p.y+"");
+
         getWindow().setAttributes(p);
         getWindow().setGravity(Gravity.LEFT | Gravity.TOP);
         photo.startAnimation(leftAnimation);
@@ -88,4 +92,5 @@ public class PhotoDialog extends Dialog implements View.OnClickListener {
         void onCameraClick();
 
     }
+
 }

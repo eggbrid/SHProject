@@ -4,6 +4,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="comment_title">20sp</dimen>
     <dimen name="comment_edit_size">16sp</dimen>
-
+<dimen name="comment_text">20sp</dimen>
+    <dimen name="comment_m_top">20dp</dimen>
+    <dimen name="comment_m_left">10dp</dimen>
+    <dimen name="comment_m_right">10dp</dimen>
+    <dimen name="comment_hight">60dp</dimen>
 
 </resources>

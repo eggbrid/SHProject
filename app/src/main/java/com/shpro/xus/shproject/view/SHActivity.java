@@ -15,6 +15,7 @@ import android.view.animation.ScaleAnimation;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.view.user.LoginActivity;
+import com.shpro.xus.shproject.view.user.UpdateUserAvtivity;
 import com.shpro.xus.shproject.view.views.TaiJiView;
 
 import cn.bmob.v3.BmobUser;
@@ -66,13 +67,13 @@ public class SHActivity extends BaseActivity {
                         SHActivity.this.finish();
                         if (BmobUser.getCurrentUser(Account.class)!=null) {
                             if (TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())){
-                                SHActivity. this.startActivity(new Intent(SHActivity.this,MainActivity.class));
+
+                                SHActivity.this.startActivity(new Intent(SHActivity.this,UpdateUserAvtivity.class));
                                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
-
                             }else{
-
+                                SHActivity. this.startActivity(new Intent(SHActivity.this,SHMainActivity.class));
+                                overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                             }
-
                         }else{
                             SHActivity.this.startActivity(new Intent(SHActivity.this,LoginActivity.class));
                             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);

@@ -6,6 +6,7 @@
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="bg_color">#444444</color>
+    <color name="bg_6444">#99444444</color>
 
     <color name="tr">#00000000</color>
 </resources>

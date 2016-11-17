@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/comment_head" />
+
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/avatar" />
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/comment_m_left"
+        android:layout_marginRight="@dimen/comment_m_right">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="请输入昵称"
+            android:inputType="textEmailAddress"
+
+            android:textColor="@color/white"
+            android:textSize="@dimen/comment_edit_size" />
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <RadioGroup
+        android:id="@+id/sex"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/comment_m_left"
+        android:layout_marginRight="@dimen/comment_m_right"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/sex_man"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="男"
+            android:textColor="@color/black"
+            android:textSize="@dimen/comment_text"
+            android:gravity="center"
+            android:background="@drawable/white_black_selector"
+            android:button="@null"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/sex_wo_man"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="女"
+            android:textSize="@dimen/comment_text"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:background="@drawable/white_black_selector"
+            android:button="@null" />
+    </RadioGroup>
+<Button
+    android:id="@+id/ok"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:textColor="@color/black_white_txt"
+    android:text="完成"
+    android:layout_marginLeft="@dimen/comment_m_left"
+    android:layout_marginRight="@dimen/comment_m_right"
+    android:background="@drawable/white_black_btn"
+    android:textSize="@dimen/comment_text"
+    android:layout_marginTop="50dp"
+    />
+
+
+</LinearLayout>
