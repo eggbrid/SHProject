@@ -1,6 +1,7 @@
 package com.shpro.xus.shproject.view.main.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.user.UserBag;
+import com.shpro.xus.shproject.util.CommentUtil;
+import com.shpro.xus.shproject.util.ImageLoaderUtil;
 
 /**
  * Created by xus on 2016/11/18.
@@ -16,7 +20,16 @@ import com.shpro.xus.shproject.R;
 
 public class MainAdapter extends BaseAdapter {
     public Context context;
-    String[] p = {"物品1", "物品2", "物品3", "物品4", "物品5", "物品6", "物品7"};
+
+    private UserBag userBag;
+
+    public UserBag getUserBag() {
+        return userBag;
+    }
+
+    public void setUserBag(UserBag userBag) {
+        this.userBag = userBag;
+    }
 
     public MainAdapter(Context context) {
         this.context = context;
@@ -48,9 +61,18 @@ public class MainAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if (p.length > i) {
-            viewHolder.name.setText(p[i]);
-            viewHolder.icon.setImageResource(R.drawable.map);
+        if (userBag.getBags().size()> i) {
+            viewHolder.name.setText(userBag.getBags().get(i).getName());
+            String icon=userBag.getBags().get(i).getIcon();
+            if (TextUtils.isEmpty(icon)){
+                viewHolder.icon.setImageResource(R.drawable.shpg_unno);
+            }else if(icon.startsWith("http:")){
+                ImageLoaderUtil.getInstance().loadNomalImage(icon,viewHolder.icon);
+            }else if(icon.startsWith("shpg")){
+                viewHolder.icon.setImageResource(  CommentUtil.getIcon(icon,context));
+            }else{
+                viewHolder.icon.setImageResource(R.drawable.shpg_unno);
+            }
         } else {
             viewHolder.name.setText("");
             viewHolder.icon.setImageResource(0);

@@ -49,7 +49,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     public abstract int setContentView();
 
-    public abstract void initView() throws SQLException;
+    public abstract void initView() throws Exception;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

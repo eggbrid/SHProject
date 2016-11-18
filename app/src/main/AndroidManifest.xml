@@ -4,15 +4,15 @@
     <!--腾讯地图 sdk 要求的权限(开始)-->
     <!--访问网络获取地图服务-->
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <!--检查网络可用性-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- 访问WiFi状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <!--需要外部存储写权限用于保存地图缓存-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--获取 device id 辨别设备-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!--腾讯地图 sdk 要求的权限(结束)-->
 
     <!-- 腾讯定位 sdk 要求的权限  (开始) -->
@@ -36,8 +36,8 @@
     <!--保持CPU 运转，屏幕和键盘灯有可能是关闭的,用于文件上传和下载 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <application
-        android:allowBackup="true"
         android:name=".APP"
+        android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -56,23 +56,22 @@
         <!-- 如果您key确认无误，却依然授权没有通过，请检查您的key的白名单配置 -->
         <meta-data
             android:name="TencentMapSDK"
-            android:value="YBRBZ-CLYRX-ZHJ4L-7NGTJ-OLXP6-34FJJ"/>
+            android:value="YBRBZ-CLYRX-ZHJ4L-7NGTJ-OLXP6-34FJJ" />
         <receiver android:name="com.wilddog.client.receiver.WilddogAuthCastReceiver">
             <intent-filter>
-                <action android:name="com.wilddog.wilddogauth.signinsuccess"/>
-                <action android:name="com.wilddog.wilddogauth.signoutsuccess"/>
+                <action android:name="com.wilddog.wilddogauth.signinsuccess" />
+                <action android:name="com.wilddog.wilddogauth.signoutsuccess" />
             </intent-filter>
         </receiver>
-        <activity android:name=".view.user.LoginActivity"/>
-        <activity android:name=".view.user.RegActivity"/>
-        <activity android:name=".view.other.ImageActivity">
+
+        <activity android:name=".view.user.LoginActivity" />
+        <activity android:name=".view.user.RegActivity" />
+        <activity android:name=".view.other.ImageActivity"/>
 
 
-        </activity>
-        <activity android:name=".view.main.SHMainActivity"/>
-        <activity android:name=".view.user.UpdateUserAvtivity">
-
-        </activity>
+        <activity android:name=".view.main.SHMainActivity" />
+        <activity android:name=".view.user.UpdateUserAvtivity"/>
+        <activity android:name=".view.main.HelpActivity" />
     </application>
 
 </manifest>

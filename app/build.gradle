@@ -57,4 +57,5 @@ dependencies {
     //    https://github.com/Yalantis/Side-Menu.Android 菜单
     //https://github.com/Q42/AndroidScrollingImageView 会动的image
     compile files('libs/universal-image-loader-1.9.5.jar')
+    compile 'me.grantland:autofittextview:0.2.+'
 }
