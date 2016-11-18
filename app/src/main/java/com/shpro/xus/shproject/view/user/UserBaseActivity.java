@@ -22,7 +22,7 @@ public abstract class UserBaseActivity extends BaseActivity{
         setContentView(setContentView());
         try {
             initView();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         getData();

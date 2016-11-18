@@ -68,7 +68,7 @@ public class SHActivity extends BaseActivity {
 
         animationSet.addAnimation(animation_suofang);
         animationSet.addAnimation(rotateAnimation);
-        if (BmobUser.getCurrentUser(Account.class) != null && (!TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())) && ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(this), User.class) != null) {
+        if (BmobUser.getCurrentUser(Account.class) != null && (!TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid()))) {
             BmobQuery<User> query = new BmobQuery<User>();
             query.getObject(BmobUser.getCurrentUser(Account.class).getUserid(), new QueryListener<User>() {
 

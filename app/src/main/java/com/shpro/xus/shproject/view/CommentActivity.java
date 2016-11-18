@@ -16,7 +16,7 @@ public abstract class CommentActivity extends BaseActivity {
         setContentView(setContentView());
         try {
             initView();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
