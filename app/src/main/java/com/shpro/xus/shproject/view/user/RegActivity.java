@@ -8,9 +8,16 @@ import android.widget.EditText;
 
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.user.Account;
+import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
+import com.shpro.xus.shproject.view.main.SHMainActivity;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
 import cn.bmob.v3.listener.SaveListener;
 
 /**
@@ -79,15 +86,30 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
             public void done(Account account, cn.bmob.v3.exception.BmobException e) {
                 dissPross();
                 if (e == null) {
-                    ToastUtil.makeTextShort(RegActivity.this, "注册成功");
-                    RegActivity.this.startActivity(new Intent(RegActivity.this, UpdateUserAvtivity.class));
-
-                    RegActivity.this.finish();
+                    login(account);
                 } else {
                     ToastUtil.makeTextShort(RegActivity.this, e.toString());
                 }
             }
 
+        });
+    }
+    public void login(final Account account){
+        Account bu2 = new Account();
+        bu2.setUsername(account.getUsername());
+        bu2.setPassword(repassword.getText().toString());
+        bu2.login(new SaveListener<Account>() {
+
+            @Override
+            public void done(Account bmobUser, BmobException e) {
+                if (e == null) {
+                    ToastUtil.makeTextShort(RegActivity.this, "注册成功");
+                    RegActivity.this.startActivity(new Intent(RegActivity.this, UpdateUserAvtivity.class));
+                    RegActivity.this.finish();
+                } else {
+                    login( account);
+                }
+            }
         });
     }
 }

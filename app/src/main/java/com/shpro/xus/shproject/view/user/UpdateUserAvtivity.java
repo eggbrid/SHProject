@@ -3,6 +3,7 @@ package com.shpro.xus.shproject.view.user;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -209,6 +210,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
                     Intent intent = new Intent(UpdateUserAvtivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     UpdateUserAvtivity.this.startActivity(intent);
                 } else {
+                    Log.e("wangxu",e.toString());
                     updateAccount(id,pgId);
                 }
             }
