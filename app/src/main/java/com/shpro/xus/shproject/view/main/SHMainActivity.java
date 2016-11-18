@@ -33,7 +33,7 @@ import cn.bmob.v3.listener.SaveListener;
  * Created by xus on 2016/11/15.
  */
 
-public class SHMainActivity extends CommentActivity implements AdapterView.OnItemClickListener{
+public class SHMainActivity extends CommentActivity implements AdapterView.OnItemClickListener {
     protected GridView mainGrid;
     private MainAdapter adapter;
     private List<Bag> bags;
@@ -62,65 +62,39 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
 
     }
 
-    public void reBag(){
+    public void reBag() {
         UserBag userBags = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(this) + "bag", UserBag.class);
         adapter.setUserBag(userBags);
         mainGrid.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 //        BagDialog
     }
-    public void getBgaList() {
-        UserBag userBags = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(this) + "bag", UserBag.class);
-        if (userBags == null) {
-           final UserBag userBag = new UserBag();
-            userBag.setBags(new ArrayList<Bag>());
-            Bag bag = new Bag();
-            bag.setAction("1");
-            bag.setName("新手指南");
-            bag.setIcon("shpg_help");
-            bag.setActionInfo("com.shpro.xus.shproject.view.main.HelpActivity");
-            bag.setInfo("一个看起来很新的羊皮卷，里面貌似写着字");
-            userBag.getBags().add(bag);
-            userBag.setUserid(BmobUser.getCurrentUser(Account.class).getUserid());
-            userBag.save(new SaveListener<String>() {
-                @Override
-                public void done(String s, BmobException e) {
-                    if (e == null) {
-                        bags=userBag.getBags();
-                        ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(SHMainActivity.this) + "bag", userBag);
-                        reBag();
-                    } else {
-                        ToastUtil.makeTextShort(SHMainActivity.this, "哎呀！刚刚好像看到了什么物品，重新打开app试试吧");
-                    }
-                }
-            });
-        } else {
-            BmobQuery<UserBag> query = new BmobQuery<UserBag>();
-            query.getObject(BmobUser.getCurrentUser(Account.class).getUserid(), new QueryListener<UserBag>() {
-                @Override
-                public void done(UserBag userBag, BmobException e) {
-                    if(e==null){
-                        ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(SHMainActivity.this) + "bag",userBag);
-                        bags=userBag.getBags();
-                        reBag();
-                    }else{
-                        if(e.getErrorCode()==101){
 
-                        }
-                        ToastUtil.makeTextShort(SHMainActivity.this, "哎呀！背包进入了异次元，重新打开app试试吧");
-                    }
+    public void getBgaList() {
+
+        BmobQuery<UserBag> query = new BmobQuery<UserBag>();
+        query.getObject(BmobUser.getCurrentUser(Account.class).getPgid(), new QueryListener<UserBag>() {
+            @Override
+            public void done(UserBag userBag, BmobException e) {
+                if (e == null) {
+                    ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(SHMainActivity.this) + "bag", userBag);
+                    bags = userBag.getBags();
+                    reBag();
+                } else {
+                    ToastUtil.makeTextShort(SHMainActivity.this, "哎呀！背包进入了异次元，重新打开app试试吧");
                 }
-            });
-        }
+            }
+        });
+
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        BagDialog bagDialog=new BagDialog(this, bags.get(i), new BagDialog.OnDialogChange() {
+        BagDialog bagDialog = new BagDialog(this, bags.get(i), new BagDialog.OnDialogChange() {
             @Override
             public void onChagne() {
-           reBag();
+                reBag();
             }
         });
         bagDialog.show();

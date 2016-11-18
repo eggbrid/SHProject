@@ -85,7 +85,6 @@ public class SHActivity extends BaseActivity {
             });
 
         } else {
-
             going();
         }
     }

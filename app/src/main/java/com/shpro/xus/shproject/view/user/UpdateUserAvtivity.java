@@ -10,17 +10,22 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.Bag;
 import com.shpro.xus.shproject.bean.people.Self;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.bean.user.UserBag;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
+import com.shpro.xus.shproject.view.main.SHMainActivity;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
@@ -154,18 +159,46 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
+                    user.setObjectId(s);
                     ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(UpdateUserAvtivity.this),user);
-                    updateAccount(s);
+                    creatBg( s);
+
                 } else {
                     save();
                 }
             }
         });
     }
+    public void creatBg(final String id){
+            final UserBag userBag = new UserBag();
+            userBag.setBags(new ArrayList<Bag>());
+            Bag bag = new Bag();
+            bag.setAction("1");
+            bag.setName("新手指南");
+            bag.setIcon("shpg_help");
+            bag.setActionInfo("com.shpro.xus.shproject.view.main.HelpActivity");
+            bag.setInfo("一个看起来很新的羊皮卷，里面貌似写着字");
+            userBag.getBags().add(bag);
+            userBag.setUserid(BmobUser.getCurrentUser(Account.class).getUserid());
+            userBag.save(new SaveListener<String>() {
+                @Override
+                public void done(String s, BmobException e) {
+                    if (e == null) {
+                        userBag.setObjectId(s);
+                        ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(UpdateUserAvtivity.this)+ "bag",userBag);
+                        updateAccount(id,s);
 
-    public void updateAccount(final String id) {
+                    } else {
+                        creatBg(id );
+                    }
+                }
+            });
+    }
+
+    public void updateAccount(final String id,final String pgId) {
         Account newUser = new Account();
         newUser.setUserid(id);
+        newUser.setPgid(pgId);
        final  Account bmobUser = Account.getCurrentUser(Account.class);
         newUser.update(bmobUser.getObjectId(), new UpdateListener() {
             @Override
@@ -176,7 +209,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
                     Intent intent = new Intent(UpdateUserAvtivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     UpdateUserAvtivity.this.startActivity(intent);
                 } else {
-                    updateAccount(id);
+                    updateAccount(id,pgId);
                 }
             }
         });
