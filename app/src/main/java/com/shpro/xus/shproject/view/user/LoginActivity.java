@@ -2,22 +2,14 @@ package com.shpro.xus.shproject.view.user;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.gson.Gson;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.util.ToastUtil;
-import com.shpro.xus.shproject.view.SHActivity;
-import com.shpro.xus.shproject.view.SHMainActivity;
-import com.wilddog.wilddogauth.WilddogAuth;
-import com.wilddog.wilddogauth.core.Task;
-import com.wilddog.wilddogauth.core.listener.OnCompleteListener;
-import com.wilddog.wilddogauth.core.result.AuthResult;
-import com.wilddog.wilddogauth.model.WilddogUser;
+import com.shpro.xus.shproject.view.main.SHMainActivity;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;

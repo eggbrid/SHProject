@@ -3,25 +3,20 @@ package com.shpro.xus.shproject.view.user;
 import android.content.Intent;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.shpro.xus.shproject.R;
-import com.shpro.xus.shproject.bean.people.People;
 import com.shpro.xus.shproject.bean.people.Self;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
-import com.shpro.xus.shproject.view.SHMainActivity;
 
 import java.io.File;
 import java.util.Calendar;
@@ -150,7 +145,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
 
     public void save() {
         showPross("正在向shProject保存数据");
-        User user = new User();
+      final  User user = new User();
         user.setAvatar(avatars);
         user.setName(nickName);
         user.setSex(sexs);
@@ -159,6 +154,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
             @Override
             public void done(String s, BmobException e) {
                 if (e == null) {
+                    ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(UpdateUserAvtivity.this),user);
                     updateAccount(s);
                 } else {
                     save();

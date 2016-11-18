@@ -21,9 +21,14 @@ import cn.bmob.v3.Bmob;
  */
 
 public class APP extends Application {
+    public static APP app;
+    public static APP getInstance() {
+        return app;
+    }
     @Override
     public void onCreate() {
         super.onCreate();
+        app=this;
         HttpUtil.getInstance().init(this);
         Bmob.initialize(this, "71c81ce12d70f8e9415d6c86d62d5a65");
         initImageLoader();

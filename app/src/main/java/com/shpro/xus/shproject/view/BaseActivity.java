@@ -30,6 +30,7 @@ import com.shpro.xus.shproject.view.views.ProLoadingDialog;
 import com.wilddog.client.SyncReference;
 
 import java.io.File;
+import java.sql.SQLException;
 
 /**
  * Created by xus on 2016/11/8.
@@ -48,7 +49,7 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     public abstract int setContentView();
 
-    public abstract void initView();
+    public abstract void initView() throws SQLException;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

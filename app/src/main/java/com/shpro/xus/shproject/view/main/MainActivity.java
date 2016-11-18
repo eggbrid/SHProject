@@ -1,4 +1,4 @@
-package com.shpro.xus.shproject.view;
+package com.shpro.xus.shproject.view.main;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

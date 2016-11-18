@@ -1,22 +1,13 @@
 package com.shpro.xus.shproject.bean.skill;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 /**
  * Created by xus on 2016/11/9.
  */
-@DatabaseTable(tableName = "tb_skill")
 public class SkillB {
-    @DatabaseField(generatedId = true)
     private int id;
-    @DatabaseField(columnName = "name")
     private String name;
-    @DatabaseField(columnName = "info")
     private String info;
-    @DatabaseField(columnName = "useMp")
     private int useMp;
-    @DatabaseField(columnName = "hitHp")
     private int hitHp;
 
     public int getId() {

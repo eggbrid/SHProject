@@ -10,7 +10,7 @@
         android:id="@+id/main_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:horizontalSpacing="10dp"
+        android:horizontalSpacing="0dp"
         android:numColumns="3"
-        android:verticalSpacing="10dp"></GridView>
+        android:verticalSpacing="0dp"></GridView>
 </LinearLayout>
