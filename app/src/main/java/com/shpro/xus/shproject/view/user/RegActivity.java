@@ -67,6 +67,7 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
         if (TextUtils.isEmpty(repassword.getText().toString()) || !repassword.getText().toString().equals(password.getText().toString())) {
             ToastUtil.makeTextShort(this, "两次密码不一致");
         }
+        showPross("正在注册");
         Account bu = new Account();
         bu.setPassword(repassword.getText().toString());
         bu.setUsername(email.getText().toString());
@@ -76,6 +77,7 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
         bu.signUp(new SaveListener<Account>() {
             @Override
             public void done(Account account, cn.bmob.v3.exception.BmobException e) {
+                dissPross();
                 if (e == null) {
                     ToastUtil.makeTextShort(RegActivity.this, "注册成功");
                     RegActivity.this.startActivity(new Intent(RegActivity.this, UpdateUserAvtivity.class));

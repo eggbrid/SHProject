@@ -74,6 +74,7 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
             ToastUtil.makeTextShort(this, "请输入密码");
             return;
         }
+        showPross("正在登陆");
         Account bu2 = new Account();
         bu2.setUsername(emails);
         bu2.setPassword(passwords);
@@ -81,6 +82,7 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
 
             @Override
             public void done(Account bmobUser, BmobException e) {
+                dissPross();
                 if (e == null) {
                     if (TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())) {
                         BmobQuery<User> query = new BmobQuery<User>();
