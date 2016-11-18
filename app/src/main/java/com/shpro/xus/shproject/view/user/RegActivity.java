@@ -1,5 +1,6 @@
 package com.shpro.xus.shproject.view.user;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -77,6 +78,8 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
             public void done(Account account, cn.bmob.v3.exception.BmobException e) {
                 if (e == null) {
                     ToastUtil.makeTextShort(RegActivity.this, "注册成功");
+                    RegActivity.this.startActivity(new Intent(RegActivity.this, UpdateUserAvtivity.class));
+
                     RegActivity.this.finish();
                 } else {
                     ToastUtil.makeTextShort(RegActivity.this, e.toString());
