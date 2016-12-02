@@ -9,7 +9,7 @@ import com.shpro.xus.shproject.interfaces.Skill;
  * Created by xus on 2016/11/7.
  */
 
-public abstract class Player implements HP,MP,Skill{
+public abstract class Player extends SHBean implements HP,MP,Skill{
     public String name;
     public int maxHp;
     public int nowHp;

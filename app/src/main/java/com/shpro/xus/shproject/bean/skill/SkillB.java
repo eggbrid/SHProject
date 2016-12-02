@@ -1,9 +1,11 @@
 package com.shpro.xus.shproject.bean.skill;
 
+import com.shpro.xus.shproject.bean.SHBean;
+
 /**
  * Created by xus on 2016/11/9.
  */
-public class SkillB {
+public class SkillB extends SHBean {
     private int id;
     private String name;
     private String info;

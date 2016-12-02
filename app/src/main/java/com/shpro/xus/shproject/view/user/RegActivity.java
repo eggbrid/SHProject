@@ -12,6 +12,7 @@ import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
+import com.shpro.xus.shproject.util.SHCallUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.main.SHMainActivity;
 
@@ -104,6 +105,7 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
             @Override
             public void done(Account bmobUser, BmobException e) {
                 if (e == null) {
+                    new SHCallUtil().toCalls(bmobUser.getUserid());
                     ToastUtil.makeTextShort(RegActivity.this, "注册成功");
                     RegActivity.this.startActivity(new Intent(RegActivity.this, UpdateUserAvtivity.class));
                     RegActivity.this.finish();

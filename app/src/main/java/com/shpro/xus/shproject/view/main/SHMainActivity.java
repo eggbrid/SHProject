@@ -58,8 +58,16 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
         title = (LinearLayout) findViewById(R.id.title);
         mainGrid = (GridView) findViewById(R.id.main_grid);
         mainGrid.setOnItemClickListener(this);
+        right.setOnClickListener(this);
+        left.setOnClickListener(this);
         getBgaList();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        reBag();
     }
 
     public void reBag() {
@@ -98,5 +106,17 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
             }
         });
         bagDialog.show();
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()){
+            case R.id.left:
+
+                break;
+            case R.id.right:
+                break;
+        }
     }
 }

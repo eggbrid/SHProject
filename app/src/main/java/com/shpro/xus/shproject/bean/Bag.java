@@ -6,7 +6,7 @@ import cn.bmob.v3.BmobObject;
  * Created by xus on 2016/11/18.
  */
 
-public class Bag  {
+public class Bag extends SHBean {
     private String name;
     private String icon;
     private String info;

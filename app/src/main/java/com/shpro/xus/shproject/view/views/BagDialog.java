@@ -79,7 +79,7 @@ public class BagDialog extends Dialog implements View.OnClickListener {
                 }
             }
             UserBag userBag = new UserBag();
-            userBag.update(userBags.getObjectId(), new UpdateListener() {
+            userBags.update(userBags.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException e) {
                     BagDialog.this.dismiss();
