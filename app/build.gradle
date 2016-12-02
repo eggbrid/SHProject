@@ -10,6 +10,8 @@ android {
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
     }
     buildTypes {
         release {
@@ -29,7 +31,7 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:appcompat-v7:25.0.0'
     compile files('libs/TencentLocationSDK_v4.5.8.jar')
     compile files('libs/TencentMapSDK_Raster_v1.2.4_4af1d6f.jar')
     compile 'com.wilddog.client:wilddog-sync-android:2.0.2'
