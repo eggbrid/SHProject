@@ -105,7 +105,7 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
             @Override
             public void done(Account bmobUser, BmobException e) {
                 if (e == null) {
-                    new SHCallUtil().toCalls(bmobUser.getUserid());
+                    new SHCallUtil().toCalls(bmobUser.getObjectId());
                     ToastUtil.makeTextShort(RegActivity.this, "注册成功");
                     RegActivity.this.startActivity(new Intent(RegActivity.this, UpdateUserAvtivity.class));
                     RegActivity.this.finish();
