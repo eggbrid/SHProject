@@ -35,10 +35,11 @@ public class CallAdapter extends SHBaseAdapter<CallPeople,CallAdapter.ViewHolder
     }
 
     @Override
-    public View getLayoutView(LayoutInflater inflater, ViewGroup viewGroup) {
-        inflater.inflate(R.layout.item_call, null);
-        return null;
+    public View getLayoutView(int i, LayoutInflater inflater, ViewGroup viewGroup) {
+        return   inflater.inflate(R.layout.item_call, null);
     }
+
+
 
     @Override
     public SHBaseViewHolder setViewHolder() {

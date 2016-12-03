@@ -1,10 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <include layout="@layout/comment_head" />
-<ListView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</LinearLayout>
+    <include
+        android:id="@+id/title"
+        layout="@layout/comment_head" />
+
+    <ListView
+        android:id="@+id/message_list"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttom"
+        android:layout_below="@+id/title" />
+
+    <RelativeLayout
+        android:id="@+id/buttom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/black"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <EditText
+            android:id="@+id/content_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/send"
+            android:background="@color/white" />
+
+        <Button
+            android:id="@+id/send"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="20dp"
+            android:background="@color/bg_6444"
+            android:text="发送"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</RelativeLayout>

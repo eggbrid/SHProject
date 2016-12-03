@@ -1,5 +1,6 @@
 package com.shpro.xus.shproject.view.main;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,7 @@ import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
+import com.shpro.xus.shproject.view.find.FindPeopleActivity;
 import com.shpro.xus.shproject.view.main.adapter.MainAdapter;
 import com.shpro.xus.shproject.view.views.BagDialog;
 
@@ -113,7 +115,8 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
         super.onClick(view);
         switch (view.getId()){
             case R.id.left:
-
+                Intent intent=new Intent(this, FindPeopleActivity.class);
+                startActivity(intent);
                 break;
             case R.id.right:
                 break;

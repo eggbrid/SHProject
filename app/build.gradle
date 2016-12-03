@@ -7,11 +7,19 @@ android {
     defaultConfig {
         applicationId "com.shpro.xus.shproject"
         minSdkVersion 21
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
 
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "6g"
     }
     buildTypes {
         release {
@@ -31,7 +39,8 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:appcompat-v7:25.+'
     compile files('libs/TencentLocationSDK_v4.5.8.jar')
     compile files('libs/TencentMapSDK_Raster_v1.2.4_4af1d6f.jar')
     compile 'com.wilddog.client:wilddog-sync-android:2.0.2'
@@ -46,7 +55,7 @@ dependencies {
     //3.5.0：请务必查看下面注释[1]
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     //bmob-push：Bmob的推送包
-    //    compile 'cn.bmob.android:bmob-push:0.8'
+        compile 'cn.bmob.android:bmob-push:0.8'
     //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
     //    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
     //    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'

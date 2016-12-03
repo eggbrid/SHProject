@@ -1,6 +1,9 @@
 package com.shpro.xus.shproject.view.call;
 
+import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -11,6 +14,8 @@ import com.hyphenate.chat.EMConversation;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.call.CallPeople;
 import com.shpro.xus.shproject.bean.user.Account;
+import com.shpro.xus.shproject.util.SHCallUtil;
+import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.call.adapter.CallAdapter;
 
 import java.util.ArrayList;
@@ -36,26 +41,46 @@ public class CallListActivity extends CallCommentActivity {
 
     @Override
     public void initView() throws Exception {
-        Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
-        Iterator it = conversations.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<String, EMConversation> entry = (Map.Entry<String, EMConversation>) it.next();
-            CallPeople callPeople = new CallPeople();
-            String key = entry.getKey().toString();
-            if (entry.getValue().getLastMessage().getFrom().equals(TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase()))) {
-                callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("toName", ""));
-                callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("toAvatar", ""));
-            } else {
-                callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("fromName", ""));
-                callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("fromAvatar", ""));
-            }
-            callPeople.setUnRead(entry.getValue().getUnreadMsgCount());
-            callPeople.setId(key);
-            list.add(callPeople);
-        }
-        adapter = new CallAdapter(this, list);
-        mainGrid = (GridView) findViewById(R.id.main_grid);
-        mainGrid.setAdapter(adapter);
-        setCommentTitleView("通讯器");
+       new  SHCallUtil().toCall(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase(),new SHCallUtil.CallBack(){
+
+           @Override
+           public void onSuccess() {
+               Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+               Iterator it = conversations.entrySet().iterator();
+               while (it.hasNext()) {
+                   Map.Entry<String, EMConversation> entry = (Map.Entry<String, EMConversation>) it.next();
+                   CallPeople callPeople = new CallPeople();
+                   String key = entry.getKey().toString();
+                   if (entry.getValue().getLastMessage().getFrom().equals(TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase()))) {
+                       callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("toName", ""));
+                       callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("toAvatar", ""));
+                   } else {
+                       callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("fromName", ""));
+                       callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("fromAvatar", ""));
+                   }
+                   callPeople.setUnRead(entry.getValue().getUnreadMsgCount());
+                   callPeople.setId(key);
+                   list.add(callPeople);
+               }
+               adapter = new CallAdapter(CallListActivity.this, list);
+               mainGrid = (GridView) findViewById(R.id.main_grid);
+               mainGrid.setAdapter(adapter);
+               setCommentTitleView("通讯器");
+               mainGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                   @Override
+                   public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                       Intent intent=new Intent(CallListActivity.this,CallDetailActivity.class);
+                       intent.putExtra("people",list.get(i));
+                   }
+               });
+           }
+
+           @Override
+           public void onError() {
+               ToastUtil.makeTextShort(CallListActivity.this,"通讯器发出呲呲呲的声音...");
+               CallListActivity.this.finish();
+           }
+       });
+
     }
 }

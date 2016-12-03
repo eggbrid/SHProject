@@ -11,6 +11,7 @@ import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
+import com.shpro.xus.shproject.util.PushUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.main.SHActivity;
 import com.shpro.xus.shproject.view.main.SHMainActivity;
@@ -83,6 +84,8 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
             @Override
             public void done(Account bmobUser, BmobException e) {
                 dissPross();
+                PushUtil.getInstance().initPush(LoginActivity.this);
+
                 if (e == null) {
                     if (TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())) {
                         BmobQuery<User> query = new BmobQuery<User>();

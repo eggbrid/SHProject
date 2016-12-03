@@ -10,12 +10,13 @@ import com.hyphenate.exceptions.HyphenateException;
 
 public class SHCallUtil  {
 
-    public void toCall(final String userName){
-        EMClient.getInstance().login(userName,"123456",new EMCallBack() {//回调
+    public void toCall(final String userName,final CallBack callBack){
+        EMClient.getInstance().login(userName.toLowerCase(),"123456",new EMCallBack() {//回调
             @Override
             public void onSuccess() {
                 EMClient.getInstance().groupManager().loadAllGroups();
                 EMClient.getInstance().chatManager().loadAllConversations();
+                callBack.onSuccess();
             }
 
             @Override
@@ -28,12 +29,13 @@ public class SHCallUtil  {
                 if (code==204){
                     while (toCalls(userName));
                 }
+                callBack.onError();
             }
         });
     }
     public  boolean toCalls(String userName){
         try {
-            EMClient.getInstance().createAccount(userName, "123456");//同步方法
+            EMClient.getInstance().createAccount(userName.toLowerCase(), "123456");//同步方法
             return true;
         } catch (HyphenateException e) {
             return false;
@@ -42,5 +44,9 @@ public class SHCallUtil  {
 
     private void backFromCalls(){
         EMClient.getInstance().logout(true);
+    }
+    public interface CallBack{
+        void onSuccess();
+        void onError();
     }
 }

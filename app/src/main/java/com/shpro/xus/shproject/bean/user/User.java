@@ -13,8 +13,16 @@ public class User extends SHBean {
     private int sex;
     private Self self;
     private String name;
-
     private String avatar;
+    private String accountId;
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 
     public String getType() {
         return type;

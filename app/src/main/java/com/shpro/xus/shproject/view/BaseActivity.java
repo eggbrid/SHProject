@@ -71,6 +71,10 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     }
 
+    public void addPushListener() {
+
+    }
+
     public void setCommentTitleView(String titles) {
         initTitleView();
         left.setImageResource(R.drawable.back);
@@ -90,6 +94,11 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
         right = (ImageButton) findViewById(R.id.right);
         title = (LinearLayout) findViewById(R.id.title);
         title.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -184,16 +193,25 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
 
     }
 
-    public void showPross(String s){
+    public void showPross(String s) {
         if (proLoadingDialog == null) {
             proLoadingDialog = new ProLoadingDialog(this);
         }
         proLoadingDialog.show(s);
     }
-    public void dissPross(){
+
+    public void dissPross() {
         if (proLoadingDialog != null) {
             proLoadingDialog.dismiss();
         }
+    }
+
+    public void addPush() {
+
+    }
+
+    public interface OnMessageGet {
+        void onmessageGet();
     }
 
 }

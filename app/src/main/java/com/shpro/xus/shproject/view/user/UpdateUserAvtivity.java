@@ -156,6 +156,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
         user.setName(nickName);
         user.setSex(sexs);
         user.setSelf(self);
+        user.setAccountId(Account.getCurrentUser(Account.class).getObjectId());
         user.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {

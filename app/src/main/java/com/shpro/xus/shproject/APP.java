@@ -20,7 +20,9 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobInstallation;
 
 /**
  * Created by xus on 2016/11/8.
@@ -42,6 +44,11 @@ public class APP extends Application {
         }
         HttpUtil.getInstance().init(this);
         Bmob.initialize(this, "71c81ce12d70f8e9415d6c86d62d5a65");
+        // 初始化BmobSDK
+        // 使用推送服务时的初始化操作
+        BmobInstallation.getCurrentInstallation().save();
+        // 启动推送服务
+        BmobPush.startWork(this);
         initImageLoader();
         initHX();
     }
