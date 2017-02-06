@@ -69,5 +69,9 @@ dependencies {
     //https://github.com/Q42/AndroidScrollingImageView 会动的image
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile 'me.grantland:autofittextview:0.2.+'
-    compile files('libs/hyphenatechat_3.2.1.jar')
+//    compile files('libs/hyphenatechat_3.2.1.jar')
+
+    //Optional compile for GCM (Google Cloud Messaging).
+    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+    compile 'com.hyphenate:hyphenate-sdk:3.2.3'
 }

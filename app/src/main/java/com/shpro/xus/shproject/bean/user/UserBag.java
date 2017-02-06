@@ -11,7 +11,7 @@ import cn.bmob.v3.BmobObject;
  * Created by xus on 2016/11/18.
  */
 
-public class UserBag extends SHBean {
+public class UserBag extends BmobObject {
     private String userid;//用户属性关联建
     private List<Bag> bags;
 

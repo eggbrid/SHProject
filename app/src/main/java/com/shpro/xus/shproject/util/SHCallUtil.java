@@ -1,5 +1,7 @@
 package com.shpro.xus.shproject.util;
 
+import android.util.Log;
+
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.exceptions.HyphenateException;
@@ -11,6 +13,10 @@ import com.hyphenate.exceptions.HyphenateException;
 public class SHCallUtil  {
 
     public void toCall(final String userName,final CallBack callBack){
+        if ( EMClient.getInstance().isConnected()){
+            callBack.onSuccess();
+            return;
+        }
         EMClient.getInstance().login(userName.toLowerCase(),"123456",new EMCallBack() {//回调
             @Override
             public void onSuccess() {
@@ -26,6 +32,7 @@ public class SHCallUtil  {
 
             @Override
             public void onError(int code, String message) {
+                Log.e("wangxu",message);
                 if (code==204){
                     while (toCalls(userName));
                 }
@@ -34,6 +41,8 @@ public class SHCallUtil  {
         });
     }
     public  boolean toCalls(String userName){
+        Log.e("wangxu","toCalls");
+
         try {
             EMClient.getInstance().createAccount(userName.toLowerCase(), "123456");//同步方法
             return true;

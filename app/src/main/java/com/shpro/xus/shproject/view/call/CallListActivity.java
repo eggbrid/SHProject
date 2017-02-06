@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.call.CallPeople;
 import com.shpro.xus.shproject.bean.user.Account;
@@ -44,43 +45,65 @@ public class CallListActivity extends CallCommentActivity {
        new  SHCallUtil().toCall(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase(),new SHCallUtil.CallBack(){
 
            @Override
-           public void onSuccess() {
-               Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
-               Iterator it = conversations.entrySet().iterator();
-               while (it.hasNext()) {
-                   Map.Entry<String, EMConversation> entry = (Map.Entry<String, EMConversation>) it.next();
-                   CallPeople callPeople = new CallPeople();
-                   String key = entry.getKey().toString();
-                   if (entry.getValue().getLastMessage().getFrom().equals(TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase()))) {
-                       callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("toName", ""));
-                       callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("toAvatar", ""));
-                   } else {
-                       callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("fromName", ""));
-                       callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("fromAvatar", ""));
+           public void onSuccess() {runOnUiThread(new Runnable() {
+               @Override
+               public void run() {
+                   Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+                   Iterator it = conversations.entrySet().iterator();
+                   while (it.hasNext()) {
+                       Map.Entry<String, EMConversation> entry = (Map.Entry<String, EMConversation>) it.next();
+                       CallPeople callPeople = new CallPeople();
+                       String key = entry.getKey().toString();
+                       if (entry.getValue().getLastMessage().getFrom().equals(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase())) {
+                           callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("toName", ""));
+                           callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("toAvatar", ""));
+                       } else {
+                           callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("fromName", ""));
+                           callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("fromAvatar", ""));
+                       }
+                       callPeople.setUnRead(entry.getValue().getUnreadMsgCount());
+                       callPeople.setId(key);
+                       list.add(callPeople);
                    }
-                   callPeople.setUnRead(entry.getValue().getUnreadMsgCount());
-                   callPeople.setId(key);
-                   list.add(callPeople);
+                   adapter = new CallAdapter(CallListActivity.this, list);
+                   mainGrid = (GridView) findViewById(R.id.main_grid);
+                   mainGrid.setAdapter(adapter);
+                   setCommentTitleView("通讯器");
+                   mainGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                       @Override
+                       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                           Intent intent=new Intent(CallListActivity.this,CallDetailActivity.class);
+                           intent.putExtra("people",list.get(i));
+                            startActivity(intent);
+                       }
+                   });
                }
-               adapter = new CallAdapter(CallListActivity.this, list);
-               mainGrid = (GridView) findViewById(R.id.main_grid);
-               mainGrid.setAdapter(adapter);
-               setCommentTitleView("通讯器");
-               mainGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                   @Override
-                   public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                       Intent intent=new Intent(CallListActivity.this,CallDetailActivity.class);
-                       intent.putExtra("people",list.get(i));
-                   }
-               });
+           });
+
            }
 
            @Override
            public void onError() {
-               ToastUtil.makeTextShort(CallListActivity.this,"通讯器发出呲呲呲的声音...");
-               CallListActivity.this.finish();
+               runOnUiThread(new Runnable() {
+                   @Override
+                   public void run() {
+                       ToastUtil.makeTextShort(CallListActivity.this,"通讯器发出呲呲呲的声音...");
+                       CallListActivity.this.finish();
+                   }
+               });
+
            }
        });
+
+    }
+
+    @Override
+    public void onMessageRead(List<EMMessage> list) {
+
+    }
+
+    @Override
+    public void onMessageDelivered(List<EMMessage> list) {
 
     }
 }

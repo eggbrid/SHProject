@@ -55,7 +55,7 @@ public abstract class SHBaseAdapter<M, ViewHodler extends SHBaseViewHolder> exte
         ViewHodler holder;
         if (view == null) {
             view = getLayoutView(i,LayoutInflater.from(context), viewGroup);
-            holder = setViewHolder();
+            holder = setViewHolder(view);
             view.setTag(holder);
         } else {
             holder = (ViewHodler) view.getTag();
@@ -65,7 +65,7 @@ public abstract class SHBaseAdapter<M, ViewHodler extends SHBaseViewHolder> exte
 
     public abstract View getView(int i, View view, ViewGroup viewGroup, ViewHodler viewHodler);
 
-    public abstract <ViewHodler extends SHBaseViewHolder> ViewHodler setViewHolder();
+    public abstract <ViewHodler extends SHBaseViewHolder> ViewHodler setViewHolder(View view);
 
     public abstract View getLayoutView(int i,LayoutInflater inflater, ViewGroup viewGroup);
 }

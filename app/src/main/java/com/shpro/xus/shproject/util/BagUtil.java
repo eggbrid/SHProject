@@ -51,9 +51,9 @@ public class BagUtil {
             userBag.setBags(new ArrayList<Bag>());
         }
         userBag.getBags().add(b);
-        userBag.setUserid(BmobUser.getCurrentUser(Account.class).getUserid());
+        userBag.setUserid(BmobUser.getCurrentUser(Account.class).getObjectId());
         final UserBag f = userBag;
-        if (TextUtils.isEmpty(userBag.getObjectId())) {
+        if (!TextUtils.isEmpty(userBag.getObjectId())) {
             userBag.update(userBag.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException e) {

@@ -30,14 +30,19 @@ import cn.bmob.v3.BmobUser;
 public class CallDetailAdapter extends SHBaseAdapter<EMMessage, CallDetailAdapter.ViewHolder> {
     public String id = BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase();
     private String username;
-    public CallDetailAdapter(Context context, List<EMMessage> list,String userName){
-        super(context, list);
-        this.username=username;
 
+    public String getUsername() {
+        return username;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public CallDetailAdapter(Context context, List<EMMessage> list) {
         super(context, list);
     }
+
     public void noti(){
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
 //获取此会话的所有消息
@@ -82,14 +87,18 @@ public class CallDetailAdapter extends SHBaseAdapter<EMMessage, CallDetailAdapte
     }
 
     @Override
-    public CallDetailAdapter.ViewHolder setViewHolder() {
-        return new ViewHolder();
+    public CallDetailAdapter.ViewHolder setViewHolder(View root) {
+        return new ViewHolder(root);
     }
 
 
     public class ViewHolder extends SHBaseViewHolder {
         private TextView content;
         private ImageView avatar;
+
+        public ViewHolder(View root) {
+            super(root);
+        }
 
         @Override
         public void initView(View root) {

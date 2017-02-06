@@ -166,6 +166,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
                     creatBg( s);
 
                 } else {
+                    Log.e("wangxu",e.toString());
                     save();
                 }
             }

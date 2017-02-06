@@ -7,5 +7,9 @@ import android.view.View;
  */
 
 public abstract class SHBaseViewHolder {
+    public SHBaseViewHolder(View root) {
+        initView(root);
+    }
+
     public abstract void initView(View root);
 }

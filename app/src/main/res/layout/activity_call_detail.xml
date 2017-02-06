@@ -9,6 +9,7 @@
         layout="@layout/comment_head" />
 
     <ListView
+
         android:id="@+id/message_list"
         android:layout_width="match_parent"
         android:layout_marginLeft="10dp"
@@ -32,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/send"
+            android:textColor="@color/bg_6444"
             android:background="@color/white" />
 
         <Button

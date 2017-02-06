@@ -67,15 +67,7 @@ public abstract class CallCommentActivity extends CommentActivity implements EMC
         //收到透传消息
     }
 
-    @Override
-    public void onMessageReadAckReceived(List<EMMessage> messages) {
-        //收到已读回执
-    }
 
-    @Override
-    public void onMessageDeliveryAckReceived(List<EMMessage> message) {
-        //收到已送达回执
-    }
 
     @Override
     public void onMessageChanged(EMMessage message, Object change) {

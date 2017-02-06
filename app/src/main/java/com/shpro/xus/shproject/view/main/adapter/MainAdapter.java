@@ -10,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.Bag;
 import com.shpro.xus.shproject.bean.user.UserBag;
 import com.shpro.xus.shproject.util.CommentUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
+
+import java.util.List;
 
 /**
  * Created by xus on 2016/11/18.
@@ -21,15 +24,17 @@ import com.shpro.xus.shproject.util.ImageLoaderUtil;
 public class MainAdapter extends BaseAdapter {
     public Context context;
 
-    private UserBag userBag;
-
-    public UserBag getUserBag() {
-        return userBag;
+    public List<Bag> getBags() {
+        return bags;
     }
 
-    public void setUserBag(UserBag userBag) {
-        this.userBag = userBag;
+    public void setBags(List<Bag> bags) {
+        this.bags = bags;
     }
+
+    private List<Bag> bags ;
+
+
 
     public MainAdapter(Context context) {
         this.context = context;
@@ -61,9 +66,9 @@ public class MainAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) view.getTag();
         }
-        if (userBag.getBags().size()> i) {
-            viewHolder.name.setText(userBag.getBags().get(i).getName());
-            String icon=userBag.getBags().get(i).getIcon();
+        if (bags.size()> i) {
+            viewHolder.name.setText(bags.get(i).getName());
+            String icon=bags.get(i).getIcon();
             if (TextUtils.isEmpty(icon)){
                 viewHolder.icon.setImageResource(R.drawable.shpg_unno);
             }else if(icon.startsWith("http:")){

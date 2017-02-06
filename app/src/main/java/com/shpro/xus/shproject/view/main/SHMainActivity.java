@@ -20,6 +20,7 @@ import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
 import com.shpro.xus.shproject.view.find.FindPeopleActivity;
 import com.shpro.xus.shproject.view.main.adapter.MainAdapter;
+import com.shpro.xus.shproject.view.user.LoginActivity;
 import com.shpro.xus.shproject.view.views.BagDialog;
 
 import java.util.ArrayList;
@@ -74,7 +75,12 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
 
     public void reBag() {
         UserBag userBags = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(this) + "bag", UserBag.class);
-        adapter.setUserBag(userBags);
+        if(userBags==null){
+            bags=new ArrayList<>();
+        }else{
+            bags=userBags.getBags();
+        }
+        adapter.setBags(bags);
         mainGrid.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 //        BagDialog
@@ -88,17 +94,24 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
             public void done(UserBag userBag, BmobException e) {
                 if (e == null) {
                     ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(SHMainActivity.this) + "bag", userBag);
-                    bags = userBag.getBags();
                     reBag();
                 } else {
                     ToastUtil.makeTextShort(SHMainActivity.this, "哎呀！背包进入了异次元，重新打开app试试吧");
                 }
             }
         });
-
+        getUser();
 
     }
-
+    public void getUser() {
+        BmobQuery<User> query = new BmobQuery<User>();
+        query.getObject(BmobUser.getCurrentUser(Account.class).getUserid(), new QueryListener<User>() {
+            @Override
+            public void done(User user, BmobException e) {
+                    ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(SHMainActivity.this), user);
+            }
+        });
+    }
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         BagDialog bagDialog = new BagDialog(this, bags.get(i), new BagDialog.OnDialogChange() {

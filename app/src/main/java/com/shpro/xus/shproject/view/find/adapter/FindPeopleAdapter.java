@@ -39,8 +39,8 @@ public class FindPeopleAdapter extends SHBaseAdapter<User, FindPeopleAdapter.Vie
     }
 
     @Override
-    public FindPeopleAdapter.ViewHodler setViewHolder() {
-        return new ViewHodler();
+    public FindPeopleAdapter.ViewHodler setViewHolder(View root) {
+        return new ViewHodler(root);
     }
 
 
@@ -50,9 +50,15 @@ public class FindPeopleAdapter extends SHBaseAdapter<User, FindPeopleAdapter.Vie
         public ImageView sex;
         public ImageView avatar;
 
+        public ViewHodler(View root) {
+            super(root);
+        }
+
         @Override
         public void initView(View root) {
-
+            name=(TextView)root.findViewById(R.id.name);
+            sex=(ImageView)root.findViewById(R.id.sex);
+            avatar=(ImageView)root.findViewById(R.id.avatar);
         }
     }
 }

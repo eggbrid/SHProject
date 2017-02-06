@@ -14,7 +14,11 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.L;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
+import com.shpro.xus.shproject.util.AndroidIDUtil;
+import com.shpro.xus.shproject.view.user.UpdateUserAvtivity;
 
 import java.io.File;
 import java.util.Iterator;
@@ -102,5 +106,9 @@ public class APP extends Application {
             }
         }
         return processName;
+    }
+    public static User getUser(){
+       return ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(app),User.class);
+
     }
 }

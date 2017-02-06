@@ -29,8 +29,8 @@ public class CallAdapter extends SHBaseAdapter<CallPeople,CallAdapter.ViewHolder
     @Override
     public View getView(int i, View view, ViewGroup viewGroup, ViewHolder viewHolder) {
         ImageLoaderUtil.getInstance().loadCircleImage(list.get(i).getAvatar(),viewHolder.avatar);
-        viewHolder.name.setText(list.get(i).getName());
-        viewHolder.unRead.setText(list.get(i).getUnRead());
+        viewHolder.name.setText(list.get(i).getName()+"");
+        viewHolder.unRead.setText(list.get(i).getUnRead()+"");
         return view;
     }
 
@@ -42,8 +42,8 @@ public class CallAdapter extends SHBaseAdapter<CallPeople,CallAdapter.ViewHolder
 
 
     @Override
-    public SHBaseViewHolder setViewHolder() {
-        return new ViewHolder();
+    public SHBaseViewHolder setViewHolder(View root) {
+        return new ViewHolder(root);
     }
 
 
@@ -51,6 +51,11 @@ public class CallAdapter extends SHBaseAdapter<CallPeople,CallAdapter.ViewHolder
         protected ImageView avatar;
         protected TextView name;
         protected TextView unRead;
+
+        public ViewHolder(View root) {
+            super(root);
+        }
+
         @Override
         public void initView(View root) {
             avatar = (ImageView) root.findViewById(R.id.avatar);

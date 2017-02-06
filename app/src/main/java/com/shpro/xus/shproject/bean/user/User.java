@@ -8,7 +8,7 @@ import cn.bmob.v3.BmobObject;
 /**
  * Created by xus on 2016/11/9.
  */
-public class User extends SHBean {
+public class User extends BmobObject {
     private String type;
     private int sex;
     private Self self;
