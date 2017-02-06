@@ -17,7 +17,9 @@
         android:background="@color/white"
         android:layout_height="match_parent"
         android:layout_above="@+id/buttom"
-        android:layout_below="@+id/title" />
+        android:layout_below="@+id/title"
+        android:transcriptMode="alwaysScroll"
+    />
 
     <RelativeLayout
         android:id="@+id/buttom"

@@ -41,6 +41,14 @@ public class CallListActivity extends CallCommentActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (adapter!=null)
+        adapter.noity();
+
+    }
+
+    @Override
     public void initView() throws Exception {
        new  SHCallUtil().toCall(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase(),new SHCallUtil.CallBack(){
 
@@ -61,7 +69,8 @@ public class CallListActivity extends CallCommentActivity {
                            callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("fromName", ""));
                            callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("fromAvatar", ""));
                        }
-                       callPeople.setUnRead(entry.getValue().getUnreadMsgCount());
+                       EMConversation conversation = EMClient.getInstance().chatManager().getConversation(key);
+                       callPeople.setUnRead(  conversation.getUnreadMsgCount());
                        callPeople.setId(key);
                        list.add(callPeople);
                    }
@@ -97,13 +106,10 @@ public class CallListActivity extends CallCommentActivity {
 
     }
 
-    @Override
-    public void onMessageRead(List<EMMessage> list) {
-
-    }
 
     @Override
-    public void onMessageDelivered(List<EMMessage> list) {
+    public void onMessageReceived() {
+        adapter.noity();
 
     }
 }

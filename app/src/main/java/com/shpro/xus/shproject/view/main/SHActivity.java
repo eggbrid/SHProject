@@ -15,7 +15,6 @@ import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
-import com.shpro.xus.shproject.util.PushUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.BaseActivity;
 import com.shpro.xus.shproject.view.user.LoginActivity;
@@ -71,7 +70,6 @@ public class SHActivity extends BaseActivity {
         animationSet.addAnimation(animation_suofang);
         animationSet.addAnimation(rotateAnimation);
         if (BmobUser.getCurrentUser(Account.class) != null && (!TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid()))) {
-            PushUtil.getInstance().initPush(this);
             BmobQuery<User> query = new BmobQuery<User>();
             query.getObject(BmobUser.getCurrentUser(Account.class).getUserid(), new QueryListener<User>() {
 

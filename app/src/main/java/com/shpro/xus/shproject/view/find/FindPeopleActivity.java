@@ -118,7 +118,7 @@ public class FindPeopleActivity extends CommentActivity {
                         callPeople.setName(user.getName());
                         callPeople.setAvatar(user.getAvatar());
                         callPeople.setUnRead(0);
-                        callPeople.setId(user.getAccountId().toLowerCase());
+                        callPeople.setId(user.getObjectId().toLowerCase());
                         Intent intent = new Intent(FindPeopleActivity.this, CallDetailActivity.class);
                         intent.putExtra("people", callPeople);
                         startActivity(intent);

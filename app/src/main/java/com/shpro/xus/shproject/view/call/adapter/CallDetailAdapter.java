@@ -43,10 +43,10 @@ public class CallDetailAdapter extends SHBaseAdapter<EMMessage, CallDetailAdapte
         super(context, list);
     }
 
-    public void noti(){
+    public void noti() {
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
 //获取此会话的所有消息
-       this.list= conversation.getAllMessages();
+        this.list = conversation.getAllMessages();
 ////SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
 ////获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
 //        List<EMMessage> messages = conversation.loadMoreMsgFromDB(startMsgId, pagesize);
@@ -58,20 +58,35 @@ public class CallDetailAdapter extends SHBaseAdapter<EMMessage, CallDetailAdapte
         if (list.get(i).getFrom().equals(id)) {
             if (list.get(i).getBody() instanceof EMTextMessageBody) {
                 viewHolder.content.setText(((EMTextMessageBody) list.get(i).getBody()).getMessage());
-            }else{
+            } else {
                 viewHolder.content.setText("????未知信息????");
 
             }
 
         } else {
+            if (list.get(i).getFrom().equals("admin")) {
+                if (list.get(i).getBody() instanceof EMTextMessageBody) {
+                    viewHolder.content.setText("管理员 : " + ((EMTextMessageBody) list.get(i).getBody()).getMessage());
+                } else {
+                    viewHolder.content.setText("????未知信息????");
 
-            if (list.get(i).getBody() instanceof EMTextMessageBody) {
-                viewHolder.content.setText(list.get(i).getStringAttribute("fromName", "")+" : "+((EMTextMessageBody) list.get(i).getBody()).getMessage());
-            }else{
-                viewHolder.content.setText("????未知信息????");
+                }
+            } else {
+                if (list.get(i).getBody() instanceof EMTextMessageBody) {
+                    viewHolder.content.setText( ((EMTextMessageBody) list.get(i).getBody()).getMessage());
+                } else {
+                    viewHolder.content.setText("????未知信息????");
+                }
             }
+
+
         }
-        ImageLoaderUtil.getInstance().loadCircleImage(list.get(i).getStringAttribute("fromAvatar", ""), viewHolder.avatar);
+        if (list.get(i).getFrom().equals("admin")) {
+            viewHolder.avatar.setImageResource(R.drawable.icon);
+        } else {
+            ImageLoaderUtil.getInstance().loadCircleImage(list.get(i).getStringAttribute("fromAvatar", ""), viewHolder.avatar);
+
+        }
 
         return view;
     }

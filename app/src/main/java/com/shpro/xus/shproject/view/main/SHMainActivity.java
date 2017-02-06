@@ -114,6 +114,9 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
     }
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        if (i>=bags.size()){
+            return;
+        }
         BagDialog bagDialog = new BagDialog(this, bags.get(i), new BagDialog.OnDialogChange() {
             @Override
             public void onChagne() {

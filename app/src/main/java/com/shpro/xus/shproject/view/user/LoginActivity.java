@@ -12,7 +12,6 @@ import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.bean.user.UserBag;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
-import com.shpro.xus.shproject.util.PushUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.main.SHActivity;
 import com.shpro.xus.shproject.view.main.SHMainActivity;

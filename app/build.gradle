@@ -55,7 +55,7 @@ dependencies {
     //3.5.0：请务必查看下面注释[1]
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     //bmob-push：Bmob的推送包
-        compile 'cn.bmob.android:bmob-push:0.8'
+    compile 'cn.bmob.android:bmob-push:0.8'
     //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
     //    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
     //    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
@@ -69,9 +69,13 @@ dependencies {
     //https://github.com/Q42/AndroidScrollingImageView 会动的image
     compile files('libs/universal-image-loader-1.9.5.jar')
     compile 'me.grantland:autofittextview:0.2.+'
-//    compile files('libs/hyphenatechat_3.2.1.jar')
-
+    //    compile files('libs/hyphenatechat_3.2.1.jar')
     //Optional compile for GCM (Google Cloud Messaging).
+/*
     compile 'com.google.android.gms:play-services-gcm:9.4.0'
-    compile 'com.hyphenate:hyphenate-sdk:3.2.3'
+*/
+    compile files('libs/hyphenatechat_3.2.3.jar')
+    compile files('libs/MiPush_SDK_Client_2_2_19.jar')
+    compile files('libs/hyphenatechat_3.2.3.jar')
+    compile files('libs/google-play-services.jar')
 }
