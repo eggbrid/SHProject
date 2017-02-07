@@ -14,6 +14,7 @@ import com.shpro.xus.shproject.bean.call.CallPeople;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.view.main.adapter.SHBaseAdapter;
+import com.shpro.xus.shproject.view.main.adapter.SHBaseCallAdapter;
 import com.shpro.xus.shproject.view.main.adapter.SHBaseViewHolder;
 
 import java.util.Iterator;
@@ -26,7 +27,7 @@ import cn.bmob.v3.BmobUser;
  * Created by xus on 2016/12/2.
  */
 
-public class CallAdapter extends SHBaseAdapter<CallPeople,CallAdapter.ViewHolder> {
+public class CallAdapter extends SHBaseCallAdapter<CallPeople,CallAdapter.ViewHolder> {
 
     public CallAdapter(Context context, List list) {
         super(context, list);
@@ -53,6 +54,7 @@ public void noity(){
         callPeople.setId(key);
         list.add(callPeople);
     }
+    notifyDataSetChanged();
 }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup, ViewHolder viewHolder) {

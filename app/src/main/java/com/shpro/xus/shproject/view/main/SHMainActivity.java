@@ -1,6 +1,7 @@
 package com.shpro.xus.shproject.view.main;
 
 import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
 import com.shpro.xus.shproject.view.find.FindPeopleActivity;
+import com.shpro.xus.shproject.view.gone.NumViewActivity;
 import com.shpro.xus.shproject.view.main.adapter.MainAdapter;
 import com.shpro.xus.shproject.view.user.LoginActivity;
 import com.shpro.xus.shproject.view.views.BagDialog;
@@ -40,7 +42,14 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
     protected GridView mainGrid;
     private MainAdapter adapter;
     private List<Bag> bags;
-
+   long[] mHints = new long[5];
+    public void onDisplaySettingButton(View view) {
+        System.arraycopy(mHints, 1, mHints, 0, mHints.length - 1);//把从第二位至最后一位之间的数字复制到第一位至倒数第一位
+        mHints[mHints.length - 1] = SystemClock.uptimeMillis();//从开机到现在的时间毫秒数
+        if (SystemClock.uptimeMillis() - mHints[0] <= 1000) {//连续点击之间间隔小于一秒，有效
+            startActivity(new Intent(this, NumViewActivity.class));
+        }
+    }
     @Override
     public int setContentView() {
         return R.layout.sh_main_activity;
@@ -63,6 +72,7 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
         mainGrid.setOnItemClickListener(this);
         right.setOnClickListener(this);
         left.setOnClickListener(this);
+        titleText.setOnClickListener(this);
         getBgaList();
 
     }
@@ -135,6 +145,9 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
                 startActivity(intent);
                 break;
             case R.id.right:
+                break;
+            case R.id.title_text:
+                onDisplaySettingButton(view);
                 break;
         }
     }

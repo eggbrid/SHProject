@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jph.takephoto.app.TakePhoto;
@@ -23,10 +24,13 @@ import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.interfaces.views.RefreshListener;
 import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
 import com.shpro.xus.shproject.util.FileUtil;
 import com.shpro.xus.shproject.view.views.PhotoDialog;
 import com.shpro.xus.shproject.view.views.ProLoadingDialog;
+import com.shpro.xus.shproject.view.views.RefreshLayout;
+import com.shpro.xus.shproject.view.views.RefreshLayoutFooter;
 import com.wilddog.client.SyncReference;
 
 import java.io.File;
@@ -205,6 +209,62 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
             proLoadingDialog.dismiss();
         }
     }
+public void setRefresh(final RefreshLayout mRefreshLayout,final ListView mListView,boolean isautoRefresh, boolean isopenLoad,final RefreshListener refreshListener){
+    mRefreshLayout.setChildView(mListView, isopenLoad);
+    mRefreshLayout.setColorSchemeResources(R.color.black,
+            R.color.white);
+
+    //使用SwipeRefreshLayout的下拉刷新监听
+    //use SwipeRefreshLayout OnRefreshListener
+    mRefreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            if (refreshListener != null) {
+                refreshListener.onRefresh();
+            }
+        }
+    });
+
+    //使用自定义的RefreshLayout加载更多监听
+    //use customed RefreshLayout OnLoadListener
+    mRefreshLayout.setOnLoadListener(new RefreshLayout.OnLoadListener() {
+        @Override
+        public void onLoad() {
+            mRefreshLayout.getRefreshLayoutFooter().closefooter();
+            if (refreshListener != null) {
+                refreshListener.onLoadMore();
+            }
+        }
+    });
+
+    if (isautoRefresh) {
+
+        mRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(true);
+                if (refreshListener != null) {
+                    refreshListener.onRefresh();
+                }
+            }
+        });
+    }
+}
+
+   public  void stopRefresh(final RefreshLayout mRefreshLayout,boolean isNoData){
+        if (mRefreshLayout == null)
+            return;
+        mRefreshLayout.setRefreshing(false);
+        mRefreshLayout.setLoading(false);
+        RefreshLayoutFooter refreshLayoutFooter = mRefreshLayout.getRefreshLayoutFooter();
+        if (refreshLayoutFooter != null) {
+            refreshLayoutFooter.setViewVis();
+            refreshLayoutFooter.openfooter();
+        }
+        mRefreshLayout.setNoData(isNoData);
+    }
+
+
 
     public void addPush() {
 

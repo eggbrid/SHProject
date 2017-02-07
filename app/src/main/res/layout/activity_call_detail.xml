@@ -8,18 +8,21 @@
         android:id="@+id/title"
         layout="@layout/comment_head" />
 
-    <ListView
-
-        android:id="@+id/message_list"
+    <com.shpro.xus.shproject.view.views.RefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:background="@color/white"
         android:layout_height="match_parent"
         android:layout_above="@+id/buttom"
-        android:layout_below="@+id/title"
-        android:transcriptMode="alwaysScroll"
-    />
+        android:layout_below="@+id/title">
+        <ListView
+            android:id="@+id/message_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:transcriptMode="alwaysScroll" />
+    </com.shpro.xus.shproject.view.views.RefreshLayout>
 
     <RelativeLayout
         android:id="@+id/buttom"
@@ -35,8 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/send"
-            android:textColor="@color/bg_6444"
-            android:background="@color/white" />
+            android:background="@color/white"
+            android:textColor="@color/bg_6444" />
 
         <Button
             android:id="@+id/send"

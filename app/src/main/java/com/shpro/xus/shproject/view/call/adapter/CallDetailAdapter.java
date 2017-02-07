@@ -17,6 +17,7 @@ import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.view.main.adapter.SHBaseAdapter;
+import com.shpro.xus.shproject.view.main.adapter.SHBaseCallAdapter;
 import com.shpro.xus.shproject.view.main.adapter.SHBaseViewHolder;
 
 import java.util.List;
@@ -27,7 +28,7 @@ import cn.bmob.v3.BmobUser;
  * Created by xus on 2016/12/3.
  */
 
-public class CallDetailAdapter extends SHBaseAdapter<EMMessage, CallDetailAdapter.ViewHolder> {
+public class CallDetailAdapter extends SHBaseCallAdapter<EMMessage, CallDetailAdapter.ViewHolder> {
     public String id = BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase();
     private String username;
 
@@ -45,11 +46,13 @@ public class CallDetailAdapter extends SHBaseAdapter<EMMessage, CallDetailAdapte
 
     public void noti() {
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
-//获取此会话的所有消息
         this.list = conversation.getAllMessages();
+//获取此会话的所有消息
 ////SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
 ////获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
-//        List<EMMessage> messages = conversation.loadMoreMsgFromDB(startMsgId, pagesize);
+        if (list!=null&&list.size()>0){
+            this.list.addAll(0,conversation.loadMoreMsgFromDB(list.get(list.size() - 1).getMsgId(), 20));
+        }
         notifyDataSetChanged();
     }
 
@@ -73,7 +76,7 @@ public class CallDetailAdapter extends SHBaseAdapter<EMMessage, CallDetailAdapte
                 }
             } else {
                 if (list.get(i).getBody() instanceof EMTextMessageBody) {
-                    viewHolder.content.setText( ((EMTextMessageBody) list.get(i).getBody()).getMessage());
+                    viewHolder.content.setText(((EMTextMessageBody) list.get(i).getBody()).getMessage());
                 } else {
                     viewHolder.content.setText("????未知信息????");
                 }

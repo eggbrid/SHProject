@@ -6,6 +6,7 @@
     <dimen name="comment_edit_size">16sp</dimen>
 <dimen name="comment_text">20sp</dimen>
     <dimen name="comment_text_sm">14sp</dimen>
+    <dimen name="comment_list_padding">10dp</dimen>
 
     <dimen name="comment_m_top">20dp</dimen>
     <dimen name="comment_m_left">10dp</dimen>

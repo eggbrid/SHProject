@@ -18,6 +18,7 @@ import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
+import com.shpro.xus.shproject.util.SntpTime;
 import com.shpro.xus.shproject.view.user.UpdateUserAvtivity;
 
 import java.io.File;
@@ -50,11 +51,12 @@ public class APP extends Application {
         Bmob.initialize(this, "71c81ce12d70f8e9415d6c86d62d5a65");
         // 初始化BmobSDK
         // 使用推送服务时的初始化操作
-        BmobInstallation.getCurrentInstallation().save();
+//        BmobInstallation.getCurrentInstallation().save();
         // 启动推送服务
-        BmobPush.startWork(this);
+//        BmobPush.startWork(this);
         initImageLoader();
         initHX();
+        new SntpTime().getNetTime();
     }
     public void initImageLoader() {
         String filePath = "Android/data/com.shpro.xus.shproject/files/cache/img/";//Environment.getExternalStorageDirectory() + "/Android/data/" + instance.getPackageName() + "/cache/";

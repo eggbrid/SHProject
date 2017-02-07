@@ -11,6 +11,9 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        ndk{
+            moduleName "MyJni"
+        }
 
     }
     sourceSets {
@@ -78,4 +81,7 @@ dependencies {
     compile files('libs/MiPush_SDK_Client_2_2_19.jar')
     compile files('libs/hyphenatechat_3.2.3.jar')
     compile files('libs/google-play-services.jar')
+    compile 'com.xw.repo:PullToRefresh:2.1@aar'
+    compile 'com.victor:lib:1.0.4'
+
 }

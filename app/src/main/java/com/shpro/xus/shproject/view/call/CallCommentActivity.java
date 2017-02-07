@@ -25,7 +25,12 @@ public abstract class CallCommentActivity extends CommentActivity implements EMC
         public void onMessageReceived(List<EMMessage> messages) {
             //收到消息
             Log.e("wangxu", messages.size() + "");
-            CallCommentActivity.this.onMessageReceived();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    CallCommentActivity.this.onMessageReceived();
+                }
+            });
 
         }
 

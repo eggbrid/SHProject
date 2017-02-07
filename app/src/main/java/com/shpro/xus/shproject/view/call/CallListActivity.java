@@ -2,6 +2,7 @@ package com.shpro.xus.shproject.view.call;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -19,10 +20,13 @@ import com.shpro.xus.shproject.util.SHCallUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.call.adapter.CallAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import cn.bmob.v3.BmobUser;
 
@@ -35,9 +39,16 @@ public class CallListActivity extends CallCommentActivity {
     private List<CallPeople> list = new ArrayList<>();
     private CallAdapter adapter;
 
+    static {
+        System.loadLibrary("MyJni");//导入生成的链接库文件
+    }
+    public native String getStringFromNative();//本地方法
+    public native String getString_From_c();
     @Override
     public int setContentView() {
+
         return R.layout.activity_call_list;
+
     }
 
     @Override
@@ -109,7 +120,8 @@ public class CallListActivity extends CallCommentActivity {
 
     @Override
     public void onMessageReceived() {
-        adapter.noity();
+        if (adapter!=null)
+            adapter.noity();
 
     }
 }

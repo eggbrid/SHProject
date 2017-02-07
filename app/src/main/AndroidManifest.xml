@@ -231,6 +231,10 @@
         <activity android:name=".view.find.FindPeopleActivity"/>
         <activity android:name=".view.call.CallListActivity"/>
         <activity android:name=".view.call.CallDetailActivity"/>
+        <activity android:name=".view.gone.NumViewActivity"/>
+        <activity android:name=".view.gone.TimeViewActivity"/>
+        <activity android:name=".view.gone.WifiViewActivity"/>
+
     </application>
 
 </manifest>

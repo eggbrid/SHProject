@@ -73,7 +73,8 @@ public class BagDialog extends Dialog implements View.OnClickListener {
 
         } else if (view.getId() == R.id.d) {
             final UserBag userBags = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(context) + "bag", UserBag.class);
-            for (Bag b : userBags.getBags()) {
+            for (int i=0;i<=userBags.getBags().size()-1;i++){
+                Bag b=userBags.getBags().get(i);
                 if (b.getActionInfo().equals(bag.getActionInfo()) && b.getName().equals(bag.getName()) && b.getIcon().equals(bag.getIcon())) {
                     userBags.getBags().remove(b);
                 }

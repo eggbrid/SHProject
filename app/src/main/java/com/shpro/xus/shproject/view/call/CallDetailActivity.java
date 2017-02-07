@@ -16,8 +16,10 @@ import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.call.CallPeople;
 import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.interfaces.views.RefreshListener;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.call.adapter.CallDetailAdapter;
+import com.shpro.xus.shproject.view.views.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ import java.util.List;
  * Created by xus on 2016/12/2.
  */
 
-public class CallDetailActivity extends CallCommentActivity implements View.OnClickListener {
+public class CallDetailActivity extends CallCommentActivity implements View.OnClickListener,RefreshListener {
     protected ListView messageList;
     protected Button send;
     protected RelativeLayout buttom;
@@ -34,6 +36,7 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
     private CallDetailAdapter adapter;
     private CallPeople callPeople;
     private User user;
+    private RefreshLayout swipeContainer;
 
     @Override
     public int setContentView() {
@@ -46,25 +49,15 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
 
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
 //指定会话消息未读数清零
-        conversation.markAllMessagesAsRead();    }
+        conversation.markAllMessagesAsRead();
+    }
 
     @Override
     public void initView() throws Exception {
         user = APP.getUser();
         callPeople = (CallPeople) getIntent().getSerializableExtra("people");
         setCommentTitleView(callPeople.getName());
-        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
-        List<EMMessage> list;
-        try {
-            list = conversation.getAllMessages();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            list = new ArrayList<>();
-        }
-        if (list == null) {
-            list = new ArrayList<>();
-        }
+        List<EMMessage> list = new ArrayList<>();
         adapter = new CallDetailAdapter(this, list);
         adapter.setUsername(callPeople.getId());
         messageList = (ListView) findViewById(R.id.message_list);
@@ -74,7 +67,13 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
         buttom.setOnClickListener(CallDetailActivity.this);
         messageList.setAdapter(adapter);
         contentText = (EditText) findViewById(R.id.content_text);
-
+        swipeContainer= (RefreshLayout) findViewById(R.id.swipe_container);
+        adapter.noti();
+        messageList.setSelection(adapter.getCount() - 1);
+        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
+//指定会话消息未读数清零
+        conversation.markAllMessagesAsRead();
+        setRefresh(swipeContainer,messageList,false,false,this);
     }
 
     @Override
@@ -85,14 +84,11 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
             } else {
 //发送消息
                 EMMessage message = EMMessage.createTxtSendMessage(contentText.getText().toString(), callPeople.getId());
-//              EMMessage message = EMMessage.createTxtSendMessage(contentText.getText().toString(),"923f9f90a4");
-
-
                 message.setChatType(EMMessage.ChatType.Chat);
-                message.setAttribute("fromName",user.getName());
-                message.setAttribute("fromAvatar",user.getAvatar());
-                message.setAttribute("toName",callPeople.getName());
-                message.setAttribute("toAvatar",callPeople.getAvatar());
+                message.setAttribute("fromName", user.getName());
+                message.setAttribute("fromAvatar", user.getAvatar());
+                message.setAttribute("toName", callPeople.getName());
+                message.setAttribute("toAvatar", callPeople.getAvatar());
                 try {
                     EMChatManager manager = EMClient.getInstance().chatManager();
                     manager.sendMessage(message);
@@ -110,5 +106,24 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
     @Override
     public void onMessageReceived() {
         adapter.noti();
+        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
+//指定会话消息未读数清零
+        conversation.markAllMessagesAsRead();
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRefresh() {
+        EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
+        if (adapter.getList()!=null&&adapter.getList().size()>0){
+            List<EMMessage>  list=   conversation.loadMoreMsgFromDB(adapter.getList().get(0).getMsgId(), 20);
+            adapter.getList().addAll(0,list);
+        }
+        adapter.notifyDataSetChanged();
+        stopRefresh(swipeContainer,true);
     }
 }
