@@ -49,7 +49,7 @@ public void noity(){
             callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("fromAvatar", ""));
         }
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(key);
-      ;
+
         callPeople.setUnRead(  conversation.getUnreadMsgCount());
         callPeople.setId(key);
         list.add(callPeople);

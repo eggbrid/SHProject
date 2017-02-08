@@ -69,7 +69,7 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
         contentText = (EditText) findViewById(R.id.content_text);
         swipeContainer= (RefreshLayout) findViewById(R.id.swipe_container);
         adapter.noti();
-        messageList.setSelection(adapter.getCount() - 1);
+        messageList.setSelection(adapter.getCount()  );
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
 //指定会话消息未读数清零
         conversation.markAllMessagesAsRead();
@@ -97,6 +97,8 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
                 }
                 contentText.setText("");
                 adapter.noti();
+                messageList.setSelection(adapter.getCount()  );
+
             }
 
         }
@@ -106,6 +108,8 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
     @Override
     public void onMessageReceived() {
         adapter.noti();
+        messageList.setSelection(adapter.getCount()  );
+
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
 //指定会话消息未读数清零
         conversation.markAllMessagesAsRead();
@@ -115,15 +119,23 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
     public void onLoadMore() {
 
     }
-
+    int pos=0;
     @Override
     public void onRefresh() {
+
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
         if (adapter.getList()!=null&&adapter.getList().size()>0){
             List<EMMessage>  list=   conversation.loadMoreMsgFromDB(adapter.getList().get(0).getMsgId(), 20);
+            pos=list.size();
             adapter.getList().addAll(0,list);
         }
         adapter.notifyDataSetChanged();
+        messageList.post(new Runnable() {
+            @Override
+            public void run() {
+                messageList.setSelection(pos);
+            }
+        });
         stopRefresh(swipeContainer,true);
     }
 }

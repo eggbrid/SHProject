@@ -32,6 +32,7 @@ public class Self extends People {
         self.lucky= self.lucky+st.getLucky();
         self.strive= self.strive+st.getStrive();
         self.sh= self.sh+st.getSh();
+        self.id=st.getType();
         return self;
     }
 }

@@ -7,7 +7,7 @@ import com.shpro.xus.shproject.bean.SHBean;
  */
 
 public abstract class People extends SHBean {
-    private int id;
+    public int id;
     public int lucky;//幸运值
     public int strive;//努力值
     public int sh;//山海值

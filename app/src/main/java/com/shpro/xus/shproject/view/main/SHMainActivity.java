@@ -19,6 +19,7 @@ import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
+import com.shpro.xus.shproject.view.find.FindActivity;
 import com.shpro.xus.shproject.view.find.FindPeopleActivity;
 import com.shpro.xus.shproject.view.gone.NumViewActivity;
 import com.shpro.xus.shproject.view.main.adapter.MainAdapter;
@@ -141,7 +142,7 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
         super.onClick(view);
         switch (view.getId()){
             case R.id.left:
-                Intent intent=new Intent(this, FindPeopleActivity.class);
+                Intent intent=new Intent(this, FindActivity.class);
                 startActivity(intent);
                 break;
             case R.id.right:

@@ -21,7 +21,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/white"
-            android:transcriptMode="alwaysScroll" />
+            android:transcriptMode="normal" />
     </com.shpro.xus.shproject.view.views.RefreshLayout>
 
     <RelativeLayout

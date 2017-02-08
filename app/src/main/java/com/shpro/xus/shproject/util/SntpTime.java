@@ -10,12 +10,9 @@ import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by xus on 2017/2/7.

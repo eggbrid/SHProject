@@ -166,7 +166,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
                     creatBg( s);
 
                 } else {
-                    Log.e("wangxu",e.toString());
+                    Log.e("wangxu",e.toString()+"重复执行操作save()");
                     save();
                 }
             }
@@ -192,6 +192,7 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
                         updateAccount(id,s);
 
                     } else {
+                        Log.e("wangxu","重复执行操作creatBg");
                         creatBg(id );
                     }
                 }
@@ -212,8 +213,9 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
                     Intent intent = new Intent(UpdateUserAvtivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     UpdateUserAvtivity.this.startActivity(intent);
                 } else {
-                    Log.e("wangxu",e.toString());
+                    Log.e("wangxu",e.toString()+"重复执行操作updateAccount");
                     updateAccount(id,pgId);
+
                 }
             }
         });

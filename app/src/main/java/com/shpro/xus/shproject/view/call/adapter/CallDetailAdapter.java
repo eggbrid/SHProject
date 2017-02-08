@@ -50,8 +50,10 @@ public class CallDetailAdapter extends SHBaseCallAdapter<EMMessage, CallDetailAd
 //获取此会话的所有消息
 ////SDK初始化加载的聊天记录为20条，到顶时需要去DB里获取更多
 ////获取startMsgId之前的pagesize条消息，此方法获取的messages SDK会自动存入到此会话中，APP中无需再次把获取到的messages添加到会话中
-        if (list!=null&&list.size()>0){
-            this.list.addAll(0,conversation.loadMoreMsgFromDB(list.get(list.size() - 1).getMsgId(), 20));
+        if (list != null && list.size() > 0) {
+            List<EMMessage> mlist = conversation.loadMoreMsgFromDB(list.get(list.size() - 1).getMsgId(), 19);
+            mlist.add(list.get(list.size() - 1));
+            this.list = mlist;
         }
         notifyDataSetChanged();
     }

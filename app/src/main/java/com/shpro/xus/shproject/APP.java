@@ -19,15 +19,12 @@ import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.SntpTime;
-import com.shpro.xus.shproject.view.user.UpdateUserAvtivity;
 
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
-import cn.bmob.push.BmobPush;
 import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobInstallation;
 
 /**
  * Created by xus on 2016/11/8.

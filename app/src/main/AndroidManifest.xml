@@ -168,7 +168,7 @@
         </receiver>
 
 
-        <service
+       <!-- <service
             android:label="PushService"
             android:name="cn.bmob.push.lib.service.PushService"
             android:process=":bmobpush"
@@ -181,27 +181,27 @@
 
         <receiver android:name="cn.bmob.push.PushReceiver" >
             <intent-filter>
-                <!-- 系统启动完成后会调用 -->
+                &lt;!&ndash; 系统启动完成后会调用 &ndash;&gt;
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <!-- 解锁完成后会调用 -->
+                &lt;!&ndash; 解锁完成后会调用 &ndash;&gt;
                 <action android:name="android.intent.action.USER_PRESENT" />
-                <!-- 监听网络连通性 -->
+                &lt;!&ndash; 监听网络连通性 &ndash;&gt;
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
 
-        <!-- 第四部中创建的消息接收器，在这里进行注册 -->
+        &lt;!&ndash; 第四部中创建的消息接收器，在这里进行注册 &ndash;&gt;
         <receiver android:name="com.shpro.xus.shproject.reciver.MyPushMessageReceiver">
             <intent-filter >
                 <action android:name="cn.bmob.push.action.MESSAGE"/>
             </intent-filter>
-        </receiver>
+        </receiver>-->
 
 
-        <activity android:name=".view.main.MainActivity">
+        <activity android:screenOrientation="portrait" android:name=".view.main.MainActivity">
 
         </activity>
-        <activity android:name=".view.main.SHActivity">
+        <activity android:screenOrientation="portrait" android:name=".view.main.SHActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -220,21 +220,22 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".view.user.LoginActivity" />
-        <activity android:name=".view.user.RegActivity" />
-        <activity android:name=".view.other.ImageActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.user.LoginActivity" />
+        <activity android:screenOrientation="portrait" android:name=".view.user.RegActivity" />
+        <activity android:screenOrientation="portrait" android:name=".view.other.ImageActivity"/>
 
 
-        <activity android:name=".view.main.SHMainActivity" />
-        <activity android:name=".view.user.UpdateUserAvtivity"/>
-        <activity android:name=".view.main.HelpActivity" />
-        <activity android:name=".view.find.FindPeopleActivity"/>
-        <activity android:name=".view.call.CallListActivity"/>
-        <activity android:name=".view.call.CallDetailActivity"/>
-        <activity android:name=".view.gone.NumViewActivity"/>
-        <activity android:name=".view.gone.TimeViewActivity"/>
-        <activity android:name=".view.gone.WifiViewActivity"/>
-
+        <activity android:screenOrientation="portrait" android:name=".view.main.SHMainActivity" />
+        <activity android:screenOrientation="portrait" android:name=".view.user.UpdateUserAvtivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.main.HelpActivity" />
+        <activity android:screenOrientation="portrait" android:name=".view.find.FindPeopleActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.call.CallListActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.call.CallDetailActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.gone.NumViewActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.gone.TimeViewActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.gone.WifiViewActivity"/>
+<activity android:name=".view.find.FindActivity"/>
+        <activity android:screenOrientation="portrait" android:name=".view.find.FindBagActivity"/>
     </application>
 
 </manifest>
