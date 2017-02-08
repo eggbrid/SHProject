@@ -1,14 +1,28 @@
 package com.shpro.xus.shproject.view.find;
 
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.Bag;
+import com.shpro.xus.shproject.bean.response.find.FindBagItem;
+import com.shpro.xus.shproject.bean.response.find.FindBagResponse;
+import com.shpro.xus.shproject.bean.user.Account;
+import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.db.cache.ACacheUtil;
+import com.shpro.xus.shproject.util.AndroidIDUtil;
+import com.shpro.xus.shproject.util.HttpCloudUtil;
+import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
+import com.shpro.xus.shproject.view.views.BagShowDialog;
 import com.shpro.xus.shproject.view.views.TaiJiView;
 import com.skyfishjy.library.RippleBackground;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import cn.bmob.v3.BmobUser;
 
 /**
  * Created by xus on 2017/2/8.
@@ -38,11 +52,33 @@ public class FindBagActivity extends CommentActivity implements View.OnClickList
         if (view.getId() == R.id.centerImage) {
             content.startRippleAnimation();
             centerImage.start();
-            new Thread(new Runnable() {
+            Map<String,String> p=new HashMap<>();
+            p.put("userId", BmobUser.getCurrentUser(Account.class).getUserid());
+            User user=   ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(FindBagActivity.this), User.class);
+            p.put("lucky", user.getSelf().lucky+"");
+            HttpCloudUtil.post(p, "findBag",FindBagResponse.class, new HttpCloudUtil.OnMessageGet<FindBagItem>() {
+
+                @Override
+                public void onSuccess(List<FindBagItem> s) {
+                    stop(s.get(0),null,false);
+
+                }
+
+                @Override
+                public void onError(String s) {
+                    stop(null,s,true);
+                }
+            });
+
+        }
+    }
+
+    public void stop(final FindBagItem fbi, final String s , final boolean isError){
+                    new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -51,11 +87,25 @@ public class FindBagActivity extends CommentActivity implements View.OnClickList
                         public void run() {
                             content.stopRippleAnimation();
                             centerImage.stop();
+                            if (isError){
+                                ToastUtil.makeTextShort(FindBagActivity.this,s);
+                                Log.e("wangxu",s);
+                            }else{
+                                Bag bag=new Bag();
+                                bag.setInfo(fbi.getInfo());
+                                bag.setName(fbi.getName());
+                                bag.setAction(fbi.getAction());
+                                bag.setActionInfo(fbi.getActionInfo());
+                                bag.setIcon(fbi.getIcon());
+                                bag.setOther(fbi.getOther());
+                                BagShowDialog bagShowDialog=new BagShowDialog(FindBagActivity.this,bag);
+                                bagShowDialog.show();
+                            }
                         }
                     });
 
                 }
             }).start();
-        }
     }
+
 }

@@ -1,17 +1,19 @@
 package com.shpro.xus.shproject.bean.response;
 
+import java.util.List;
+
 /**
  * Created by xus on 2017/2/8.
  */
 
-public class TResponse<T extends BaseResponse> extends Response {
-    private T msg;
+public class TResponse<T> extends Response {
+    private List<T> results;
 
-    public void setMsg(T msg) {
-        this.msg = msg;
+    public List<T> getResults() {
+        return results;
     }
 
-    public T getMsg() {
-        return msg;
+    public void setResults(List<T> results) {
+        this.results = results;
     }
 }
