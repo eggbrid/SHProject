@@ -2,6 +2,7 @@ package com.shpro.xus.shproject.view.user;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -127,6 +128,7 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
                     Intent intent = new Intent(LoginActivity.this, SHMainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     LoginActivity.this.startActivity(intent);
                 } else {
+                    Log.e("wangxu",e.toString());
                     ToastUtil.makeTextShort(LoginActivity.this, "哎呀！登录失败了呢");
                 }
             }

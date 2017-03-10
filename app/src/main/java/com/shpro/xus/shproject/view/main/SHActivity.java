@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
@@ -79,6 +80,7 @@ public class SHActivity extends BaseActivity {
                         ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(SHActivity.this), object);
                         going();
                     } else {
+                        Log.e("wangxu",e.toString());
                         ToastUtil.makeTextShort(SHActivity.this, "加载失败了！");
                     }
                 }
