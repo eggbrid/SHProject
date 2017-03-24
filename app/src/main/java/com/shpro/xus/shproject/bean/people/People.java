@@ -12,4 +12,5 @@ public abstract class People extends SHBean {
     public int strive;//努力值
     public int sh;//山海值
     public int lv;//等级
+    public long experience;//经验
 }

@@ -21,6 +21,14 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+
+        lintOptions {
+            checkReleaseBuilds false
+            // Or, if you prefer, you can continue to check for errors in release builds,
+            // but continue the build even when errors are found:
+            abortOnError false
+        }
+
     dexOptions {
         javaMaxHeapSize "6g"
     }
@@ -45,7 +53,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.android.support:appcompat-v7:25.+'
     compile files('libs/TencentLocationSDK_v4.5.8.jar')
-    compile files('libs/TencentMapSDK_Raster_v1.2.4_4af1d6f.jar')
     compile 'com.wilddog.client:wilddog-sync-android:2.0.2'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.wilddog.client:wilddog-auth-android:2.0.3'
@@ -58,7 +65,7 @@ dependencies {
     //3.5.0：请务必查看下面注释[1]
     compile 'cn.bmob.android:bmob-sdk:3.5.0'
     //bmob-push：Bmob的推送包
-//    compile 'cn.bmob.android:bmob-push:0.8'
+    //    compile 'cn.bmob.android:bmob-push:0.8'
     //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
     //    compile 'cn.bmob.android:bmob-im:2.0.5@aar'
     //    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
@@ -74,9 +81,9 @@ dependencies {
     compile 'me.grantland:autofittextview:0.2.+'
     //    compile files('libs/hyphenatechat_3.2.1.jar')
     //Optional compile for GCM (Google Cloud Messaging).
-/*
-    compile 'com.google.android.gms:play-services-gcm:9.4.0'
-*/
+    /*
+            compile 'com.google.android.gms:play-services-gcm:9.4.0'
+        */
     compile files('libs/hyphenatechat_3.2.3.jar')
     compile files('libs/MiPush_SDK_Client_2_2_19.jar')
     compile files('libs/hyphenatechat_3.2.3.jar')
@@ -84,4 +91,6 @@ dependencies {
     compile 'com.xw.repo:PullToRefresh:2.1@aar'
     compile 'com.victor:lib:1.0.4'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
+    compile files('libs/TencentMapSDK_Vector_v_3.0.6.jar')
+    compile files('libs/TencentmapVectorUtils_v1.0.1.59c4f8a.jar')
 }

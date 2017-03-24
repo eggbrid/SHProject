@@ -94,10 +94,10 @@ public class SHActivity extends BaseActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                taiji.startAnimation(animationSet);
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+//                taiji.startAnimation(animationSet);
+//                handler.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
                         SHActivity.this.finish();
                         if (BmobUser.getCurrentUser(Account.class) != null) {
                             if (TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())) {
@@ -112,8 +112,8 @@ public class SHActivity extends BaseActivity {
                             SHActivity.this.startActivity(new Intent(SHActivity.this, LoginActivity.class));
                             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                         }
-                    }
-                }, 2500);
+//                    }
+//                }, 2500);
             }
         }, 1000);
     }

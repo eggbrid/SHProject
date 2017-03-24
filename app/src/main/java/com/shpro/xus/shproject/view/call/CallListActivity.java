@@ -39,11 +39,11 @@ public class CallListActivity extends CallCommentActivity {
     private List<CallPeople> list = new ArrayList<>();
     private CallAdapter adapter;
 
-    static {
-        System.loadLibrary("MyJni");//导入生成的链接库文件
-    }
-    public native String getStringFromNative();//本地方法
-    public native String getString_From_c();
+//    static {
+//        System.loadLibrary("MyJni");//导入生成的链接库文件
+//    }
+//    public native String getStringFromNative();//本地方法
+//    public native String getString_From_c();
     @Override
     public int setContentView() {
 

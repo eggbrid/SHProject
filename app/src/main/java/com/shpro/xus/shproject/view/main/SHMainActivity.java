@@ -146,6 +146,8 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
                 startActivity(intent);
                 break;
             case R.id.right:
+                Intent intent2=new Intent(this, MainActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.title_text:
                 onDisplaySettingButton(view);
