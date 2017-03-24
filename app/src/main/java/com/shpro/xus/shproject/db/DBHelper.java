@@ -38,13 +38,13 @@ public class DBHelper {
         }
         return dBHelper;
     }
-
-    public void createUser(User accounts) throws SQLException {
-        self.delete(self.queryForAll());
-        self.create(accounts.getSelf());
-        user.delete(user.queryForAll());
-        user.create(accounts);
-    }
+//
+//    public void createUser(User accounts) throws SQLException {
+//        self.delete(self.queryForAll());
+//        self.create(accounts.getSelf());
+//        user.delete(user.queryForAll());
+//        user.create(accounts);
+//    }
     public void delectUser(User accounts) throws SQLException {
         user.delete(user.queryForAll());
     }

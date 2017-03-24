@@ -55,7 +55,7 @@ public class FindBagActivity extends CommentActivity implements View.OnClickList
             Map<String,String> p=new HashMap<>();
             p.put("userId", BmobUser.getCurrentUser(Account.class).getUserid());
             User user=   ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(FindBagActivity.this), User.class);
-            p.put("lucky", user.getSelf().lucky+"");
+//            p.put("lucky", user.getSelf().lucky+"");
             HttpCloudUtil.post(p, "findBag",FindBagResponse.class, new HttpCloudUtil.OnMessageGet<FindBagItem>() {
 
                 @Override

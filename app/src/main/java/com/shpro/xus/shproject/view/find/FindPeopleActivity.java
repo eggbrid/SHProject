@@ -54,24 +54,24 @@ public class FindPeopleActivity extends CommentActivity {
     public void initView() throws Exception {
         peoples = (ListView) findViewById(R.id.peoples);
 
-        peoples.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                User user = list.get(i);
-                if (user.getAccountId().equals(BmobUser.getCurrentUser(Account.class).getObjectId())) {
-                    //自己详情
-                    ToastUtil.makeTextShort(FindPeopleActivity.this, "不要点击自己！");
-                } else {
-                    if (isHasChat()){
-                        gotoChat(user);
-                    }else{
-                        ToastUtil.makeTextShort(FindPeopleActivity.this, "您现在没有通讯器呢，若没有扔掉新手指南，可以在里面领取哦！");
-
-                    }
-
-                }
-            }
-        });
+//        peoples.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                User user = list.get(i);
+//                if (user.getAccountId().equals(BmobUser.getCurrentUser(Account.class).getObjectId())) {
+//                    //自己详情
+//                    ToastUtil.makeTextShort(FindPeopleActivity.this, "不要点击自己！");
+//                } else {
+//                    if (isHasChat()){
+//                        gotoChat(user);
+//                    }else{
+//                        ToastUtil.makeTextShort(FindPeopleActivity.this, "您现在没有通讯器呢，若没有扔掉新手指南，可以在里面领取哦！");
+//
+//                    }
+//
+//                }
+//            }
+//        });
         setCommentTitleView("山海师");
         getData();
     }
@@ -115,10 +115,10 @@ public class FindPeopleActivity extends CommentActivity {
                     @Override
                     public void run() {
                         CallPeople callPeople = new CallPeople();
-                        callPeople.setName(user.getName());
-                        callPeople.setAvatar(user.getAvatar());
-                        callPeople.setUnRead(0);
-                        callPeople.setId(user.getObjectId().toLowerCase());
+//                        callPeople.setName(user.getName());
+//                        callPeople.setAvatar(user.getAvatar());
+//                        callPeople.setUnRead(0);
+//                        callPeople.setId(user.getObjectId().toLowerCase());
                         Intent intent = new Intent(FindPeopleActivity.this, CallDetailActivity.class);
                         intent.putExtra("people", callPeople);
                         startActivity(intent);
