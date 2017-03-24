@@ -27,11 +27,20 @@ public class AndroidIDUtil {
      * @return
      */
     private static String getM_szBTMAC() {
-        if (TextUtils.isEmpty(m_szBTMAC)) {
-            BluetoothAdapter m_BluetoothAdapter = null; // Local Bluetooth adapter
-            m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            m_szBTMAC = m_BluetoothAdapter.getAddress();
+        try {
+            if (TextUtils.isEmpty(m_szBTMAC)) {
+                BluetoothAdapter m_BluetoothAdapter = null; // Local Bluetooth adapter
+                m_BluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if(m_BluetoothAdapter==null){
+                    return m_szBTMAC+"NULL";
+
+                }
+                m_szBTMAC = m_BluetoothAdapter.getAddress();
+            }
+        }catch (Exception e){
+
         }
+
         return m_szBTMAC;
     }
 
@@ -41,10 +50,15 @@ public class AndroidIDUtil {
      * @return
      */
     private static String getM_szWLANMAC(Context context) {
-        if (TextUtils.isEmpty(m_szWLANMAC)) {
-            WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+        try{
+            if (TextUtils.isEmpty(m_szWLANMAC)) {
+                WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                m_szWLANMAC = wm.getConnectionInfo().getMacAddress();
+            }
+        }catch (Exception e){
+
         }
+
         return m_szWLANMAC;
     }
 
@@ -54,9 +68,14 @@ public class AndroidIDUtil {
      * @return
      */
     private static String getM_szAndroidID(Context context) {
-        if (TextUtils.isEmpty(m_szAndroidID)) {
-            m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+        try{
+            if (TextUtils.isEmpty(m_szAndroidID)) {
+                m_szAndroidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+            }
+        }catch (Exception e){
+
         }
+
         return m_szAndroidID;
     }
 
@@ -90,10 +109,15 @@ public class AndroidIDUtil {
      * @return
      */
     private static String getSzImei(Context context) {
-        if (TextUtils.isEmpty(szImei)) {
-            TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
-            szImei = TelephonyMgr.getDeviceId();
+        try {
+            if (TextUtils.isEmpty(szImei)) {
+                TelephonyManager TelephonyMgr = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+                szImei = TelephonyMgr.getDeviceId();
+            }
+        }catch (Exception e){
+
         }
+
         return szImei;
     }
 
@@ -103,7 +127,7 @@ public class AndroidIDUtil {
      * @return
      */
     public static String getID(Context context) {
-        String m_szLongID = getM_szBTMAC() + getM_szWLANMAC(context)
+        String m_szLongID = getM_szWLANMAC(context)
                 + getM_szAndroidID(context) + getM_szDevIDShort() + getSzImei(context);
 // compute md5
         MessageDigest m = null;
