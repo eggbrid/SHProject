@@ -150,27 +150,27 @@ public class UpdateUserAvtivity extends UserBaseActivity implements View.OnClick
     }
 
     public void save() {
-        showPross("正在向shProject保存数据");
-      final  User user = new User();
-        user.setAvatar(avatars);
-        user.setName(nickName);
-        user.setSex(sexs);
-        user.setSelf(self);
-        user.setAccountId(Account.getCurrentUser(Account.class).getObjectId());
-        user.save(new SaveListener<String>() {
-            @Override
-            public void done(String s, BmobException e) {
-                if (e == null) {
-                    user.setObjectId(s);
-                    ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(UpdateUserAvtivity.this),user);
-                    creatBg( s);
-
-                } else {
-                    Log.e("wangxu",e.toString()+"重复执行操作save()");
-                    save();
-                }
-            }
-        });
+//        showPross("正在向shProject保存数据");
+//      final  User user = new User();
+//        user.setAvatar(avatars);
+//        user.setName(nickName);
+//        user.setSex(sexs);
+//        user.setSelf(self);
+//        user.setAccountId(Account.getCurrentUser(Account.class).getObjectId());
+//        user.save(new SaveListener<String>() {
+//            @Override
+//            public void done(String s, BmobException e) {
+//                if (e == null) {
+//                    user.setObjectId(s);
+//                    ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(UpdateUserAvtivity.this),user);
+//                    creatBg( s);
+//
+//                } else {
+//                    Log.e("wangxu",e.toString()+"重复执行操作save()");
+//                    save();
+//                }
+//            }
+//        });
     }
     public void creatBg(final String id){
             final UserBag userBag = new UserBag();

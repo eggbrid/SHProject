@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.SntpTime;
 
@@ -39,6 +40,7 @@ public class APP extends Application {
     public void onCreate() {
         super.onCreate();
         app=this;
+        OkHttpUtil.initHttpUtil();
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
         if (processAppName == null ||!processAppName.equalsIgnoreCase(app.getPackageName())) {

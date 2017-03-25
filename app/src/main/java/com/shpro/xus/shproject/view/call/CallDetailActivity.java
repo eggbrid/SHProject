@@ -85,8 +85,8 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
 //发送消息
                 EMMessage message = EMMessage.createTxtSendMessage(contentText.getText().toString(), callPeople.getId());
                 message.setChatType(EMMessage.ChatType.Chat);
-                message.setAttribute("fromName", user.getName());
-                message.setAttribute("fromAvatar", user.getAvatar());
+//                message.setAttribute("fromName", user.getName());
+//                message.setAttribute("fromAvatar", user.getAvatar());
                 message.setAttribute("toName", callPeople.getName());
                 message.setAttribute("toAvatar", callPeople.getAvatar());
                 try {

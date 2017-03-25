@@ -33,8 +33,8 @@ public class HelpActivity extends CommentActivity implements View.OnClickListene
     public void initView() throws Exception {
         setCommentTitleView("新手帮助");
         text = (AutofitTextView) findViewById(R.id.text);
-        text.setText(ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(this), User.class).getName() + ",您好+\n也许您第一次使用" +
-                "这个app");
+//        text.setText(ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(this), User.class).getName() + ",您好+\n也许您第一次使用" +
+//                "这个app");
         getCall = (Button) findViewById(R.id.get_call);
         getCall.setOnClickListener(HelpActivity.this);
     }

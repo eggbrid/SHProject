@@ -27,9 +27,9 @@ public class FindPeopleAdapter extends SHBaseAdapter<User, FindPeopleAdapter.Vie
     @Override
     public View getView(int i, View view, ViewGroup viewGroup, ViewHodler viewHodler) {
         User user = list.get(i);
-        viewHodler.name.setText(user.getName());
-        ImageLoaderUtil.getInstance().loadCircleImage(user.getAvatar(), viewHodler.avatar);
-        viewHodler.sex.setImageResource(user.getSex() == 1 ? R.drawable.man : R.drawable.woman);
+//        viewHodler.name.setText(user.getName());
+//        ImageLoaderUtil.getInstance().loadCircleImage(user.getAvatar(), viewHodler.avatar);
+//        viewHodler.sex.setImageResource(user.getSex() == 1 ? R.drawable.man : R.drawable.woman);
         return view;
     }
 

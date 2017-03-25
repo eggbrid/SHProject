@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 23
     buildToolsVersion '25.0.0'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
@@ -51,8 +51,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.0'
-    compile 'com.android.support:appcompat-v7:25.+'
+    compile 'com.android.support:appcompat-v7:23.+'
     compile files('libs/TencentLocationSDK_v4.5.8.jar')
+    compile files('libs/TencentMapSDK_Raster_v1.2.4_4af1d6f.jar')
     compile 'com.wilddog.client:wilddog-sync-android:2.0.2'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.wilddog.client:wilddog-auth-android:2.0.3'
