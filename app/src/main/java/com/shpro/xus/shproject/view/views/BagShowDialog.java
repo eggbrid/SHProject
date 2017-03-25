@@ -67,18 +67,18 @@ public class BagShowDialog extends Dialog implements View.OnClickListener {
         use.setOnClickListener(BagShowDialog.this);
         d = (Button) findViewById(R.id.d);
         d.setOnClickListener(BagShowDialog.this);
-        info.setText(bag.getInfo());
-        if (bag.getAction().equals("1") || bag.getAction().equals("3")) {
+        info.setText(bag.getBagTemplate().getInfo());
+        if (bag.getBagTemplate().getAction().equals("1") || bag.getBagTemplate().getAction().equals("3")) {
             use.setVisibility(View.VISIBLE);
         } else {
             use.setVisibility(View.GONE);
         }
-        if (TextUtils.isEmpty(bag.getIcon())) {
+        if (TextUtils.isEmpty(bag.getBagTemplate().getIcon())) {
             icon.setImageResource(R.drawable.shpg_unno);
-        } else if (bag.getIcon().startsWith("http:")) {
-            ImageLoaderUtil.getInstance().loadNomalImage(bag.getIcon(), icon);
-        } else if (bag.getIcon().startsWith("shpg")) {
-            icon.setImageResource(CommentUtil.getIcon(bag.getIcon(), context));
+        } else if (bag.getBagTemplate().getIcon().startsWith("http:")) {
+            ImageLoaderUtil.getInstance().loadNomalImage(bag.getBagTemplate().getIcon(), icon);
+        } else if (bag.getBagTemplate().getIcon().startsWith("shpg")) {
+            icon.setImageResource(CommentUtil.getIcon(bag.getBagTemplate().getIcon(), context));
         } else {
             icon.setImageResource(R.drawable.shpg_unno);
         }

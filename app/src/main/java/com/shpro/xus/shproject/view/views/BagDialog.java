@@ -61,9 +61,9 @@ public class BagDialog extends Dialog implements View.OnClickListener {
     public void onClick(View view) {
         if (view.getId() == R.id.use) {
             this.dismiss();
-            if (bag.getAction().equals("1")) {
+            if (bag.getBagTemplate().getAction().equals("1")) {
                 try {
-                    context.startActivity(new Intent(context, Class.forName(bag.getActionInfo())));
+                    context.startActivity(new Intent(context, Class.forName(bag.getBagTemplate().getActionInfo())));
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -75,7 +75,7 @@ public class BagDialog extends Dialog implements View.OnClickListener {
             final UserBag userBags = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(context) + "bag", UserBag.class);
             for (int i=0;i<=userBags.getBags().size()-1;i++){
                 Bag b=userBags.getBags().get(i);
-                if (b.getActionInfo().equals(bag.getActionInfo()) && b.getName().equals(bag.getName()) && b.getIcon().equals(bag.getIcon())) {
+                if (b.getBagTemplate().getActionInfo().equals(bag.getBagTemplate().getActionInfo()) && b.getBagTemplate().getName().equals(bag.getBagTemplate().getName()) && b.getBagTemplate().getIcon().equals(bag.getBagTemplate().getIcon())) {
                     userBags.getBags().remove(b);
                 }
             }
@@ -109,18 +109,18 @@ public class BagDialog extends Dialog implements View.OnClickListener {
         d.setOnClickListener(BagDialog.this);
         back = (Button) findViewById(R.id.back);
         back.setOnClickListener(BagDialog.this);
-        info.setText(bag.getInfo());
-        if (bag.getAction().equals("1") || bag.getAction().equals("3")) {
+        info.setText(bag.getBagTemplate().getInfo());
+        if (bag.getBagTemplate().getAction().equals("1") || bag.getBagTemplate().getAction().equals("3")) {
             use.setVisibility(View.VISIBLE);
         } else {
             use.setVisibility(View.GONE);
         }
-        if (TextUtils.isEmpty(bag.getIcon())) {
+        if (TextUtils.isEmpty(bag.getBagTemplate().getIcon())) {
             icon.setImageResource(R.drawable.shpg_unno);
-        } else if (bag.getIcon().startsWith("http:")) {
-            ImageLoaderUtil.getInstance().loadNomalImage(bag.getIcon(), icon);
-        } else if (bag.getIcon().startsWith("shpg")) {
-            icon.setImageResource(CommentUtil.getIcon(bag.getIcon(), context));
+        } else if (bag.getBagTemplate().getIcon().startsWith("http:")) {
+            ImageLoaderUtil.getInstance().loadNomalImage(bag.getBagTemplate().getIcon(), icon);
+        } else if (bag.getBagTemplate().getIcon().startsWith("shpg")) {
+            icon.setImageResource(CommentUtil.getIcon(bag.getBagTemplate().getIcon(), context));
         } else {
             icon.setImageResource(R.drawable.shpg_unno);
         }

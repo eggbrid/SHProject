@@ -7,13 +7,4 @@ import java.io.Serializable;
  */
 
 public class Response implements Serializable {
-    private String  error;
-
-    public String getError() {
-        return error;
-    }
-
-    public void setError(String error) {
-        this.error = error;
-    }
 }

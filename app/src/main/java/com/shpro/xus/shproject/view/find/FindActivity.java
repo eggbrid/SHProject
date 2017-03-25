@@ -39,7 +39,7 @@ public class FindActivity extends CommentActivity implements View.OnClickListene
     public void initData() {
         lists = new ArrayList<>();
         lists.add(new ViewNum("寻找山海师", FindPeopleActivity.class));
-        lists.add(new ViewNum("寻找物品", FindBagActivity.class));
+//        lists.add(new ViewNum("寻找物品", FindBagActivity.class));
 
     }
 

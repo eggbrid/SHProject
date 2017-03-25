@@ -1,64 +1,40 @@
 package com.shpro.xus.shproject.bean;
 
+import java.io.Serializable;
+
 import cn.bmob.v3.BmobObject;
 
 /**
  * Created by xus on 2016/11/18.
  */
 
-public class Bag extends BmobObject {
-    private String name;
-    private String icon;
-    private String info;
-    private String action;//1打开activity 2打开dialog 3无打开操作
-    private String actionInfo;
-    private String other;
+public class Bag extends Basebean {
+    private String userId;
+    private BagTemplate bagTemplate;
+    private String bagTemplateId;
 
-    public String getName() {
-        return name;
+    public String getBagTemplateId() {
+        return bagTemplateId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBagTemplateId(String bagTemplateId) {
+        this.bagTemplateId = bagTemplateId;
     }
 
-    public String getIcon() {
-        return icon;
+    public BagTemplate getBagTemplate() {
+        return bagTemplate;
     }
 
-    public void setIcon(String icon) {
-        this.icon = icon;
+    public void setBagTemplate(BagTemplate bagTemplate) {
+        this.bagTemplate = bagTemplate;
     }
 
-    public String getInfo() {
-        return info;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public String getActionInfo() {
-        return actionInfo;
-    }
-
-    public void setActionInfo(String actionInfo) {
-        this.actionInfo = actionInfo;
-    }
-
-    public String getOther() {
-        return other;
-    }
-
-    public void setOther(String other) {
-        this.other = other;
-    }
 }

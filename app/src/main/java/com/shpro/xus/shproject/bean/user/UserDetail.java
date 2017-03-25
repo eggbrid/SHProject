@@ -1,12 +1,12 @@
 package com.shpro.xus.shproject.bean.user;
 
+import com.shpro.xus.shproject.bean.Basebean;
+
 /**
  * Created by xus on 2017/3/25.
  */
 
-public class UserDetail {
-    private String id;//
-    private String creatTime;//
+public class UserDetail extends Basebean {
     private String type;//
     private int sex;// 0,
     private String name;//
@@ -17,22 +17,6 @@ public class UserDetail {
     private int sh;// 0,
     private int lv;// 0,
     private int experience;// 0
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getCreatTime() {
-        return creatTime;
-    }
-
-    public void setCreatTime(String creatTime) {
-        this.creatTime = creatTime;
-    }
 
     public String getType() {
         return type;

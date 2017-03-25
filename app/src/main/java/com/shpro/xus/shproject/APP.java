@@ -14,11 +14,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.L;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.shpro.xus.shproject.bean.response.LoginResponse;
 import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.bean.user.UserDetail;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
+import com.shpro.xus.shproject.util.ConstantUtil;
 import com.shpro.xus.shproject.util.SntpTime;
 
 import java.io.File;
@@ -33,17 +36,71 @@ import cn.bmob.v3.Bmob;
 
 public class APP extends Application {
     public static APP app;
+
     public static APP getInstance() {
         return app;
     }
+
+    public User user;
+    public UserDetail userDetail;
+    public LoginResponse loginResponse;
+
+    public User getUser() {
+        if (!isLogin()) {
+            return null;
+        }
+        if (user == null) {
+            this.user = loginResponse.getUser();
+        }
+        return user;
+    }
+
+    public LoginResponse getLoginResponse() {
+        loginResponse = ACacheUtil.getInstance().getObject(ConstantUtil.USER, LoginResponse.class);
+        return loginResponse;
+    }
+
+    public UserDetail getUserDetail() {
+        if (!isLogin()) {
+            return null;
+        }
+        if (userDetail == null) {
+            this.userDetail = loginResponse.getUserDetail();
+        }
+        return userDetail;
+    }
+
+    public boolean isLogin() {
+        loginResponse = ACacheUtil.getInstance().getObject(ConstantUtil.USER, LoginResponse.class);
+        return loginResponse != null;
+    }
+
+    public void setLoginResponse(LoginResponse loginResponse) {
+        this.loginResponse = loginResponse;
+        ACacheUtil.getInstance().cacheObject(ConstantUtil.USER, loginResponse);
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        this.loginResponse.setUser(user);
+        ACacheUtil.getInstance().cacheObject(ConstantUtil.USER, loginResponse);
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
+        this.loginResponse.setUserDetail(userDetail);
+        ACacheUtil.getInstance().cacheObject(ConstantUtil.USER, loginResponse);
+
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        app=this;
+        app = this;
         OkHttpUtil.initHttpUtil();
         int pid = android.os.Process.myPid();
         String processAppName = getAppName(pid);
-        if (processAppName == null ||!processAppName.equalsIgnoreCase(app.getPackageName())) {
+        if (processAppName == null || !processAppName.equalsIgnoreCase(app.getPackageName())) {
             return;
         }
         HttpUtil.getInstance().init(this);
@@ -57,6 +114,7 @@ public class APP extends Application {
         initHX();
         new SntpTime().getNetTime();
     }
+
     public void initImageLoader() {
         String filePath = "Android/data/com.shpro.xus.shproject/files/cache/img/";//Environment.getExternalStorageDirectory() + "/Android/data/" + instance.getPackageName() + "/cache/";
         File cacheDir = StorageUtils.getOwnCacheDirectory(this, filePath);// 获取到缓存的目录地址
@@ -78,7 +136,8 @@ public class APP extends Application {
         ImageLoader.getInstance().init(config.build());
         L.writeLogs(false);
     }
-    public void initHX(){
+
+    public void initHX() {
         EMOptions options = new EMOptions();
 // 默认添加好友时，是不需要验证的，改成需要验证
 //        options.setAcceptInvitationAlways(false);
@@ -89,6 +148,7 @@ public class APP extends Application {
 //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
     }
+
     private String getAppName(int pID) {
         String processName = null;
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
@@ -108,8 +168,5 @@ public class APP extends Application {
         }
         return processName;
     }
-    public static User getUser(){
-       return ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(app),User.class);
 
-    }
 }

@@ -41,19 +41,19 @@ public class HelpActivity extends CommentActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.get_call) {
-            Bag bag =new Bag();
-            bag.setAction("1");
-            bag.setName("通讯器");
-            bag.setIcon("shpg_call");
-            bag.setActionInfo("com.shpro.xus.shproject.view.call.CallListActivity");
-            bag.setInfo("可以聊天的通讯器");
-            BagUtil.getInstance().addBag(this, bag, true, 1, new BagUtil.OnSuccess() {
-                @Override
-                public void onSuccess(int flg) {
-                    HelpActivity.this.finish();
-                }
-            });
-        }
+//        if (view.getId() == R.id.get_call) {
+//            Bag bag =new Bag();
+//            bag.setAction("1");
+//            bag.setName("通讯器");
+//            bag.setIcon("shpg_call");
+//            bag.setActionInfo("com.shpro.xus.shproject.view.call.CallListActivity");
+//            bag.setInfo("可以聊天的通讯器");
+//            BagUtil.getInstance().addBag(this, bag, true, 1, new BagUtil.OnSuccess() {
+//                @Override
+//                public void onSuccess(int flg) {
+//                    HelpActivity.this.finish();
+//                }
+//            });
+//        }
     }
 }

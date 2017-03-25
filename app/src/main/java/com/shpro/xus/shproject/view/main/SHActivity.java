@@ -1,52 +1,105 @@
 package com.shpro.xus.shproject.view.main;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.RotateAnimation;
-import android.view.animation.ScaleAnimation;
+import android.os.Message;
+import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
-import com.shpro.xus.shproject.bean.user.Account;
-import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.bean.response.LoginResponse;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
-import com.shpro.xus.shproject.util.AndroidIDUtil;
-import com.shpro.xus.shproject.util.ToastUtil;
+import com.shpro.xus.shproject.util.ConstantUtil;
 import com.shpro.xus.shproject.view.BaseActivity;
 import com.shpro.xus.shproject.view.user.LoginActivity;
 import com.shpro.xus.shproject.view.user.UpdateUserAvtivity;
 import com.shpro.xus.shproject.view.views.TaiJiView;
-
-import java.sql.SQLException;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.QueryListener;
 
 /**
  * Created by xus on 2016/11/10.
  */
 
 public class SHActivity extends BaseActivity {
-    TaiJiView taiji;
-    Handler handler = new Handler();
-    AnimationSet animationSet;
+    private TaiJiView taiji;
+    private TextView message_info;
+    private NumberProgressBar number_progress_bar;
+    private final int INIT_APP = 1;
+    private final int GET_USER_INFO = 2;
+    private final int GET_MESSAGE_BY_NET = 3;
+    private int progress = 0;
+    private LoginResponse loginResponse;
+    private int userStatus = 0;//0 无状态 1 有用户 2无用户
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case INIT_APP:
+                    message_info.setText("正在初始化app");
+                    if (progress >= 30) {
+                        progress++;
+                        Message message = new Message();
+                        message.what = GET_USER_INFO;
+                        message.arg1 = progress;
+                        handler.sendMessageDelayed(message, 30);
+                    } else {
+                        progress++;
+                        number_progress_bar.setProgress(progress);
+                        Message message = new Message();
+                        message.what = INIT_APP;
+                        message.arg1 = progress;
+
+                        handler.sendMessageDelayed(message, 30);
+                    }
+
+                    break;
+                case GET_USER_INFO:
+                    message_info.setText("正在获取用户信息");
+                    if (userStatus == 0) {
+                        if (loginResponse == null) {
+                            loginResponse = APP.getInstance().getLoginResponse();
+                        }
+                        userStatus = (loginResponse == null) ? 2 : 1;
+                    }
+                    if (progress >= 70) {
+                        progress++;
+                        Message message = new Message();
+                        message.what = GET_MESSAGE_BY_NET;
+                        message.arg1 = progress;
+                        handler.sendMessageDelayed(message, 30);
+                    } else {
+                        progress++;
+                        number_progress_bar.setProgress(progress);
+                        Message message = new Message();
+                        message.what = GET_USER_INFO;
+                        message.arg1 = progress;
+                        handler.sendMessageDelayed(message, 30);
+                    }
+                    break;
+                case GET_MESSAGE_BY_NET:
+                    message_info.setText("正在监测版本");
+                    if (progress >= 100) {
+                        going();
+                    } else {
+                        progress++;
+                        number_progress_bar.setProgress(progress);
+                        Message message = new Message();
+                        message.what = GET_MESSAGE_BY_NET;
+                        message.arg1 = progress;
+                        handler.sendMessageDelayed(message, 30);
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(setContentView());
-        try {
-            initView();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        initView();
     }
 
     @Override
@@ -55,68 +108,32 @@ public class SHActivity extends BaseActivity {
     }
 
     @Override
-    public void initView() throws SQLException {
+    public void initView() {
         taiji = (TaiJiView) findViewById(R.id.taiji);
-        animationSet = new AnimationSet(true);
-        ScaleAnimation animation_suofang = new ScaleAnimation(1.0f, 5.0f, 1.0f, 5.0f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-
-        animation_suofang.setDuration(2700);                     //执行时间
-        RotateAnimation rotateAnimation = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setDuration(2500);                     //执行时间
-
-        rotateAnimation.setRepeatCount(0);
-        rotateAnimation.setFillAfter(false);
-
-        animationSet.addAnimation(animation_suofang);
-        animationSet.addAnimation(rotateAnimation);
-        if (BmobUser.getCurrentUser(Account.class) != null && (!TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid()))) {
-            BmobQuery<User> query = new BmobQuery<User>();
-            query.getObject(BmobUser.getCurrentUser(Account.class).getUserid(), new QueryListener<User>() {
-
-                @Override
-                public void done(User object, BmobException e) {
-                    if (e == null) {
-                        ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(SHActivity.this), object);
-                        going();
-                    } else {
-                        Log.e("wangxu",e.toString());
-                        ToastUtil.makeTextShort(SHActivity.this, "加载失败了！");
-                    }
-                }
-
-            });
-
-        } else {
-            going();
-        }
+        message_info = (TextView) findViewById(R.id.message_info);
+        number_progress_bar = (NumberProgressBar) findViewById(R.id.number_progress_bar);
+        taiji.start();
+        number_progress_bar.setProgress(progress);
+        Message message = new Message();
+        message.what = INIT_APP;
+        message.arg1 = progress;
+        handler.sendMessageDelayed(message, 30);
     }
 
     private void going() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-//                taiji.startAnimation(animationSet);
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-                        SHActivity.this.finish();
-                        if (BmobUser.getCurrentUser(Account.class) != null) {
-                            if (TextUtils.isEmpty(BmobUser.getCurrentUser(Account.class).getUserid())) {
-
-                                SHActivity.this.startActivity(new Intent(SHActivity.this, UpdateUserAvtivity.class));
-                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            } else {
-                                SHActivity.this.startActivity(new Intent(SHActivity.this, SHMainActivity.class));
-                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                            }
-                        } else {
-                            SHActivity.this.startActivity(new Intent(SHActivity.this, LoginActivity.class));
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                        }
-//                    }
-//                }, 2500);
+        if (userStatus == 2) {
+            SHActivity.this.startActivity(new Intent(SHActivity.this, LoginActivity.class));
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        } else {
+            if (loginResponse.getUserDetail() == null) {
+                SHActivity.this.startActivity(new Intent(SHActivity.this, UpdateUserAvtivity.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            } else {
+                SHActivity.this.startActivity(new Intent(SHActivity.this, SHMainActivity.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
-        }, 1000);
+        }
+        taiji.stop();
+        this.finish();
     }
 }

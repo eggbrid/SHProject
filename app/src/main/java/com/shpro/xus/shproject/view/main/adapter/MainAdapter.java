@@ -15,6 +15,7 @@ import com.shpro.xus.shproject.bean.user.UserBag;
 import com.shpro.xus.shproject.util.CommentUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class MainAdapter extends BaseAdapter {
         this.bags = bags;
     }
 
-    private List<Bag> bags ;
+    private List<Bag> bags =new ArrayList<>();
 
 
 
@@ -67,8 +68,8 @@ public class MainAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) view.getTag();
         }
         if (bags.size()> i) {
-            viewHolder.name.setText(bags.get(i).getName());
-            String icon=bags.get(i).getIcon();
+            viewHolder.name.setText(bags.get(i).getBagTemplate().getName());
+            String icon=bags.get(i).getBagTemplate().getIcon();
             if (TextUtils.isEmpty(icon)){
                 viewHolder.icon.setImageResource(R.drawable.shpg_unno);
             }else if(icon.startsWith("http:")){

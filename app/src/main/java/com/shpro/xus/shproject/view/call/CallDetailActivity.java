@@ -54,7 +54,7 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
 
     @Override
     public void initView() throws Exception {
-        user = APP.getUser();
+        user = APP.getInstance().getUser();
         callPeople = (CallPeople) getIntent().getSerializableExtra("people");
         setCommentTitleView(callPeople.getName());
         List<EMMessage> list = new ArrayList<>();

@@ -7,7 +7,7 @@ import com.shpro.xus.shproject.bean.user.UserDetail;
  * Created by xus on 2017/3/25.
  */
 
-public class LoginResponse {
+public class LoginResponse extends Response{
     private User user;
     private UserDetail userDetail;
 

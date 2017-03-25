@@ -7,14 +7,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.response.LoginResponse;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
+import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
+import com.shpro.xus.shproject.util.MD5Util;
 import com.shpro.xus.shproject.util.SHCallUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.main.SHMainActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -66,54 +75,44 @@ public class RegActivity extends UserBaseActivity implements View.OnClickListene
     }
 
     private void reg() {
+        String emails = email.getText().toString();
+        String passwords = password.getText().toString();
+        String repasswords = repassword.getText().toString();
+
         if (TextUtils.isEmpty(email.getText().toString())) {
             ToastUtil.makeTextShort(this, "请输入邮箱");
         }
         if (TextUtils.isEmpty(password.getText().toString())) {
             ToastUtil.makeTextShort(this, "请输入密码");
         }
-
-        if (TextUtils.isEmpty(repassword.getText().toString()) || !repassword.getText().toString().equals(password.getText().toString())) {
+        if (TextUtils.isEmpty(repasswords) || !repasswords.equals(passwords)) {
             ToastUtil.makeTextShort(this, "两次密码不一致");
+            return;
         }
         showPross("正在注册");
-        Account bu = new Account();
-        bu.setPassword(repassword.getText().toString());
-        bu.setUsername(email.getText().toString());
-        bu.setEmail(email.getText().toString());
-        bu.setShid(AndroidIDUtil.getID(this));
-        //注意：不能用save方法进行注册
-        bu.signUp(new SaveListener<Account>() {
+        Map<String, String> map = new HashMap<>();
+        map.put("number", emails);
+        map.put("pwd", MD5Util.md5(passwords));
+
+        OkHttpUtil.doPost(this, UrlUtil.REGISTER_URL, map, new CallBack<LoginResponse>() {
             @Override
-            public void done(Account account, cn.bmob.v3.exception.BmobException e) {
+            public void onSuccess(LoginResponse loginResponse) {
                 dissPross();
-                if (e == null) {
-                    login(account);
-                } else {
-                    ToastUtil.makeTextShort(RegActivity.this, e.toString());
-                }
-            }
-
-        });
-    }
-    public void login(final Account account){
-        Account bu2 = new Account();
-        bu2.setUsername(email.getText().toString());
-        bu2.setPassword(repassword.getText().toString());
-        bu2.login(new SaveListener<Account>() {
-
-            @Override
-            public void done(Account bmobUser, BmobException e) {
-                if (e == null) {
-                    new SHCallUtil().toCalls(bmobUser.getObjectId());
-                    ToastUtil.makeTextShort(RegActivity.this, "注册成功");
+                if (loginResponse != null) {
+                    APP.getInstance().setLoginResponse(loginResponse);
                     RegActivity.this.startActivity(new Intent(RegActivity.this, UpdateUserAvtivity.class));
                     RegActivity.this.finish();
                 } else {
-                    Log.e("wangxu",e.toString());
-                    login( account);
+                    ToastUtil.makeTextShort(RegActivity.this, "哎？连接失败？退出app看看？");
                 }
             }
-        });
+
+            @Override
+            public void onError(String s) {
+                dissPross();
+                ToastUtil.makeTextShort(RegActivity.this, s);
+
+            }
+        }, LoginResponse.class);
     }
 }

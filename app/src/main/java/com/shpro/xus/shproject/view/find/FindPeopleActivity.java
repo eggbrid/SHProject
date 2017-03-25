@@ -99,7 +99,7 @@ public class FindPeopleActivity extends CommentActivity {
     public boolean isHasChat() {
         UserBag userBag = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(FindPeopleActivity.this) + "bag", UserBag.class);
         for (Bag b : userBag.getBags()) {
-            if ((!TextUtils.isEmpty(b.getActionInfo())) && b.getActionInfo().equals("com.shpro.xus.shproject.view.call.CallListActivity")) {
+            if ((!TextUtils.isEmpty(b.getBagTemplate().getActionInfo())) && b.getBagTemplate().getActionInfo().equals("com.shpro.xus.shproject.view.call.CallListActivity")) {
                 return true;
             }
         }
