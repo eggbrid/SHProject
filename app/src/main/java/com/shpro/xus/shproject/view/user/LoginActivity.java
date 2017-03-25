@@ -83,12 +83,12 @@ public class LoginActivity extends UserBaseActivity implements View.OnClickListe
             ToastUtil.makeTextShort(this, "请输入密码");
             return;
         }
-//        showPross("正在登陆");
+        showPross("正在登陆");
         Map<String,String> map=new HashMap<>();
         map.put("number",emails);
         map.put("pwd",passwords);
 
-        OkHttpUtil.<LoginResponse>doPost(this,"http://192.168.0.107:8080/shproject/user/login", map, new CallBack<LoginResponse>() {
+        OkHttpUtil.doPost(this,"http://192.168.0.107:8080/shproject/user/login", map, new CallBack<LoginResponse>() {
             @Override
             public void onSuccess(LoginResponse loginResponse) {
                 ToastUtil.makeTextShort(LoginActivity.this,"登录成功");

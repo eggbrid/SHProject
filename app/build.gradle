@@ -83,8 +83,8 @@ dependencies {
     //    compile files('libs/hyphenatechat_3.2.1.jar')
     //Optional compile for GCM (Google Cloud Messaging).
     /*
-            compile 'com.google.android.gms:play-services-gcm:9.4.0'
-        */
+                    compile 'com.google.android.gms:play-services-gcm:9.4.0'
+                */
     compile files('libs/hyphenatechat_3.2.3.jar')
     compile files('libs/MiPush_SDK_Client_2_2_19.jar')
     compile files('libs/hyphenatechat_3.2.3.jar')
@@ -93,5 +93,5 @@ dependencies {
     compile 'com.victor:lib:1.0.4'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
     compile files('libs/TencentMapSDK_Vector_v_3.0.6.jar')
-    compile files('libs/TencentmapVectorUtils_v1.0.1.59c4f8a.jar')
+    compile files('libs/TencentmapVectorUtils.jar')
 }
