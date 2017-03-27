@@ -13,6 +13,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.adapter.message.EMATextMessageBody;
+import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
@@ -29,7 +30,6 @@ import cn.bmob.v3.BmobUser;
  */
 
 public class CallDetailAdapter extends SHBaseCallAdapter<EMMessage, CallDetailAdapter.ViewHolder> {
-    public String id = BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase();
     private String username;
 
     public String getUsername() {
@@ -60,7 +60,7 @@ public class CallDetailAdapter extends SHBaseCallAdapter<EMMessage, CallDetailAd
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup, ViewHolder viewHolder) {
-        if (list.get(i).getFrom().equals(id)) {
+        if (list.get(i).getFrom().equals(APP.getInstance().getUser().getId())) {
             if (list.get(i).getBody() instanceof EMTextMessageBody) {
                 viewHolder.content.setText(((EMTextMessageBody) list.get(i).getBody()).getMessage());
             } else {
@@ -98,7 +98,7 @@ public class CallDetailAdapter extends SHBaseCallAdapter<EMMessage, CallDetailAd
 
     @Override
     public View getLayoutView(int i, LayoutInflater inflater, ViewGroup viewGroup) {
-        if (list.get(i).getFrom().equals(id)) {
+        if (list.get(i).getFrom().equals(APP.getInstance().getUser().getId())) {
             return inflater.inflate(R.layout.item_chat_to, viewGroup, false);
 
         } else {

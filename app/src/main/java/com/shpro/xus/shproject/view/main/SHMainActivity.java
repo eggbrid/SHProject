@@ -97,6 +97,7 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
     }
 
     public void reBag() {
+        bags=APP.getInstance().getBags();
         adapter.setBags(bags);
         mainGrid.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -115,6 +116,7 @@ public class SHMainActivity extends CommentActivity implements AdapterView.OnIte
                     if (bags == null) {
                         bags = new ArrayList<Bag>();
                     }
+                    APP.getInstance().setBags(bags);
                     reBag();
                 } else {
                     ToastUtil.makeTextShort(SHMainActivity.this, "空间戒没有空间波动！");

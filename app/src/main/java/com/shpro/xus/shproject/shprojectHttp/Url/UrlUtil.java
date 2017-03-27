@@ -31,7 +31,10 @@ public class UrlUtil {
     public static String REGISTER_URL=getUrl()+"shproject/user/register";
     public static String INSERTUSERDETAIL_URL=getUrl()+"shproject/user/insertUserDetail";
     public static String BAGLIST_URL=getUrl()+"shproject/bag/bagList";
-
+    public static String NEARPEOPLE_LIST_URL=getUrl()+"shproject/nearPeople/list";
+    public static String ADDBAG_URL=getUrl()+"shproject/bag/addBag";
+    public static String BAGGET_URL=getUrl()+"shproject/bag/bagGet";
+    public static String DELETEBAG_URL=getUrl()+"shproject/bag/deleteBag";
 
 
 }

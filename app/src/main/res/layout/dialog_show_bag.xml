@@ -26,17 +26,17 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content">
 
-
+<!--
         <Button
             android:id="@+id/use"
             android:text="放入背包"
             android:layout_weight="1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content" />-->
 
         <Button
             android:id="@+id/d"
-            android:text="丢弃"
+            android:text="确定"
             android:layout_weight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

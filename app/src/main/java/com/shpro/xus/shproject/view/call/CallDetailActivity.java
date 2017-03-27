@@ -16,6 +16,7 @@ import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.call.CallPeople;
 import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.bean.user.UserDetail;
 import com.shpro.xus.shproject.interfaces.views.RefreshListener;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.call.adapter.CallDetailAdapter;
@@ -35,7 +36,7 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
     protected EditText contentText;
     private CallDetailAdapter adapter;
     private CallPeople callPeople;
-    private User user;
+    private UserDetail userDetail;
     private RefreshLayout swipeContainer;
 
     @Override
@@ -54,7 +55,7 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
 
     @Override
     public void initView() throws Exception {
-        user = APP.getInstance().getUser();
+        userDetail = APP.getInstance().getUserDetail();
         callPeople = (CallPeople) getIntent().getSerializableExtra("people");
         setCommentTitleView(callPeople.getName());
         List<EMMessage> list = new ArrayList<>();
@@ -85,8 +86,8 @@ public class CallDetailActivity extends CallCommentActivity implements View.OnCl
 //发送消息
                 EMMessage message = EMMessage.createTxtSendMessage(contentText.getText().toString(), callPeople.getId());
                 message.setChatType(EMMessage.ChatType.Chat);
-//                message.setAttribute("fromName", user.getName());
-//                message.setAttribute("fromAvatar", user.getAvatar());
+                message.setAttribute("fromName", userDetail.getName());
+                message.setAttribute("fromAvatar", userDetail.getAvatar());
                 message.setAttribute("toName", callPeople.getName());
                 message.setAttribute("toAvatar", callPeople.getAvatar());
                 try {

@@ -10,16 +10,28 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.Bag;
+import com.shpro.xus.shproject.bean.response.FindBagResponse;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.bean.user.UserBag;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
+import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.CommentUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
+import com.shpro.xus.shproject.view.BaseActivity;
+import com.shpro.xus.shproject.view.find.FindBagActivity;
 import com.shpro.xus.shproject.view.main.SHMainActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
@@ -35,17 +47,17 @@ public class BagDialog extends Dialog implements View.OnClickListener {
     protected Button d;
     protected Button back;
     protected Bag bag;
-    protected Context context;
+    protected BaseActivity context;
     protected OnDialogChange onDialogChange;
 
-    public BagDialog(Context context, Bag bag, OnDialogChange onDialogChange) {
+    public BagDialog(BaseActivity context, Bag bag, OnDialogChange onDialogChange) {
         super(context, R.style.Dialog_Fullscreen);
         this.bag = bag;
         this.context = context;
         this.onDialogChange = onDialogChange;
     }
 
-    public BagDialog(Context context, int themeResId) {
+    public BagDialog(BaseActivity context, int themeResId) {
         super(context, R.style.Dialog_Fullscreen);
     }
 
@@ -72,27 +84,36 @@ public class BagDialog extends Dialog implements View.OnClickListener {
             }
 
         } else if (view.getId() == R.id.d) {
-            final UserBag userBags = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(context) + "bag", UserBag.class);
-            for (int i=0;i<=userBags.getBags().size()-1;i++){
-                Bag b=userBags.getBags().get(i);
-                if (b.getBagTemplate().getActionInfo().equals(bag.getBagTemplate().getActionInfo()) && b.getBagTemplate().getName().equals(bag.getBagTemplate().getName()) && b.getBagTemplate().getIcon().equals(bag.getBagTemplate().getIcon())) {
-                    userBags.getBags().remove(b);
-                }
-            }
-            UserBag userBag = new UserBag();
-            userBags.update(userBags.getObjectId(), new UpdateListener() {
+            context.showPross("正在丢弃");
+            Map<String, String> map = new HashMap<>();
+            map.put("userId", APP.getInstance().getUser().getId());
+            map.put("bagId", bag.getId());
+
+            OkHttpUtil.doPost(context, UrlUtil.DELETEBAG_URL, map, new CallBack<FindBagResponse>() {
                 @Override
-                public void done(BmobException e) {
+                public void onSuccess(FindBagResponse findBagResponse) {
+                    context. dissPross();
                     BagDialog.this.dismiss();
-                    if (e == null) {
-                        ACacheUtil.getInstance().cacheObject(AndroidIDUtil.getID(context) + "bag", userBags);
+                    if (findBagResponse != null) {
+                        List<Bag> bags = findBagResponse.getList();
+                        if (bags == null) {
+                            bags = new ArrayList<Bag>();
+                        }
+                        APP.getInstance().setBags(bags);
                         onDialogChange.onChagne();
                     } else {
-                        ToastUtil.makeTextShort(context, "丢弃失败了");
+                        ToastUtil.makeTextShort(context, "空间戒没有空间波动！");
                     }
 
                 }
-            });
+
+                @Override
+                public void onError(String s) {
+                    context. dissPross();
+                    ToastUtil.makeTextShort(context, s);
+
+                }
+            }, FindBagResponse.class);
 
         } else if (view.getId() == R.id.back) {
             this.dismiss();

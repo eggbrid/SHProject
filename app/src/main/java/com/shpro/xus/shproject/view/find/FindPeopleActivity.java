@@ -10,13 +10,22 @@ import android.widget.ListView;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.Bag;
 import com.shpro.xus.shproject.bean.call.CallPeople;
+import com.shpro.xus.shproject.bean.people.NearPeople;
+import com.shpro.xus.shproject.bean.response.BagListResponse;
+import com.shpro.xus.shproject.bean.response.FindPeopleResponse;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.bean.user.UserBag;
+import com.shpro.xus.shproject.bean.user.UserDetail;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
+import com.shpro.xus.shproject.interfaces.views.RefreshListener;
+import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
 import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.SHCallUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
@@ -26,7 +35,17 @@ import com.shpro.xus.shproject.view.call.CallListActivity;
 import com.shpro.xus.shproject.view.call.adapter.CallAdapter;
 import com.shpro.xus.shproject.view.find.adapter.FindPeopleAdapter;
 import com.shpro.xus.shproject.view.main.SHMainActivity;
+import com.shpro.xus.shproject.view.views.RefreshLayout;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
+import com.tencent.tencentmap.mapsdk.maps.model.BitmapDescriptorFactory;
+import com.tencent.tencentmap.mapsdk.maps.model.LatLng;
+import com.tencent.tencentmap.mapsdk.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +59,16 @@ import cn.bmob.v3.listener.FindListener;
  * Created by xus on 2016/12/3.
  */
 
-public class FindPeopleActivity extends CommentActivity {
+public class FindPeopleActivity extends CommentActivity implements View.OnClickListener, RefreshListener, TencentLocationListener {
     public FindPeopleAdapter adapter;
     protected ListView peoples;
-    private List<User> list;
+    private RefreshLayout swipe_container;
+    private List<NearPeople> list = new ArrayList<>();
+    private int pageSize = 20;
+    private int pageNum = 0;
+    private double lat=39.908683;
+    private double lng=116.397518;
+    private TencentLocationManager locationManager;
 
     @Override
     public int setContentView() {
@@ -53,61 +78,71 @@ public class FindPeopleActivity extends CommentActivity {
     @Override
     public void initView() throws Exception {
         peoples = (ListView) findViewById(R.id.peoples);
+        swipe_container=(RefreshLayout) findViewById(R.id.swipe_container);
+        peoples.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                UserDetail user = list.get(i).getUserDetail();
+                if (APP.getInstance().hasBag("1002")) {
+                    gotoChat(user);
+                } else {
+                    ToastUtil.makeTextShort(FindPeopleActivity.this, "您现在没有通讯器呢，若没有扔掉新手指南，可以在里面领取哦！");
 
-//        peoples.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                User user = list.get(i);
-//                if (user.getAccountId().equals(BmobUser.getCurrentUser(Account.class).getObjectId())) {
-//                    //自己详情
-//                    ToastUtil.makeTextShort(FindPeopleActivity.this, "不要点击自己！");
-//                } else {
-//                    if (isHasChat()){
-//                        gotoChat(user);
-//                    }else{
-//                        ToastUtil.makeTextShort(FindPeopleActivity.this, "您现在没有通讯器呢，若没有扔掉新手指南，可以在里面领取哦！");
-//
-//                    }
-//
-//                }
-//            }
-//        });
+                }
+
+            }
+        });
         setCommentTitleView("山海师");
-        getData();
+        locationManager = TencentLocationManager.getInstance(this);
+        TencentLocationRequest request = TencentLocationRequest.create();
+        request.setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_GEO);
+        request.setInterval(1000);
+        int error = locationManager.requestLocationUpdates(request, this);
+        swipe_container.setRefreshing(true);
+
     }
 
     public void getData() {
-        BmobQuery<User> query = new BmobQuery<User>();
-//返回50条数据，如果不加上这条语句，默认返回10条数据
-        query.setLimit(20);
-//执行查询方法
-        query.findObjects(new FindListener<User>() {
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", APP.getInstance().getUser().getId());
+        map.put("lat", lat+"");
+        map.put("lng", lng+"");
+        map.put("pageNum", pageNum + "");
+        map.put("pageSize", pageSize + "");
+        OkHttpUtil.doGet(this, UrlUtil.NEARPEOPLE_LIST_URL, map, new CallBack<FindPeopleResponse>() {
             @Override
-            public void done(List<User> object, BmobException e) {
-                if (e == null) {
-                    list = object;
+            public void onSuccess(FindPeopleResponse findPeopleResponse) {
+                if (findPeopleResponse != null) {
+                    List<NearPeople> data = findPeopleResponse.getList();
+                    if (pageNum == 0) {
+                        list.clear();
+                    }
+                    if (data == null) {
+                        data = new ArrayList<NearPeople>();
+                    }
+                    stopRefresh(swipe_container, data.size() < pageSize);
+                    list.addAll(data);
                     adapter = new FindPeopleAdapter(FindPeopleActivity.this, list);
                     peoples.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
-                    Log.i("bmob", "失败：" + e.getMessage() + "," + e.getErrorCode());
+                    ToastUtil.makeTextShort(FindPeopleActivity.this, "空间戒没有空间波动！");
                 }
+
             }
-        });
+
+            @Override
+            public void onError(String s) {
+                stopRefresh(swipe_container, false);
+                ToastUtil.makeTextShort(FindPeopleActivity.this, s);
+            }
+        }, FindPeopleResponse.class);
     }
 
-    public boolean isHasChat() {
-        UserBag userBag = ACacheUtil.getInstance().getObject(AndroidIDUtil.getID(FindPeopleActivity.this) + "bag", UserBag.class);
-        for (Bag b : userBag.getBags()) {
-            if ((!TextUtils.isEmpty(b.getBagTemplate().getActionInfo())) && b.getBagTemplate().getActionInfo().equals("com.shpro.xus.shproject.view.call.CallListActivity")) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public void gotoChat(final  User user) {
-        new SHCallUtil().toCall(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase(), new SHCallUtil.CallBack() {
+
+    public void gotoChat(final UserDetail user) {
+        new SHCallUtil().toCall(APP.getInstance().getUser().getId().toLowerCase(), new SHCallUtil.CallBack() {
 
             @Override
             public void onSuccess() {
@@ -115,10 +150,10 @@ public class FindPeopleActivity extends CommentActivity {
                     @Override
                     public void run() {
                         CallPeople callPeople = new CallPeople();
-//                        callPeople.setName(user.getName());
-//                        callPeople.setAvatar(user.getAvatar());
-//                        callPeople.setUnRead(0);
-//                        callPeople.setId(user.getObjectId().toLowerCase());
+                        callPeople.setName(user.getName());
+                        callPeople.setAvatar(user.getAvatar());
+                        callPeople.setUnRead(0);
+                        callPeople.setId(user.getUserid().toLowerCase());
                         Intent intent = new Intent(FindPeopleActivity.this, CallDetailActivity.class);
                         intent.putExtra("people", callPeople);
                         startActivity(intent);
@@ -139,5 +174,41 @@ public class FindPeopleActivity extends CommentActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onLoadMore() {
+        pageNum++;
+        getData();
+    }
+
+    @Override
+    public void onRefresh() {
+        pageNum = 0;
+        getData();
+    }
+
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int i, String s) {
+        locationManager.removeUpdates(this);
+
+        if (TencentLocation.ERROR_OK == i) {
+            // 定位成功
+            boolean b = tencentLocation == null;
+            lat=tencentLocation.getLatitude();
+            lng=tencentLocation.getLongitude();
+        } else {
+        }
+        setRefresh(swipe_container, peoples, true, true, this);
+    }
+
+    @Override
+    public void onStatusUpdate(String s, int i, String s1) {
+        if (s.equals("cell")) {
+        }
+        if (s.equals("wifi")) {
+        }
+        if (s.equals("GPS")) {
+        }
     }
 }

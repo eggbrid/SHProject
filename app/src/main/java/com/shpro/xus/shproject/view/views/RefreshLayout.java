@@ -93,6 +93,7 @@ public class RefreshLayout extends SwipeRefreshLayout {
         }
     }
 
+
     public void setOnScrollListener() {
         mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override

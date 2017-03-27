@@ -1,7 +1,6 @@
 package com.shpro.xus.shproject.view.views;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.Bag;
-import com.shpro.xus.shproject.util.BagUtil;
 import com.shpro.xus.shproject.util.CommentUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.view.BaseActivity;
@@ -23,7 +21,7 @@ import com.shpro.xus.shproject.view.BaseActivity;
 public class BagShowDialog extends Dialog implements View.OnClickListener {
     protected ImageView icon;
     protected TextView info;
-    protected Button use;
+//    protected Button use;
     protected Button d;
     protected Bag bag;
     protected BaseActivity context;
@@ -48,14 +46,14 @@ public class BagShowDialog extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view.getId() == R.id.use) {
+     /*   if (view.getId() == R.id.use) {
             BagUtil.getInstance().addBag(context, bag, true, 1, new BagUtil.OnSuccess() {
                 @Override
                 public void onSuccess(int flg) {
                     BagShowDialog.this.dismiss();
                 }
             });
-        } else if (view.getId() == R.id.d) {
+        } else*/ if (view.getId() == R.id.d) {
             this.dismiss();
         }
     }
@@ -63,16 +61,16 @@ public class BagShowDialog extends Dialog implements View.OnClickListener {
     private void initView() {
         icon = (ImageView) findViewById(R.id.icon);
         info = (TextView) findViewById(R.id.info);
-        use = (Button) findViewById(R.id.use);
-        use.setOnClickListener(BagShowDialog.this);
+//        use = (Button) findViewById(R.id.use);
+//        use.setOnClickListener(BagShowDialog.this);
         d = (Button) findViewById(R.id.d);
         d.setOnClickListener(BagShowDialog.this);
         info.setText(bag.getBagTemplate().getInfo());
-        if (bag.getBagTemplate().getAction().equals("1") || bag.getBagTemplate().getAction().equals("3")) {
-            use.setVisibility(View.VISIBLE);
-        } else {
-            use.setVisibility(View.GONE);
-        }
+//        if (bag.getBagTemplate().getAction().equals("1") || bag.getBagTemplate().getAction().equals("3")) {
+//            use.setVisibility(View.VISIBLE);
+//        } else {
+//            use.setVisibility(View.GONE);
+//        }
         if (TextUtils.isEmpty(bag.getBagTemplate().getIcon())) {
             icon.setImageResource(R.drawable.shpg_unno);
         } else if (bag.getBagTemplate().getIcon().startsWith("http:")) {

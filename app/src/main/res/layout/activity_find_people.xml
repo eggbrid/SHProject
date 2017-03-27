@@ -3,9 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <include layout="@layout/comment_head" />
-
-    <ListView
-        android:id="@+id/peoples"
+    <com.shpro.xus.shproject.view.views.RefreshLayout
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttom"
+        android:layout_below="@+id/title">
+        <ListView
+            android:id="@+id/peoples"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.shpro.xus.shproject.view.views.RefreshLayout>
+
 </LinearLayout>

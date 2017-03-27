@@ -2,17 +2,20 @@ package com.shpro.xus.shproject.view.main;
 
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.Bag;
-import com.shpro.xus.shproject.bean.user.User;
-import com.shpro.xus.shproject.db.cache.ACacheUtil;
-import com.shpro.xus.shproject.util.AndroidIDUtil;
-import com.shpro.xus.shproject.util.BagUtil;
+import com.shpro.xus.shproject.bean.response.BagListResponse;
+import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
+import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import me.grantland.widget.AutofitTextView;
 
@@ -41,19 +44,31 @@ public class HelpActivity extends CommentActivity implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
-//        if (view.getId() == R.id.get_call) {
-//            Bag bag =new Bag();
-//            bag.setAction("1");
-//            bag.setName("通讯器");
-//            bag.setIcon("shpg_call");
-//            bag.setActionInfo("com.shpro.xus.shproject.view.call.CallListActivity");
-//            bag.setInfo("可以聊天的通讯器");
-//            BagUtil.getInstance().addBag(this, bag, true, 1, new BagUtil.OnSuccess() {
-//                @Override
-//                public void onSuccess(int flg) {
-//                    HelpActivity.this.finish();
-//                }
-//            });
-//        }
+        showPross("正在将通讯器放入包裹");
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", APP.getInstance().getUser().getId());
+        map.put("templateId","1002");
+        OkHttpUtil.doPost(this, UrlUtil.ADDBAG_URL, map, new CallBack<BagListResponse>() {
+            @Override
+            public void onSuccess(BagListResponse bagListResponse) {
+                dissPross();
+                if (bagListResponse != null) {
+                    if (bagListResponse.getList() == null) {
+                        bagListResponse.setList(new ArrayList<Bag>());
+                    }
+                    APP.getInstance().setBags(bagListResponse.getList());
+                    HelpActivity.this.finish();
+                } else {
+                    ToastUtil.makeTextShort(HelpActivity.this, "空间戒没有空间波动！");
+                }
+            }
+
+            @Override
+            public void onError(String s) {
+                dissPross();
+                ToastUtil.makeTextShort(HelpActivity.this, s);
+
+            }
+        }, BagListResponse.class);
     }
 }

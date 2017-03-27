@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.L;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.shpro.xus.shproject.bean.Bag;
 import com.shpro.xus.shproject.bean.response.LoginResponse;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.bean.user.UserDetail;
@@ -41,9 +42,32 @@ public class APP extends Application {
         return app;
     }
 
-    public User user;
-    public UserDetail userDetail;
-    public LoginResponse loginResponse;
+    private User user;
+    private UserDetail userDetail;
+    private LoginResponse loginResponse;
+    private List<Bag> bags;
+
+    public boolean hasBag(String bagTemplateId) {
+        bags = getBags();
+        for (Bag bag : bags) {
+            if (bag.getBagTemplateId().equals(bagTemplateId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void setBags(List<Bag> bags) {
+        this.bags = bags;
+        ACacheUtil.getInstance().cacheList(ConstantUtil.BAG,bags);
+    }
+
+    public List<Bag> getBags() {
+        if (bags==null){
+            bags = ACacheUtil.getInstance().getList(ConstantUtil.BAG, Bag.class);
+        }
+        return bags;
+    }
 
     public User getUser() {
         if (!isLogin()) {
@@ -92,6 +116,7 @@ public class APP extends Application {
         ACacheUtil.getInstance().cacheObject(ConstantUtil.USER, loginResponse);
 
     }
+
 
     @Override
     public void onCreate() {

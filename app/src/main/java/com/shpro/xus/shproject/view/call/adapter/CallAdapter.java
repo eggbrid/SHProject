@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.call.CallPeople;
 import com.shpro.xus.shproject.bean.user.Account;
@@ -41,7 +42,7 @@ public void noity(){
         Map.Entry<String, EMConversation> entry = (Map.Entry<String, EMConversation>) it.next();
         CallPeople callPeople = new CallPeople();
         String key = entry.getKey().toString();
-        if (entry.getValue().getLastMessage().getFrom().equals(BmobUser.getCurrentUser(Account.class).getUserid().toLowerCase())) {
+        if (entry.getValue().getLastMessage().getFrom().equals(APP.getInstance().getUser().getId().toLowerCase())) {
             callPeople.setName(entry.getValue().getLastMessage().getStringAttribute("toName", ""));
             callPeople.setAvatar(entry.getValue().getLastMessage().getStringAttribute("toAvatar", ""));
         } else {

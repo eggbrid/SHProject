@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.people.NearPeople;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.view.main.adapter.SHBaseAdapter;
@@ -19,17 +20,17 @@ import java.util.List;
  * Created by xus on 2016/12/3.
  */
 
-public class FindPeopleAdapter extends SHBaseAdapter<User, FindPeopleAdapter.ViewHodler> {
-    public FindPeopleAdapter(Context context, List<User> list) {
+public class FindPeopleAdapter extends SHBaseAdapter<NearPeople, FindPeopleAdapter.ViewHodler> {
+    public FindPeopleAdapter(Context context, List<NearPeople> list) {
         super(context, list);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup, ViewHodler viewHodler) {
-        User user = list.get(i);
-//        viewHodler.name.setText(user.getName());
-//        ImageLoaderUtil.getInstance().loadCircleImage(user.getAvatar(), viewHodler.avatar);
-//        viewHodler.sex.setImageResource(user.getSex() == 1 ? R.drawable.man : R.drawable.woman);
+        NearPeople people = list.get(i);
+        viewHodler.name.setText(people.getUserDetail().getName());
+        ImageLoaderUtil.getInstance().loadCircleImage(people.getUserDetail().getAvatar(), viewHodler.avatar);
+        viewHodler.sex.setImageResource(people.getUserDetail().getSex() == 1 ? R.drawable.man : R.drawable.woman);
         return view;
     }
 
