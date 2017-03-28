@@ -53,7 +53,8 @@ public abstract class SHBaseCallAdapter<M, ViewHodler extends SHBaseViewHolder> 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHodler holder;
-        view = getLayoutView(i, LayoutInflater.from(context), viewGroup);
+        view = getLayoutView(i, (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE), viewGroup);
         holder = setViewHolder(view);
         view.setTag(holder);
         return getView(i, view, viewGroup, holder);

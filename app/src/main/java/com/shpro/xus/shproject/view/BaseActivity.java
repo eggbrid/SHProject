@@ -6,8 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.PersistableBundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -250,7 +253,41 @@ public void setRefresh(final RefreshLayout mRefreshLayout,final ListView mListVi
         });
     }
 }
+    public void setRefresh(final SwipeRefreshLayout mRefreshLayout, final RecyclerView mListView, boolean isautoRefresh, final RefreshListener refreshListener){
+        mRefreshLayout.setColorSchemeResources(R.color.black,
+                R.color.white);
 
+        //使用SwipeRefreshLayout的下拉刷新监听
+        //use SwipeRefreshLayout OnRefreshListener
+        mRefreshLayout.setOnRefreshListener(new RefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (refreshListener != null) {
+                    refreshListener.onRefresh();
+                }
+            }
+        });
+
+
+        if (isautoRefresh) {
+
+            mRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mRefreshLayout.setRefreshing(true);
+                    if (refreshListener != null) {
+                        refreshListener.onRefresh();
+                    }
+                }
+            });
+        }
+    }
+    public  void stopRefresh(final SwipeRefreshLayout mRefreshLayout){
+        if (mRefreshLayout == null)
+            return;
+        mRefreshLayout.setRefreshing(false);
+
+    }
    public  void stopRefresh(final RefreshLayout mRefreshLayout,boolean isNoData){
         if (mRefreshLayout == null)
             return;
@@ -262,7 +299,8 @@ public void setRefresh(final RefreshLayout mRefreshLayout,final ListView mListVi
             refreshLayoutFooter.openfooter();
         }
         mRefreshLayout.setNoData(isNoData);
-    }
+
+   }
 
 
 

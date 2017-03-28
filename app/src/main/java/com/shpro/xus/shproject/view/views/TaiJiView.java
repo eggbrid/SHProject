@@ -27,9 +27,13 @@ public class TaiJiView extends View  {
     private RectF whiteHalfRect;
     public TaiJiView(Context context) {
         this(context,null);
+        initPaint();
+        initAnim();
     }
     public TaiJiView(Context context, AttributeSet attrs) {
         this(context, attrs,0);
+        initPaint();
+        initAnim();
     }
     public TaiJiView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);

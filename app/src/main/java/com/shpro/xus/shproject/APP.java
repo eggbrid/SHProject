@@ -95,6 +95,9 @@ public class APP extends Application {
     }
 
     public boolean isLogin() {
+        if (loginResponse!=null){
+            return true;
+        }
         loginResponse = ACacheUtil.getInstance().getObject(ConstantUtil.USER, LoginResponse.class);
         return loginResponse != null;
     }

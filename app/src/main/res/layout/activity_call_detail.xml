@@ -8,21 +8,30 @@
         android:id="@+id/title"
         layout="@layout/comment_head" />
 
-    <com.shpro.xus.shproject.view.views.RefreshLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_above="@+id/buttom"
         android:layout_below="@+id/title">
-        <ListView
+
+        <!--        <com.shpro.xus.shproject.view.views.RefreshListView
+                    android:id="@+id/message_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_above="@+id/buttom"
+                    android:layout_below="@+id/title"
+                    android:background="@color/white" />-->
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/message_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:transcriptMode="disabled" />
-    </com.shpro.xus.shproject.view.views.RefreshLayout>
+            android:background="@color/white" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <RelativeLayout
         android:id="@+id/buttom"
