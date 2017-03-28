@@ -80,6 +80,9 @@ public class APP extends Application {
     }
 
     public LoginResponse getLoginResponse() {
+        if (loginResponse!=null){
+            return loginResponse;
+        }
         loginResponse = ACacheUtil.getInstance().getObject(ConstantUtil.USER, LoginResponse.class);
         return loginResponse;
     }

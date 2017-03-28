@@ -1,5 +1,6 @@
 package com.shpro.xus.shproject.view.call.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.util.ChatUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class CallDetailChatAdapter extends BaseRecycleListAdapter<ListViewHolder
         super(context, list);
     }
 
-    public void noti() {
+    public synchronized void noti() {
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(username);
         this.list = conversation.getAllMessages();
 //获取此会话的所有消息
@@ -82,7 +84,16 @@ public class CallDetailChatAdapter extends BaseRecycleListAdapter<ListViewHolder
 
     @Override
     public void onBindViewHolder(final ListViewHolder holder, final int position) {
+
+        setStatus(list.get(position), holder);
+        holder.send_error.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ChatUtil.resendStringMessage((Activity) context,list.get(position),CallDetailChatAdapter.this);
+            }
+        });
         if (list.get(position).getFrom().equals(APP.getInstance().getUser().getId())) {
+
             if (list.get(position).getBody() instanceof EMTextMessageBody) {
                 holder.content.setText(((EMTextMessageBody) list.get(position).getBody()).getMessage());
             } else {
@@ -113,6 +124,29 @@ public class CallDetailChatAdapter extends BaseRecycleListAdapter<ListViewHolder
         } else {
             ImageLoaderUtil.getInstance().loadCircleImage(list.get(position).getStringAttribute("fromAvatar", ""), holder.avatar);
 
+        }
+    }
+
+    public void setStatus(EMMessage message, ListViewHolder holder) {
+        switch (message.status()) {
+            case SUCCESS:
+                holder.pro.setVisibility(View.INVISIBLE);
+                holder.send_error.setVisibility(View.INVISIBLE);
+
+                break;
+            case FAIL:
+                holder.pro.setVisibility(View.INVISIBLE);
+                holder.send_error.setVisibility(View.VISIBLE);
+                break;
+            case INPROGRESS:
+            case CREATE:
+                holder.pro.setVisibility(View.VISIBLE);
+                holder.send_error.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                holder.pro.setVisibility(View.INVISIBLE);
+                holder.send_error.setVisibility(View.INVISIBLE);
+                break;
         }
     }
 

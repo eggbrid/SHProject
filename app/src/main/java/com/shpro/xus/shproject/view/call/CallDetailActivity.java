@@ -90,7 +90,7 @@ public class CallDetailActivity extends CallCommentActivity implements RefreshLi
             if (TextUtils.isEmpty(contentText.getText().toString())) {
                 ToastUtil.makeTextShort(this, "通讯器发出呲呲呲的声音");
             } else {
-                ChatUtil.sendStringMessage(callPeople, userDetail, contentText.getText().toString());
+                ChatUtil.sendStringMessage(this,callPeople, userDetail, contentText.getText().toString(),adapter);
                 contentText.setText("");
                 adapter.noti();
                 MoveToPosition(adapter.getList().size() - 1);
