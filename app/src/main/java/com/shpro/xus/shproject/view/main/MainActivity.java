@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -12,19 +13,21 @@ import android.widget.ListView;
 
 import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
-import com.shpro.xus.shproject.bean.Bag;
 import com.shpro.xus.shproject.bean.BagMap;
 import com.shpro.xus.shproject.bean.BagTemplate;
+import com.shpro.xus.shproject.bean.response.BagMapAndBagListResponse;
 import com.shpro.xus.shproject.bean.response.BagMapListResponse;
 import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
 import com.shpro.xus.shproject.util.CommentUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
+import com.shpro.xus.shproject.util.MapUtils;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.util.ViewUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
 import com.shpro.xus.shproject.view.main.adapter.MapBagsAdapter;
+import com.shpro.xus.shproject.view.views.CommentBagDialog;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
@@ -35,6 +38,8 @@ import com.tencent.tencentmap.mapsdk.maps.MapView;
 import com.tencent.tencentmap.mapsdk.maps.TencentMap;
 import com.tencent.tencentmap.mapsdk.maps.model.BitmapDescriptorFactory;
 import com.tencent.tencentmap.mapsdk.maps.model.CameraPosition;
+import com.tencent.tencentmap.mapsdk.maps.model.Circle;
+import com.tencent.tencentmap.mapsdk.maps.model.CircleOptions;
 import com.tencent.tencentmap.mapsdk.maps.model.LatLng;
 import com.tencent.tencentmap.mapsdk.maps.model.Marker;
 import com.tencent.tencentmap.mapsdk.maps.model.MarkerOptions;
@@ -44,7 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends CommentActivity implements TencentLocationListener, TencentMap.OnCameraChangeListener {
+public class MainActivity extends CommentActivity implements TencentLocationListener, TencentMap.OnCameraChangeListener, TencentMap.OnMarkerClickListener {
     protected Button myLocation;
     protected Button delete;
     protected ListView bags;
@@ -52,10 +57,14 @@ public class MainActivity extends CommentActivity implements TencentLocationList
     private TencentMap tencentMap;
     private Marker markerLocation;
     private LatLng locationLatLng;
+    private LatLng centerLatLng;
+    private LatLng lastLatLng;
+    private Circle circle;
+
     private TencentLocationManager locationManager;
-    private Marker centerMarker;
     private MapBagsAdapter adapter;
     private List<Marker> markers = new ArrayList<>();
+    private Map<Marker, BagMap> mapMap = new HashMap<>();
 
     @Override
     public int setContentView() {
@@ -75,14 +84,17 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         bags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                LatLng latLng = centerLatLng;
+                setBagToHere(latLng.latitude + "", latLng.longitude + "", adapter.getList().get(i).getId());
             }
         });
         tencentMap = mMapView.getMap();
         tencentMap.setOnCameraChangeListener(this);
         tencentMap.setMapType(TencentMap.MAP_TYPE_NORMAL);
+        tencentMap.setOnMarkerClickListener(this);
         adapter = new MapBagsAdapter(this, APP.getInstance().getBags());
         bags.setAdapter(adapter);
+
         doGetLocation();
     }
 
@@ -111,6 +123,67 @@ public class MainActivity extends CommentActivity implements TencentLocationList
 
             }
         }, BagMapListResponse.class);
+    }
+
+    public void getBagByHere(String lat, String lng, String bagMapId) {
+        showPross("正在捡起包裹");
+        Map<String, String> map = new HashMap<>();
+        map.put("lat", lat);
+        map.put("lng", lng);
+        map.put("bagMapId", bagMapId);
+        map.put("userId", APP.getInstance().getUser().getId());
+        OkHttpUtil.doPost(this, UrlUtil.GETBAGBYHERE_URL, map, new CallBack<BagMapAndBagListResponse>() {
+            @Override
+            public void onSuccess(BagMapAndBagListResponse bagListResponse) {
+                dissPross();
+                if (bagListResponse != null) {
+                    List<BagMap> list = bagListResponse.getList();
+                    APP.getInstance().setBags(bagListResponse.getListBag());
+                    adapter.setList(APP.getInstance().getBags());
+                    adapter.notifyDataSetChanged();
+                    setMapMaker(list);
+                } else {
+                    ToastUtil.makeTextShort(MainActivity.this, "位置信号定位失踪！无法连接！重新再试");
+                }
+            }
+
+            @Override
+            public void onError(String s) {
+                dissPross();
+                ToastUtil.makeTextShort(MainActivity.this, s);
+
+            }
+        }, BagMapAndBagListResponse.class);
+    }
+
+    public void setBagToHere(String lat, String lng, String bid) {
+        showPross("正在把包裹放在地图上");
+        Map<String, String> map = new HashMap<>();
+        map.put("lat", lat);
+        map.put("lng", lng);
+        map.put("bagId", bid);
+        OkHttpUtil.doPost(this, UrlUtil.PUTBAGTOHEAR_URL, map, new CallBack<BagMapAndBagListResponse>() {
+            @Override
+            public void onSuccess(BagMapAndBagListResponse bagListResponse) {
+                dissPross();
+                if (bagListResponse != null) {
+                    List<BagMap> list = bagListResponse.getList();
+                    APP.getInstance().setBags(bagListResponse.getListBag());
+                    adapter.setList(APP.getInstance().getBags());
+                    adapter.notifyDataSetChanged();
+                    setMapMaker(list);
+                } else {
+                    ToastUtil.makeTextShort(MainActivity.this, "位置信号定位失踪！无法连接！重新再试");
+                }
+            }
+
+            @Override
+            public void onError(String s) {
+                dissPross();
+                ToastUtil.makeTextShort(MainActivity.this, s);
+
+            }
+        }, BagMapAndBagListResponse.class);
     }
 
     @Override
@@ -169,26 +242,20 @@ public class MainActivity extends CommentActivity implements TencentLocationList
     }
 
     public void setMapMaker(List<BagMap> list) {
-
-        LatLng centerLatLng = null;
         LatLng locationLatLng = null;
-        if (centerMarker != null) {
-            centerLatLng = new LatLng(centerMarker.getPosition().latitude, centerMarker.getPosition().longitude);
-        }
         if (markerLocation != null) {
             locationLatLng = new LatLng(markerLocation.getPosition().latitude, markerLocation.getPosition().longitude);
         }
         tencentMap.clear();
-        if (centerMarker != null) {
-            drawCenter(centerLatLng);
-        }
+        markers.clear();
+        mapMap.clear();
         if (markerLocation != null) {
             drawLocation(locationLatLng);
         }
         for (BagMap maps : list) {
             BagTemplate bt = maps.getBagTemplate();
             String icons = bt.getIcon();
-            View mapItemView = View.inflate(this, R.layout.item_location_marker, null);
+            View mapItemView = LayoutInflater.from(this).inflate(R.layout.item_location_marker, null);
             ImageView icon = (ImageView) mapItemView.findViewById(R.id.icon);
             if (TextUtils.isEmpty(icons)) {
                 icon.setImageResource(R.drawable.shpg_unno);
@@ -199,12 +266,12 @@ public class MainActivity extends CommentActivity implements TencentLocationList
             } else {
                 icon.setImageResource(R.drawable.shpg_unno);
             }
-            MarkerOptions option = new MarkerOptions();
-            option.icon(BitmapDescriptorFactory.fromBitmap(ViewUtil.getViewBitmap(mapItemView)));
-            option.position(new LatLng(Double.parseDouble(maps.getLat()), Double.parseDouble(maps.getLng())));
-            Marker marker = tencentMap.addMarker(option);
+            Marker marker = tencentMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(ViewUtil.getViewBitmap(mapItemView))).
+                    position(new LatLng(Double.parseDouble(maps.getLat()), Double.parseDouble(maps.getLng()))).infoWindowEnable(false));
             markers.add(marker);
+            mapMap.put(marker, maps);
         }
+//        clusterManager.addItems(items);
     }
 
     public void moveCamera(LatLng latLng) {
@@ -245,7 +312,7 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                drawCenter(cameraPosition.target);
+                centerLatLng = cameraPosition.target;
 
             }
         });
@@ -256,10 +323,17 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getMapData(cameraPosition.target.latitude + "", cameraPosition.target.longitude + "");
+                if (lastLatLng != null) {
+                    if (MapUtils.GetDistance(lastLatLng.latitude, lastLatLng.longitude, cameraPosition.target.latitude, cameraPosition.target.longitude) > 50) {
+                        getMapData(cameraPosition.target.latitude + "", cameraPosition.target.longitude + "");
+                        lastLatLng = cameraPosition.target;
+                    }
+                } else {
+                    getMapData(cameraPosition.target.latitude + "", cameraPosition.target.longitude + "");
+                    lastLatLng = cameraPosition.target;
+                }
             }
         });
-//        getMapData();
     }
 
     public void isHasPoremess() {
@@ -295,21 +369,48 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         if (markerLocation != null) {
             markerLocation.remove();
         }
+        if (circle != null) {
+            circle.remove();
+        }
         markerLocation = tencentMap.addMarker(new MarkerOptions(locationLatLng).
                 snippet("markerLocation"));
         markerLocation.setClickable(false);
         markerLocation.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.loc));
+        circle = tencentMap.addCircle(new CircleOptions().
+                center(locationLatLng).
+                radius(20000d).
+                fillColor(0x330000ff).
+                strokeColor(0x33000000).
+                strokeWidth(3));
     }
 
-    public void drawCenter(LatLng latLng) {
-        if (centerMarker != null) {
-            centerMarker.remove();
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        marker. hideInfoWindow();
+        if (MapUtils.GetDistance(locationLatLng.latitude, locationLatLng.longitude, marker.getPosition().latitude, marker.getPosition().longitude) > 20000d) {
+            ToastUtil.makeTextShort(this,"你不能捡起圈圈外的东西哦！");
+            return true;
         }
-        final MarkerOptions option = new MarkerOptions();
-        option.icon(BitmapDescriptorFactory.fromResource(R.drawable.hognsedingwei));
-        option.position(latLng);
-        centerMarker = tencentMap.addMarker(option);
+        if (marker == markerLocation) {
 
+        } else {
+           final  BagMap bagMap = mapMap.get(marker);
+            final CommentBagDialog dialog = new CommentBagDialog(this, bagMap.getBagTemplate());
+            dialog.show();
+            dialog.setButton1("放入背包").setButton2("无视").setButtonListener1(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getBagByHere(bagMap.getLat(),bagMap.getLng(),bagMap.getId());
+                    dialog.dismiss();
+                }
+            }).setButtonListener2(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
 
+                }
+            });
+        }
+        return true;
     }
 }

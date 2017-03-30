@@ -36,6 +36,8 @@ public class UrlUtil {
     public static String BAGGET_URL=getUrl()+"shproject/bag/bagGet";
     public static String DELETEBAG_URL=getUrl()+"shproject/bag/deleteBag";
     public static String BAGMAPLIST_URL=getUrl()+"shproject/bag/bagMapList";
+    public static String PUTBAGTOHEAR_URL=getUrl()+"shproject/bag/putBagToHear";
+    public static String GETBAGBYHERE_URL=getUrl()+"shproject/bag/getBagByHere";
 
 
 }
