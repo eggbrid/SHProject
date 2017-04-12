@@ -19,9 +19,7 @@ import com.shpro.xus.shproject.bean.response.LoginResponse;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.bean.user.UserDetail;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
-import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
-import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.ConstantUtil;
 import com.shpro.xus.shproject.util.SntpTime;
 
@@ -134,7 +132,6 @@ public class APP extends Application {
         if (processAppName == null || !processAppName.equalsIgnoreCase(app.getPackageName())) {
             return;
         }
-        HttpUtil.getInstance().init(this);
         Bmob.initialize(this, "71c81ce12d70f8e9415d6c86d62d5a65");
         // 初始化BmobSDK
         // 使用推送服务时的初始化操作

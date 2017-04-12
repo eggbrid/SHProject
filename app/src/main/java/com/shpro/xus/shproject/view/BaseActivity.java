@@ -2,15 +2,10 @@ package com.shpro.xus.shproject.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.PersistableBundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -25,19 +20,15 @@ import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
-import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.interfaces.views.RefreshListener;
-import com.shpro.xus.shproject.shprojectHttp.HttpUtil;
 import com.shpro.xus.shproject.util.FileUtil;
 import com.shpro.xus.shproject.view.views.PhotoDialog;
 import com.shpro.xus.shproject.view.views.ProLoadingDialog;
 import com.shpro.xus.shproject.view.views.RefreshLayout;
 import com.shpro.xus.shproject.view.views.RefreshLayoutFooter;
-import com.wilddog.client.SyncReference;
 
 import java.io.File;
-import java.sql.SQLException;
 
 /**
  * Created by xus on 2016/11/8.

@@ -38,6 +38,7 @@ public class UrlUtil {
     public static String BAGMAPLIST_URL=getUrl()+"shproject/bag/bagMapList";
     public static String PUTBAGTOHEAR_URL=getUrl()+"shproject/bag/putBagToHear";
     public static String GETBAGBYHERE_URL=getUrl()+"shproject/bag/getBagByHere";
+    public static String GETTODAY_URL=getUrl()+"shproject/tbOneDay/getToday";
 
 
 }
