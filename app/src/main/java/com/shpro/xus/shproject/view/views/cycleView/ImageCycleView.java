@@ -63,7 +63,7 @@ public class ImageCycleView extends LinearLayout {
 	private float mScale;
 	private boolean isStop;
 	private TextView imageName;
-	private ArrayList<String> mImageDescList;
+//	private ArrayList<String> mImageDescList;
 	final private int time=5000;
 
 	/**
@@ -118,7 +118,7 @@ public class ImageCycleView extends LinearLayout {
 	 * @param imageCycleViewListener
 	 */
 	public void setImageResources(ArrayList<String> imageDesList, ArrayList<String> imageUrlList, ImageCycleViewListener imageCycleViewListener) {
-		mImageDescList=imageDesList;
+//		mImageDescList=imageDesList;
 		if(imageUrlList!=null&&imageUrlList.size()>0){
 			this.setVisibility(View.VISIBLE);
 		}else{
@@ -147,7 +147,7 @@ public class ImageCycleView extends LinearLayout {
 			mGroup.addView(mImageViews[i]);
 		}
 
-		imageName.setText(imageDesList.get(0));
+		imageName.setText("");
 		mAdvAdapter = new ImageCycleAdapter(mContext, imageUrlList, imageDesList,imageCycleViewListener);
 		mAdvPager.setAdapter(mAdvAdapter);
 		startImageTimerTask();
@@ -220,7 +220,7 @@ public class ImageCycleView extends LinearLayout {
 			mImageIndex = index;
 			// 设置图片滚动指示器背
 			mImageViews[index].setBackgroundResource(R.drawable.home_header_cycle_selected_bg);//R.drawable.banner_dot_focus
-			imageName.setText(mImageDescList.get(index));
+//			imageName.setText(mImageDescList.get(index));
 			for (int i = 0; i < mImageViews.length; i++) {
 				if (index != i) {
 					mImageViews[i].setBackgroundResource(R.drawable.home_header_cycle_dis_selected_bg);//R.drawable.banner_dot_normal

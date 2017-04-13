@@ -19,6 +19,7 @@ import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.BaseActivity;
+import com.shpro.xus.shproject.view.CommentActivity;
 import com.shpro.xus.shproject.view.views.cycleView.ImageCycleView;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import java.util.Map;
  * Created by xus on 2017/4/11.
  */
 
-public class TBOneDayActivity extends BaseActivity implements View.OnClickListener {
+public class TBOneDayActivity extends CommentActivity implements View.OnClickListener {
     protected ImageCycleView pager;
     protected TextView salary;
     protected TextView content;
@@ -50,9 +51,11 @@ private  TBOneDay tbOneDay;
         salary = (TextView) findViewById(R.id.salary);
         content = (TextView) findViewById(R.id.content);
         btnGoTb = (Button) findViewById(R.id.btn_go_tb);
-        contentTitle=(TextView)findViewById(R.id.title);
+        contentTitle=(TextView)findViewById(R.id.content_title);
         btnGoTb.setOnClickListener(TBOneDayActivity.this);
         has_data = (RelativeLayout) findViewById(R.id.has_data);
+        setCommentTitleView("今日推荐");
+
         findBag();
     }
 
@@ -110,7 +113,6 @@ private  TBOneDay tbOneDay;
         intent.setAction("android.intent.action.VIEW");
         Uri content_url = Uri.parse(url);
         intent.setData(content_url);
-        intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
         startActivity(intent);
     }
 
