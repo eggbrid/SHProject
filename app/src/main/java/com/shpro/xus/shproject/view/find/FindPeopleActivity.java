@@ -1,59 +1,35 @@
 package com.shpro.xus.shproject.view.find;
 
 import android.content.Intent;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
-import com.shpro.xus.shproject.bean.Bag;
 import com.shpro.xus.shproject.bean.call.CallPeople;
 import com.shpro.xus.shproject.bean.people.NearPeople;
-import com.shpro.xus.shproject.bean.response.BagListResponse;
 import com.shpro.xus.shproject.bean.response.FindPeopleResponse;
-import com.shpro.xus.shproject.bean.user.Account;
-import com.shpro.xus.shproject.bean.user.User;
-import com.shpro.xus.shproject.bean.user.UserBag;
 import com.shpro.xus.shproject.bean.user.UserDetail;
-import com.shpro.xus.shproject.db.cache.ACacheUtil;
 import com.shpro.xus.shproject.interfaces.views.RefreshListener;
 import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
-import com.shpro.xus.shproject.util.AndroidIDUtil;
 import com.shpro.xus.shproject.util.SHCallUtil;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
 import com.shpro.xus.shproject.view.call.CallDetailActivity;
-import com.shpro.xus.shproject.view.call.CallListActivity;
-import com.shpro.xus.shproject.view.call.adapter.CallAdapter;
 import com.shpro.xus.shproject.view.find.adapter.FindPeopleAdapter;
-import com.shpro.xus.shproject.view.main.SHMainActivity;
 import com.shpro.xus.shproject.view.views.RefreshLayout;
 import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
-import com.tencent.tencentmap.mapsdk.maps.model.BitmapDescriptorFactory;
-import com.tencent.tencentmap.mapsdk.maps.model.LatLng;
-import com.tencent.tencentmap.mapsdk.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
 
 /**
  * Created by xus on 2016/12/3.

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
@@ -34,7 +35,7 @@ import java.io.File;
  * Created by xus on 2016/11/8.
  */
 
-public abstract class BaseActivity extends Activity implements View.OnClickListener, TakePhoto.TakeResultListener, InvokeListener {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener, TakePhoto.TakeResultListener, InvokeListener {
 
     protected ImageButton left;
     protected ImageButton right;

@@ -4,6 +4,7 @@ import com.shpro.xus.shproject.view.CommentActivity;
 
 /**
  * Created by xus on 2017/4/13.
+ * 创建山海故事
  */
 
 public class SHProPageActivity extends CommentActivity {

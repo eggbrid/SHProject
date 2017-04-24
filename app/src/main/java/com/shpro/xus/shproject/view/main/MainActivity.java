@@ -32,24 +32,24 @@ import com.tencent.map.geolocation.TencentLocation;
 import com.tencent.map.geolocation.TencentLocationListener;
 import com.tencent.map.geolocation.TencentLocationManager;
 import com.tencent.map.geolocation.TencentLocationRequest;
-import com.tencent.tencentmap.mapsdk.maps.CameraUpdate;
-import com.tencent.tencentmap.mapsdk.maps.CameraUpdateFactory;
-import com.tencent.tencentmap.mapsdk.maps.MapView;
-import com.tencent.tencentmap.mapsdk.maps.TencentMap;
-import com.tencent.tencentmap.mapsdk.maps.model.BitmapDescriptorFactory;
-import com.tencent.tencentmap.mapsdk.maps.model.CameraPosition;
-import com.tencent.tencentmap.mapsdk.maps.model.Circle;
-import com.tencent.tencentmap.mapsdk.maps.model.CircleOptions;
-import com.tencent.tencentmap.mapsdk.maps.model.LatLng;
-import com.tencent.tencentmap.mapsdk.maps.model.Marker;
-import com.tencent.tencentmap.mapsdk.maps.model.MarkerOptions;
+import com.tencent.mapsdk.raster.model.BitmapDescriptorFactory;
+import com.tencent.mapsdk.raster.model.CameraPosition;
+import com.tencent.mapsdk.raster.model.Circle;
+import com.tencent.mapsdk.raster.model.CircleOptions;
+import com.tencent.mapsdk.raster.model.LatLng;
+import com.tencent.mapsdk.raster.model.Marker;
+import com.tencent.mapsdk.raster.model.MarkerOptions;
+import com.tencent.tencentmap.mapsdk.map.CameraUpdate;
+import com.tencent.tencentmap.mapsdk.map.CameraUpdateFactory;
+import com.tencent.tencentmap.mapsdk.map.MapView;
+import com.tencent.tencentmap.mapsdk.map.TencentMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends CommentActivity implements TencentLocationListener, TencentMap.OnCameraChangeListener, TencentMap.OnMarkerClickListener {
+public class MainActivity extends CommentActivity implements TencentLocationListener, TencentMap.OnMapCameraChangeListener, TencentMap.OnMarkerClickListener {
     protected Button myLocation;
     protected Button delete;
     protected ListView bags;
@@ -85,12 +85,12 @@ public class MainActivity extends CommentActivity implements TencentLocationList
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 LatLng latLng = centerLatLng;
-                setBagToHere(latLng.latitude + "", latLng.longitude + "", adapter.getList().get(i).getId());
+                setBagToHere(latLng.getLatitude() + "", latLng.getLongitude() + "", adapter.getList().get(i).getId());
             }
         });
         tencentMap = mMapView.getMap();
-        tencentMap.setOnCameraChangeListener(this);
-        tencentMap.setMapType(TencentMap.MAP_TYPE_NORMAL);
+        tencentMap.setOnMapCameraChangeListener(this);
+//        tencentMap.setMapType(TencentMap.MAP_TYPE_NORMAL);
         tencentMap.setOnMarkerClickListener(this);
         adapter = new MapBagsAdapter(this, APP.getInstance().getBags());
         bags.setAdapter(adapter);
@@ -186,11 +186,6 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         }, BagMapAndBagListResponse.class);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mMapView.onStart();
-    }
 
     @Override
     protected void onResume() {
@@ -244,9 +239,9 @@ public class MainActivity extends CommentActivity implements TencentLocationList
     public void setMapMaker(List<BagMap> list) {
         LatLng locationLatLng = null;
         if (markerLocation != null) {
-            locationLatLng = new LatLng(markerLocation.getPosition().latitude, markerLocation.getPosition().longitude);
+            locationLatLng = new LatLng(markerLocation.getPosition().getLatitude(), markerLocation.getPosition().getLatitude());
         }
-        tencentMap.clear();
+        tencentMap.clearAllOverlays();
         markers.clear();
         mapMap.clear();
         if (markerLocation != null) {
@@ -267,7 +262,7 @@ public class MainActivity extends CommentActivity implements TencentLocationList
                 icon.setImageResource(R.drawable.shpg_unno);
             }
             Marker marker = tencentMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(ViewUtil.getViewBitmap(mapItemView))).
-                    position(new LatLng(Double.parseDouble(maps.getLat()), Double.parseDouble(maps.getLng()))).infoWindowEnable(false));
+                    position(new LatLng(Double.parseDouble(maps.getLat()), Double.parseDouble(maps.getLng()))));
             markers.add(marker);
             mapMap.put(marker, maps);
         }
@@ -279,9 +274,7 @@ public class MainActivity extends CommentActivity implements TencentLocationList
             return;
         }
         CameraUpdate cameraSigma = CameraUpdateFactory.newCameraPosition(new CameraPosition(latLng,//新的中心点坐标
-                19,//新的缩放级别
-                0f, //俯仰角 0~45° (垂直地图时为0)
-                0f)); //偏航角 0~360° (正北方为0)
+                19)); //偏航角 0~360° (正北方为0)
         tencentMap.moveCamera(cameraSigma);
     }
 
@@ -312,25 +305,27 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                centerLatLng = cameraPosition.target;
+                centerLatLng = cameraPosition.getTarget();
 
             }
         });
     }
 
+
+
     @Override
-    public void onCameraChangeFinished(final CameraPosition cameraPosition) {
+    public void onCameraChangeFinish(final CameraPosition cameraPosition) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (lastLatLng != null) {
-                    if (MapUtils.GetDistance(lastLatLng.latitude, lastLatLng.longitude, cameraPosition.target.latitude, cameraPosition.target.longitude) > 50) {
-                        getMapData(cameraPosition.target.latitude + "", cameraPosition.target.longitude + "");
-                        lastLatLng = cameraPosition.target;
+                    if (MapUtils.GetDistance(lastLatLng.getLatitude(), lastLatLng.getLongitude(), cameraPosition.getTarget().getLatitude(), cameraPosition.getTarget().getLongitude()) > 50) {
+                        getMapData(cameraPosition.getTarget().getLatitude() + "", cameraPosition.getTarget().getLongitude() + "");
+                        lastLatLng = cameraPosition.getTarget();
                     }
                 } else {
-                    getMapData(cameraPosition.target.latitude + "", cameraPosition.target.longitude + "");
-                    lastLatLng = cameraPosition.target;
+                    getMapData(cameraPosition.getTarget().getLatitude() + "", cameraPosition.getTarget().getLongitude() + "");
+                    lastLatLng = cameraPosition.getTarget();
                 }
             }
         });
@@ -372,9 +367,9 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         if (circle != null) {
             circle.remove();
         }
-        markerLocation = tencentMap.addMarker(new MarkerOptions(locationLatLng).
+        markerLocation = tencentMap.addMarker(new MarkerOptions().position(locationLatLng).
                 snippet("markerLocation"));
-        markerLocation.setClickable(false);
+//        markerLocation.setClickable(false);
         markerLocation.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.loc));
         circle = tencentMap.addCircle(new CircleOptions().
                 center(locationLatLng).
@@ -387,7 +382,7 @@ public class MainActivity extends CommentActivity implements TencentLocationList
     @Override
     public boolean onMarkerClick(final Marker marker) {
         marker. hideInfoWindow();
-        if (MapUtils.GetDistance(locationLatLng.latitude, locationLatLng.longitude, marker.getPosition().latitude, marker.getPosition().longitude) > 20000d) {
+        if (MapUtils.GetDistance(locationLatLng.getLatitude(), locationLatLng.getLongitude(), marker.getPosition().getLatitude(), marker.getPosition().getLongitude()) > 20000d) {
             ToastUtil.makeTextShort(this,"你不能捡起圈圈外的东西哦！");
             return true;
         }
@@ -413,4 +408,6 @@ public class MainActivity extends CommentActivity implements TencentLocationList
         }
         return true;
     }
+
+
 }

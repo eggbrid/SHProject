@@ -1,7 +1,7 @@
 package com.shpro.xus.shproject.view.views;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,23 +9,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.shpro.xus.shproject.APP;
 import com.shpro.xus.shproject.R;
-import com.shpro.xus.shproject.bean.Bag;
 import com.shpro.xus.shproject.bean.BagTemplate;
-import com.shpro.xus.shproject.bean.response.FindBagResponse;
-import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
-import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
-import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
 import com.shpro.xus.shproject.util.CommentUtil;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
-import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.BaseActivity;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by xus on 2016/11/18.
@@ -38,7 +26,7 @@ public class CommentBagDialog extends Dialog implements View.OnClickListener {
     protected Button d;
     protected Button back;
     protected BagTemplate bag;
-    protected BaseActivity context;
+    protected Activity context;
 
     public CommentBagDialog setButton1(String button1) {
         use.setVisibility(View.VISIBLE);
@@ -100,7 +88,6 @@ public class CommentBagDialog extends Dialog implements View.OnClickListener {
         this.bag = bag;
         this.context = context;
     }
-
     public CommentBagDialog(BaseActivity context, int themeResId) {
         super(context, R.style.Dialog_Fullscreen);
     }

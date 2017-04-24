@@ -269,7 +269,11 @@
         <activity
             android:name=".view.bag.CreatBagActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.taobao.TBOneDayActivity"
+        <activity
+            android:name=".view.taobao.TBOneDayActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.baisi.VideoActivity"
             android:screenOrientation="portrait" />
 
     </application>

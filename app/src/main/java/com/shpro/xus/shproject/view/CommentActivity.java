@@ -1,6 +1,7 @@
 package com.shpro.xus.shproject.view;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import java.sql.SQLException;
 
@@ -17,6 +18,7 @@ public abstract class CommentActivity extends BaseActivity {
         try {
             initView();
         } catch (Exception e) {
+            Log.e("wangxu",e.toString());
             e.printStackTrace();
         }
     }
