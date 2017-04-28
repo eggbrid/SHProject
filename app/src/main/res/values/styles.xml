@@ -27,4 +27,11 @@
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
 
     </style>
+
+    <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
+
+        <item name="android:progressDrawable">@drawable/ratingbar_drawable</item>
+        <item name="android:maxHeight">48dip</item>
+
+    </style>
 </resources>

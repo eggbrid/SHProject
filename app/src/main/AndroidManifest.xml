@@ -275,6 +275,10 @@
         <activity
             android:name=".view.baisi.VideoActivity"
             android:screenOrientation="portrait" />
+<activity android:name=".view.start.StartDetailActivity"
+    android:screenOrientation="portrait" />
+<activity android:name=".view.start.StartActivity"
+    android:screenOrientation="portrait" />
 
     </application>
 

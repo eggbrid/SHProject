@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.shpro.xus.shproject.R;
 import com.shpro.xus.shproject.bean.baisi.ShowBaiSiBean;
+import com.shpro.xus.shproject.util.ImageLoaderUtil;
 import com.shpro.xus.shproject.view.find.adapter.FindAdapter;
 import com.shpro.xus.shproject.view.main.adapter.SHBaseAdapter;
 import com.shpro.xus.shproject.view.main.adapter.SHBaseViewHolder;
@@ -29,6 +30,8 @@ public class VideoAdapter extends SHBaseAdapter<ShowBaiSiBean,VideoAdapter.ViewH
     public View getView(int i, View view, ViewGroup viewGroup, ViewHolder viewHolder) {
         viewHolder.videoplayer.setUp(list.get(i).getVideo_uri()
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST,list.get(i).getText());
+        ImageLoaderUtil.getInstance().loadNomalImage(list.get(i).getVideo_uri(),viewHolder.videoplayer.thumbImageView);
+
         return view;
     }
 
