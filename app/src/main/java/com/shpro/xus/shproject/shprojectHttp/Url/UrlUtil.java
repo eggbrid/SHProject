@@ -40,6 +40,7 @@ public class UrlUtil {
     public static String GETBAGBYHERE_URL=getUrl()+"shproject/bag/getBagByHere";
     public static String GETTODAY_URL=getUrl()+"shproject/tbOneDay/getToday";
     public static String BAISI_LIST_URL=getUrl()+"shproject/baisi/list";
+    public static String START_DETAIL_URL=getUrl()+"shproject/start/detail";
 
 
 }

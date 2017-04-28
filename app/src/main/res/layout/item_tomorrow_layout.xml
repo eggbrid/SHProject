@@ -49,9 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="情感生活在平淡中享受着爱情的甜蜜，让你觉得相当的舒心。今天贵人运不错，会得到许多的帮助，让你在投资场上如鱼得水。今天可对工作日程做出一个明确的安排，让自己对时间把握得更好。" />
-            </LinearLayout>
+                    android:lineSpacingExtra="4dp"/> </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -73,7 +71,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -110,8 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="感情上有点郁闷，外力的干扰容易让你烦恼伤神，别小题大作，更别吃醋吃过头啰" />
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -134,7 +130,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -171,8 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="合理的安排作息时间，不要安排太多的娱乐活动，过度的玩乐会让你失去工作的激情。\r\n\r\n" />
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -195,7 +189,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -233,9 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="财运佳，四处充满商机，适合运用口才开发财源，进帐丰厚。                                                                                                                                                                 \n" />
-            </LinearLayout>
+                    android:lineSpacingExtra="4dp"/>  </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -257,7 +248,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -294,8 +284,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="月亮石银" />
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -314,8 +303,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="下午1:00--2:00" />
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -334,8 +322,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="正东方" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -354,8 +341,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="0" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -374,8 +360,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="水瓶座" />
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -399,8 +384,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginLeft="10dp"
-                android:lineSpacingExtra="4dp"
-                android:text="购物运较好的一天。" />
+                android:lineSpacingExtra="4dp" />
 
         </LinearLayout>
         <TextView

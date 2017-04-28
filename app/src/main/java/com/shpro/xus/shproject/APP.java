@@ -6,6 +6,8 @@ import android.content.pm.PackageManager;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -153,9 +155,9 @@ public class APP extends Application {
         config.threadPriority(Thread.NORM_PRIORITY - 2);
         config.denyCacheImageMultipleSizesInMemory();
         config.memoryCache(new WeakMemoryCache());
-
         config.denyCacheImageMultipleSizesInMemory();
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
+        config.memoryCacheExtraOptions(800,600);
         //config.diskCacheSize(1 * 1024 * 1024); // 50 MiB
         config.tasksProcessingOrder(QueueProcessingType.LIFO);
         config.diskCache(new UnlimitedDiskCache(cacheDir));
@@ -175,6 +177,7 @@ public class APP extends Application {
         EMClient.getInstance().init(this, options);
 //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
+        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=58fdcab9");
     }
 
     private String getAppName(int pID) {

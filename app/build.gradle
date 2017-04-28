@@ -116,4 +116,6 @@ dependencies {
     compile files('libs/TencentLocationSDK_v4.5.8.jar')
     compile 'fm.jiecao:jiecaovideoplayer:5.5.3'
     compile files('libs/TencentMapSDK_Raster_v_1.2.7_51ae0e7.jar')
+    compile files('libs/Msc.jar')
+    compile files('libs/Sunflower.jar')
 }

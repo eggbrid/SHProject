@@ -49,8 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="异性助力特别强的一周，在工作、生活中异性朋友时常会扮演你的贵人，当你遇到困难时会得到他们的意外援助，让你一次次度过难关。"/>
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -73,7 +72,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -110,8 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="感情上有点郁闷，外力的干扰容易让你烦恼伤神，别小题大作，更别吃醋吃过头啰" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -134,7 +131,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -171,8 +167,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="合理的安排作息时间，不要安排太多的娱乐活动，过度的玩乐会让你失去工作的激情。\r\n\r\n" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -195,7 +190,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -233,8 +227,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="财运佳，四处充满商机，适合运用口才开发财源，进帐丰厚。                                                                                                                                                                 \n" />
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -257,7 +250,6 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
                     android:numStars="5"
-                    android:rating="4"
                     android:stepSize="0.15" />
             </LinearLayout>
         </LinearLayout>
@@ -294,8 +286,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="月亮石银" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -314,8 +305,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="星期一" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -334,8 +324,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="正东方" />
+                    android:lineSpacingExtra="4dp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -354,8 +343,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="0" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
             <LinearLayout
@@ -374,8 +362,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="水瓶座" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -393,8 +380,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:lineSpacingExtra="4dp"
-                    android:text="天蝎座" />
+                    android:lineSpacingExtra="4dp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -419,8 +405,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_marginLeft="10dp"
-                android:lineSpacingExtra="4dp"
-                android:text="主动出击，效果显着" />
+                android:lineSpacingExtra="4dp" />
 
         </LinearLayout>
         <TextView

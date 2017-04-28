@@ -1,15 +1,27 @@
 package com.shpro.xus.shproject.view.start;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RatingBar;
 
 import com.shpro.xus.shproject.R;
+import com.shpro.xus.shproject.bean.response.StartBeanResponse;
+import com.shpro.xus.shproject.bean.start.Start;
+import com.shpro.xus.shproject.bean.tb.TBOneDay;
+import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
+import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
+import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
+import com.shpro.xus.shproject.view.taobao.TBOneDayActivity;
 import com.shpro.xus.shproject.view.views.VerticalViewPager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.grantland.widget.AutofitTextView;
 
@@ -117,7 +129,7 @@ public class StartDetailActivity extends CommentActivity {
         list.add(week);
 
         month = inflater.inflate(R.layout.item_month_layout, null);
-        initWeekView(month);
+        initMonthView(month);
         list.add(month);
         year = inflater.inflate(R.layout.item_year_layout, null);
         initYearView(year);
@@ -125,7 +137,7 @@ public class StartDetailActivity extends CommentActivity {
 
         adapter = new StartDetailAdapter(list);
         viewpage.setAdapter(adapter);
-
+        getData();
 
     }
 
@@ -146,6 +158,22 @@ public class StartDetailActivity extends CommentActivity {
         dayNotice = (AutofitTextView) day.findViewById(R.id.day_notice);
     }
 
+    public void initDayData(Start day) {
+        generalTxt.setText(day.getGeneral_txt());
+        summaryStar.setRating(Float.parseFloat(day.getSummary_star()));
+        loveTxt.setText(day.getLove_txt());
+        loveStar.setRating(Float.parseFloat(day.getLove_star()));
+        workTxt.setText(day.getWork_txt());
+        workStar.setRating(Float.parseFloat(day.getWork_star()));
+        moneyTxt.setText(day.getMoney_txt());
+        moneyStar.setRating(Float.parseFloat(day.getMoney_star()));
+        luckyColor.setText(day.getLucky_color());
+        luckyTime.setText(day.getLucky_time());
+        luckyDirection.setText(day.getLucky_direction());
+        luckyNum.setText(day.getLucky_num());
+        grxz.setText(day.getGrxz());
+        dayNotice.setText(day.getDay_notice());
+    }
     public void initTomorrowView(View tomorrow) {
         tomorrowGeneralTxt = (AutofitTextView) tomorrow.findViewById(R.id.tomorrow_general_txt);
         tomorrowSummaryStar = (RatingBar) tomorrow.findViewById(R.id.tomorrow_summary_star);
@@ -162,7 +190,22 @@ public class StartDetailActivity extends CommentActivity {
         tomorrowGrxz = (AutofitTextView) tomorrow.findViewById(R.id.tomorrow_grxz);
         tomorrowDayNotice = (AutofitTextView) tomorrow.findViewById(R.id.tomorrow_day_notice);
     }
-
+    public void initTomorrowData(Start tomorrow) {
+        tomorrowGeneralTxt.setText(tomorrow.getGeneral_txt());
+        tomorrowSummaryStar.setRating(Float.parseFloat(tomorrow.getSummary_star()));
+        tomorrowLoveTxt.setText(tomorrow.getLove_txt());
+        tomorrowLoveStar.setRating(Float.parseFloat(tomorrow.getLove_star()));
+        tomorrowWorkTxt.setText(tomorrow.getWork_txt());
+        tomorrowWorkStar.setRating(Float.parseFloat(tomorrow.getWork_star()));
+        tomorrowMoneyTxt.setText(tomorrow.getMoney_txt());
+        tomorrowMoneyStar.setRating(Float.parseFloat(tomorrow.getMoney_star()));
+        tomorrowLuckyColor.setText(tomorrow.getLucky_color());
+        tomorrowLuckyTime.setText(tomorrow.getLucky_time());
+        tomorrowLuckyDirection.setText(tomorrow.getLucky_direction());
+        tomorrowLuckyNum.setText(tomorrow.getLucky_num());
+        tomorrowGrxz.setText(tomorrow.getGrxz());
+        tomorrowDayNotice.setText(tomorrow.getDay_notice());
+    }
     private void initWeekView(View week) {
         weekGeneralTxt = (AutofitTextView) week.findViewById(R.id.week_general_txt);
         weekSummaryStar = (RatingBar) week.findViewById(R.id.week_summary_star);
@@ -180,7 +223,23 @@ public class StartDetailActivity extends CommentActivity {
         weekXrxz = (AutofitTextView) week.findViewById(R.id.week_xrxz);
         weekWeekNotice = (AutofitTextView) week.findViewById(R.id.week_week_notice);
     }
-
+    public void initWeekData(Start week) {
+        weekGeneralTxt.setText(week.getGeneral_txt());
+        weekSummaryStar.setRating(Float.parseFloat(week.getSummary_star()));
+        weekLoveTxt.setText(week.getLove_txt());
+        weekLoveStar.setRating(Float.parseFloat(week.getLove_star()));
+        weekWorkTxt.setText(week.getWork_txt());
+        weekWorkStar.setRating(Float.parseFloat(week.getWork_star()));
+        weekMoneyTxt.setText(week.getMoney_txt());
+        weekMoneyStar.setRating(Float.parseFloat(week.getMoney_star()));
+        weekLuckyColor.setText(week.getLucky_color());
+        weekLuckyDay.setText(week.getLucky_day());
+        weekLuckyDirection.setText(week.getLucky_direction());
+        weekLuckyNum.setText(week.getLucky_num());
+        weekGrxz.setText(week.getGrxz());
+        weekXrxz.setText(week.getXrxz());
+        weekWeekNotice.setText(week.getWeek_notice());
+    }
     private void initMonthView(View month) {
         monthGeneralTxt = (AutofitTextView) month.findViewById(R.id.month_general_txt);
         monthSummaryStar = (RatingBar) month.findViewById(R.id.month_summary_star);
@@ -197,7 +256,22 @@ public class StartDetailActivity extends CommentActivity {
         monthXrxz = (AutofitTextView) month.findViewById(R.id.month_xrxz);
         monthMonthAdvantage = (AutofitTextView) month.findViewById(R.id.month_month_advantage);
     }
-
+    public void initMonthData(Start month) {
+        monthGeneralTxt.setText(month.getGeneral_txt());
+        monthSummaryStar.setRating(Float.parseFloat(month.getSummary_star()));
+        monthLoveTxt.setText(month.getLove_txt());
+        monthLoveStar.setRating(Float.parseFloat(month.getLove_star()));
+        monthWorkTxt.setText(month.getWork_txt());
+        monthWorkStar.setRating(Float.parseFloat(month.getWork_star()));
+        monthMoneyTxt.setText(month.getMoney_txt());
+        monthMoneyStar.setRating(Float.parseFloat(month.getMoney_star()));
+        monthMonthWeakness.setText(month.getMonth_weakness());
+        monthLuckyDirection.setText(month.getLucky_direction());
+        monthYfxz.setText(month.getYfxz());
+        monthGrxz.setText(month.getGrxz());
+        monthXrxz.setText(month.getXrxz());
+        monthMonthAdvantage.setText(month.getMonth_advantage());
+    }
     private void initYearView(View year) {
         yearGeneralTxt = (AutofitTextView) year.findViewById(R.id.year_general_txt);
         yearGeneralIndex = (AutofitTextView) year.findViewById(R.id.year_general_index);
@@ -209,4 +283,45 @@ public class StartDetailActivity extends CommentActivity {
         moneyIndex = (AutofitTextView) year.findViewById(R.id.money_index);
         healthTxt = (AutofitTextView) year.findViewById(R.id.health_txt);
     }
+
+    public void initYearData(Start year) {
+        yearGeneralTxt.setText(year.getGeneral_txt());
+        yearGeneralIndex.setText(year.getGeneral_index());
+        yearLoveTxt.setText(year.getLove_txt());
+        yearLoveIndex .setText(year.getLove_index());
+        yearWorkTxt  .setText(year.getWork_txt());
+        workIndex  .setText(year.getWork_index());
+        yearMoneyTxt   .setText(year.getMoney_txt());
+        moneyIndex .setText(year.getMoney_index());
+        healthTxt .setText(year.getHealth_txt());
+    }
+    public void getData() {
+        showPross("正在获取星座信息");
+        Map<String, String> map = new HashMap<>();
+        map.put("xz", id);
+        OkHttpUtil.doGet(this, UrlUtil.START_DETAIL_URL, map, new CallBack<StartBeanResponse>() {
+            @Override
+            public void onSuccess(StartBeanResponse startBeanResponse) {
+                dissPross();
+                Start day=startBeanResponse.getDay();
+                initDayData(day);
+                Start tomorrow=startBeanResponse.getTomorrow();
+                initTomorrowData(tomorrow);
+                Start week=startBeanResponse.getWeek();
+                initWeekData(week);
+                Start month=startBeanResponse.getMonth();
+                initMonthData(month);
+                Start year=startBeanResponse.getYear();
+                initYearData(year);
+            }
+
+            @Override
+            public void onError(String s) {
+                dissPross();
+                StartDetailActivity.this.finish();
+                ToastUtil.makeTextShort(StartDetailActivity.this, s);
+            }
+        }, StartBeanResponse.class);
+    }
+
 }
