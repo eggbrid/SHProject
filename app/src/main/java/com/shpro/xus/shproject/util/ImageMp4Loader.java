@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -34,44 +35,40 @@ import java.util.HashMap;
 
 public class ImageMp4Loader {
     private static ImageSize targetSize;
-
+private static Thread thread;
     public static void loadImage(final String path, final ImageView image, final Activity context) {
-        ImageAware imageAware = (ImageAware) (new ImageViewAware(image));
-        if (targetSize == null) {
-            targetSize = ImageSizeUtils.defineTargetSizeForView(imageAware, new ImageSize(600, 800));
+        if (thread!=null){
+            thread.interrupt();
         }
-
-        final String memoryCacheKey = MemoryCacheUtils.generateKey(path, targetSize);
-        final DisplayImageOptions deOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .showImageOnLoading(context.getResources().getDrawable(R.drawable.defult_icon))
-                .build();
-        File file = ImageLoader.getInstance().getDiskCache().get(memoryCacheKey);
+        File file = ImageLoader.getInstance().getDiskCache().get(path);
         if (file == null || !file.exists() || file.length() <= 0L) {
             //执行网络获取
-            Log.e("wangxu", "網絡獲取");
-            new Thread(new Runnable() {
+            thread=   new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         final Bitmap bitmap = createVideoThumbnail(path);
-                        ImageLoader.getInstance().getDiskCache().save(memoryCacheKey, bitmap);
-                        ImageLoader.getInstance().getMemoryCache().put(memoryCacheKey, bitmap);
+                        ImageLoader.getInstance().getDiskCache().save(path, bitmap);
+                        ImageLoader.getInstance().getMemoryCache().put(path, bitmap);
+                        bitmap.recycle();
                         context.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ImageLoader.getInstance().displayImage(path, image, deOptions);
+                                File file = ImageLoader.getInstance().getDiskCache().get(path);
+                                image.setImageURI(Uri.fromFile(file));
+//                                ImageLoader.getInstance().displayImage(path, image, deOptions);
                             }
                         });
                     } catch (IOException e) {
                         e.printStackTrace();
+
                     }
                 }
-            }).start();
+            });
+            thread.start();
         } else {
-            Log.e("wangxu", "本地獲取");
-            ImageLoader.getInstance().displayImage(path, image, deOptions);
+            image.setImageURI(Uri.fromFile(file));
+
         }
 
     }
@@ -90,7 +87,6 @@ public class ImageMp4Loader {
             retriever.release();
 
         } catch (Exception ex) {
-            Log.e("wangxu", ex.toString());
         }
         if (kind == MediaStore.Images.Thumbnails.MICRO_KIND && bitmap != null) {
             bitmap = ThumbnailUtils.extractThumbnail(bitmap, 799, 599,

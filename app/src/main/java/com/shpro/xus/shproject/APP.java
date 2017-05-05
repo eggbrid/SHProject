@@ -2,7 +2,15 @@ package com.shpro.xus.shproject;
 
 import android.app.ActivityManager;
 import android.app.Application;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
@@ -21,11 +29,16 @@ import com.shpro.xus.shproject.bean.response.LoginResponse;
 import com.shpro.xus.shproject.bean.user.User;
 import com.shpro.xus.shproject.bean.user.UserDetail;
 import com.shpro.xus.shproject.db.cache.ACacheUtil;
+import com.shpro.xus.shproject.service.GrayService;
+import com.shpro.xus.shproject.service.LvService;
+import com.shpro.xus.shproject.service.WhiteService;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
 import com.shpro.xus.shproject.util.ConstantUtil;
 import com.shpro.xus.shproject.util.SntpTime;
+import com.shpro.xus.shproject.view.main.MainActivity;
 
 import java.io.File;
+import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,10 +50,11 @@ import cn.bmob.v3.Bmob;
 
 public class APP extends Application {
     public static APP app;
-
+    private int mJobId = 0;
     public static APP getInstance() {
         return app;
     }
+    private final static String BLACK_WAKE_ACTION = "com.wake.black";
 
     private User user;
     private UserDetail userDetail;
@@ -59,11 +73,11 @@ public class APP extends Application {
 
     public void setBags(List<Bag> bags) {
         this.bags = bags;
-        ACacheUtil.getInstance().cacheList(ConstantUtil.BAG,bags);
+        ACacheUtil.getInstance().cacheList(ConstantUtil.BAG, bags);
     }
 
     public List<Bag> getBags() {
-        if (bags==null){
+        if (bags == null) {
             bags = ACacheUtil.getInstance().getList(ConstantUtil.BAG, Bag.class);
         }
         return bags;
@@ -80,7 +94,7 @@ public class APP extends Application {
     }
 
     public LoginResponse getLoginResponse() {
-        if (loginResponse!=null){
+        if (loginResponse != null) {
             return loginResponse;
         }
         loginResponse = ACacheUtil.getInstance().getObject(ConstantUtil.USER, LoginResponse.class);
@@ -98,7 +112,7 @@ public class APP extends Application {
     }
 
     public boolean isLogin() {
-        if (loginResponse!=null){
+        if (loginResponse != null) {
             return true;
         }
         loginResponse = ACacheUtil.getInstance().getObject(ConstantUtil.USER, LoginResponse.class);
@@ -143,6 +157,24 @@ public class APP extends Application {
         initImageLoader();
         initHX();
         new SntpTime().getNetTime();
+        JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        ComponentName componentName = new ComponentName(this, LvService.class);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            JobInfo.Builder builder = new JobInfo.Builder(++mJobId, componentName);
+            builder.setMinimumLatency( 1000);
+            builder.setOverrideDeadline( 1000);
+            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+            builder.setRequiresDeviceIdle(false);
+            builder.setRequiresCharging(false);
+            scheduler.schedule(builder.build());
+        }
+        Intent whiteIntent = new Intent(getApplicationContext(), WhiteService.class);
+        startService(whiteIntent);
+        Intent grayIntent = new Intent(getApplicationContext(), GrayService.class);
+        startService(grayIntent);
+        Intent blackIntent = new Intent();
+        blackIntent.setAction(BLACK_WAKE_ACTION);
+        sendBroadcast(blackIntent);
     }
 
     public void initImageLoader() {
@@ -157,7 +189,7 @@ public class APP extends Application {
         config.memoryCache(new WeakMemoryCache());
         config.denyCacheImageMultipleSizesInMemory();
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
-        config.memoryCacheExtraOptions(800,600);
+        config.memoryCacheExtraOptions(800, 600);
         //config.diskCacheSize(1 * 1024 * 1024); // 50 MiB
         config.tasksProcessingOrder(QueueProcessingType.LIFO);
         config.diskCache(new UnlimitedDiskCache(cacheDir));
@@ -177,7 +209,7 @@ public class APP extends Application {
         EMClient.getInstance().init(this, options);
 //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
         EMClient.getInstance().setDebugMode(true);
-        SpeechUtility.createUtility(this, SpeechConstant.APPID +"=58fdcab9");
+        SpeechUtility.createUtility(this, SpeechConstant.APPID + "=58fdcab9");
     }
 
     private String getAppName(int pID) {

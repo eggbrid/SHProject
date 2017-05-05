@@ -2,22 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/title"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="45dp"
     android:orientation="vertical"
     android:background="@color/black">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:background="@color/black">
 
         <ImageButton
             android:id="@+id/left"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:background="@color/tr"
-            android:padding="15dp"
+            android:padding="8dp"
             android:scaleType="centerInside"
             android:src="@drawable/back"
             android:visibility="invisible" />
@@ -36,10 +36,10 @@
         <ImageButton
             android:id="@+id/right"
             android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:layout_alignParentRight="true"
             android:background="@color/tr"
-            android:padding="15dp"
+            android:padding="8dp"
             android:scaleType="centerInside"
             android:src="@drawable/back"
             android:visibility="invisible" />

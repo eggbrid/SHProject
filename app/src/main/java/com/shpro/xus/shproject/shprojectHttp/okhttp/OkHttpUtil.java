@@ -165,4 +165,7 @@ public class OkHttpUtil {
     public static <P> String toJson(P p) {
         return gson.toJson(p);
     }
+    public static <P> P fromJson(String json,Class<P> p) {
+        return gson.fromJson(json,p);
+    }
 }

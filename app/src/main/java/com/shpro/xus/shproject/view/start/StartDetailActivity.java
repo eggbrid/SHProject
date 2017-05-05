@@ -119,24 +119,18 @@ public class StartDetailActivity extends CommentActivity {
         LayoutInflater inflater = getLayoutInflater();
         day = inflater.inflate(R.layout.item_day_layout, null);
         initDayView(day);
-        list.add(day);
         tomorrow = inflater.inflate(R.layout.item_tomorrow_layout, null);
         initTomorrowView(tomorrow);
-        list.add(tomorrow);
 
         week = inflater.inflate(R.layout.item_week_layout, null);
         initWeekView(week);
-        list.add(week);
 
         month = inflater.inflate(R.layout.item_month_layout, null);
         initMonthView(month);
-        list.add(month);
         year = inflater.inflate(R.layout.item_year_layout, null);
         initYearView(year);
-        list.add(year);
 
-        adapter = new StartDetailAdapter(list);
-        viewpage.setAdapter(adapter);
+
         getData();
 
     }
@@ -159,6 +153,10 @@ public class StartDetailActivity extends CommentActivity {
     }
 
     public void initDayData(Start day) {
+        if(day==null){
+            return;
+        }
+        list.add(this.day);
         generalTxt.setText(day.getGeneral_txt());
         summaryStar.setRating(Float.parseFloat(day.getSummary_star()));
         loveTxt.setText(day.getLove_txt());
@@ -191,6 +189,13 @@ public class StartDetailActivity extends CommentActivity {
         tomorrowDayNotice = (AutofitTextView) tomorrow.findViewById(R.id.tomorrow_day_notice);
     }
     public void initTomorrowData(Start tomorrow) {
+        if(tomorrow==null){
+
+            return;
+
+        }
+        list.add(this.tomorrow);
+
         tomorrowGeneralTxt.setText(tomorrow.getGeneral_txt());
         tomorrowSummaryStar.setRating(Float.parseFloat(tomorrow.getSummary_star()));
         tomorrowLoveTxt.setText(tomorrow.getLove_txt());
@@ -224,6 +229,13 @@ public class StartDetailActivity extends CommentActivity {
         weekWeekNotice = (AutofitTextView) week.findViewById(R.id.week_week_notice);
     }
     public void initWeekData(Start week) {
+        if(week==null){
+
+            return;
+
+        }
+        list.add(this.week);
+
         weekGeneralTxt.setText(week.getGeneral_txt());
         weekSummaryStar.setRating(Float.parseFloat(week.getSummary_star()));
         weekLoveTxt.setText(week.getLove_txt());
@@ -257,6 +269,13 @@ public class StartDetailActivity extends CommentActivity {
         monthMonthAdvantage = (AutofitTextView) month.findViewById(R.id.month_month_advantage);
     }
     public void initMonthData(Start month) {
+        if(month==null){
+
+            return;
+
+        }
+        list.add(this.month);
+
         monthGeneralTxt.setText(month.getGeneral_txt());
         monthSummaryStar.setRating(Float.parseFloat(month.getSummary_star()));
         monthLoveTxt.setText(month.getLove_txt());
@@ -285,6 +304,15 @@ public class StartDetailActivity extends CommentActivity {
     }
 
     public void initYearData(Start year) {
+
+        if(year==null){
+            adapter = new StartDetailAdapter(list);
+            viewpage.setAdapter(adapter);
+            return;
+        }
+        list.add(this.year);
+        adapter = new StartDetailAdapter(list);
+        viewpage.setAdapter(adapter);
         yearGeneralTxt.setText(year.getGeneral_txt());
         yearGeneralIndex.setText(year.getGeneral_index());
         yearLoveTxt.setText(year.getLove_txt());

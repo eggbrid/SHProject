@@ -11,6 +11,7 @@ import com.shpro.xus.shproject.bean.people.Self;
 import com.shpro.xus.shproject.bean.skill.SkillB;
 import com.shpro.xus.shproject.bean.user.Account;
 import com.shpro.xus.shproject.bean.user.User;
+import com.shpro.xus.shproject.db.bean.QILing;
 
 /**
  * Created by xus on 2016/11/9.
@@ -27,8 +28,7 @@ public class DBConfig extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
-            TableUtils.createTable(connectionSource, Account.class);
-            TableUtils.createTable(connectionSource, Self.class);
+            TableUtils.createTable(connectionSource, QILing.class);
 
 
         } catch (java.sql.SQLException e) {

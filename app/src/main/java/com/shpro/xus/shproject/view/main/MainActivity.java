@@ -239,7 +239,7 @@ public class MainActivity extends CommentActivity implements TencentLocationList
     public void setMapMaker(List<BagMap> list) {
         LatLng locationLatLng = null;
         if (markerLocation != null) {
-            locationLatLng = new LatLng(markerLocation.getPosition().getLatitude(), markerLocation.getPosition().getLatitude());
+            locationLatLng = new LatLng(markerLocation.getPosition().getLatitude(), markerLocation.getPosition().getLongitude());
         }
         tencentMap.clearAllOverlays();
         markers.clear();
