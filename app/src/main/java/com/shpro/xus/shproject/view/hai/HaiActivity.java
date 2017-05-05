@@ -36,6 +36,7 @@ import com.shpro.xus.shproject.shprojectHttp.Url.UrlUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.OkHttpUtil;
 import com.shpro.xus.shproject.shprojectHttp.okhttp.interfaces.CallBack;
 import com.shpro.xus.shproject.util.ImageLoaderUtil;
+import com.shpro.xus.shproject.util.ImageMp4Loader;
 import com.shpro.xus.shproject.util.SntpTime;
 import com.shpro.xus.shproject.util.ToastUtil;
 import com.shpro.xus.shproject.view.CommentActivity;
@@ -50,6 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
@@ -93,7 +95,20 @@ public class HaiActivity extends CommentActivity implements View.OnClickListener
     public int setContentView() {
         return R.layout.activity_hai;
     }
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+
+    }
     @Override
     public void initView() throws Exception {
 
@@ -183,6 +198,7 @@ public class HaiActivity extends CommentActivity implements View.OnClickListener
     }
 
     public void setWating(String string) {
+        ImageMp4Loader.stopThread();
         pro.setVisibility(View.VISIBLE);
         weather.setVisibility(View.GONE);
         peoples.setVisibility(View.GONE);
@@ -191,6 +207,13 @@ public class HaiActivity extends CommentActivity implements View.OnClickListener
         mySay.setVisibility(View.VISIBLE);
         mySay.setText(string);
         qlSay.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ImageMp4Loader.stopThread();
+
     }
 
     public void setSayView() {
@@ -207,6 +230,7 @@ public class HaiActivity extends CommentActivity implements View.OnClickListener
         weather.setVisibility(View.GONE);
         peoples.setVisibility(View.GONE);
         video.setVisibility(View.GONE);
+        videoplayer.releaseAllVideos();
         noSay.setVisibility(View.GONE);
         mySay.setVisibility(View.VISIBLE);
         qlSay.setVisibility(View.VISIBLE);
@@ -227,6 +251,8 @@ public class HaiActivity extends CommentActivity implements View.OnClickListener
         weather.setVisibility(View.GONE);
         peoples.setVisibility(View.VISIBLE);
         video.setVisibility(View.GONE);
+        videoplayer.releaseAllVideos();
+
         noSay.setVisibility(View.GONE);
         qlSay.setVisibility(View.GONE);
 
@@ -272,6 +298,8 @@ private void setWeatherData(Weather weatherData){
         weather.setVisibility(View.VISIBLE);
         peoples.setVisibility(View.GONE);
         video.setVisibility(View.GONE);
+        videoplayer.releaseAllVideos();
+
         noSay.setVisibility(View.GONE);
         qlSay.setVisibility(View.GONE);
 
@@ -297,6 +325,8 @@ public  void setVideodata(ShowBaiSiBean showBaiSiBean){
         pro.setVisibility(View.GONE);
         weather.setVisibility(View.GONE);
         peoples.setVisibility(View.GONE);
+        videoplayer.releaseAllVideos();
+
         video.setVisibility(View.VISIBLE);
         noSay.setVisibility(View.GONE);
         qlSay.setVisibility(View.GONE);
@@ -306,6 +336,7 @@ public  void setVideodata(ShowBaiSiBean showBaiSiBean){
 
     public void setNoSayView() {
         pro.setVisibility(View.GONE);
+        videoplayer.releaseAllVideos();
 
         weather.setVisibility(View.GONE);
         peoples.setVisibility(View.GONE);

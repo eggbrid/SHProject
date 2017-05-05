@@ -36,9 +36,15 @@ import java.util.HashMap;
 public class ImageMp4Loader {
     private static ImageSize targetSize;
 private static Thread thread;
+    public static  void stopThread(){
+        if (thread!=null){
+            thread.interrupt();
+            thread=null;        }
+    }
     public static void loadImage(final String path, final ImageView image, final Activity context) {
         if (thread!=null){
             thread.interrupt();
+            thread=null;
         }
         File file = ImageLoader.getInstance().getDiskCache().get(path);
         if (file == null || !file.exists() || file.length() <= 0L) {
