@@ -3,10 +3,13 @@ package com.shpro.xus.shproject.view.call;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.hyphenate.chat.EMClient;
@@ -31,9 +34,9 @@ import static android.R.transition.move;
  * Created by xus on 2016/12/2.
  */
 
-public class CallDetailActivity extends CallCommentActivity implements RefreshListener {
+public class CallDetailActivity extends CallCommentActivity implements RefreshListener, TextWatcher {
     protected RecyclerView messageList;
-    protected Button send;
+    protected ImageView send;
     protected RelativeLayout buttom;
     protected EditText contentText;
     private CallDetailChatAdapter adapter;
@@ -68,12 +71,13 @@ public class CallDetailActivity extends CallCommentActivity implements RefreshLi
         linearLayoutManager = new LinearLayoutManager(this);
         messageList.setLayoutManager(linearLayoutManager);
         messageList.setOnScrollListener(new RecyclerViewListener());
-        send = (Button) findViewById(R.id.send);
+        send = (ImageView) findViewById(R.id.send);
         send.setOnClickListener(CallDetailActivity.this);
         buttom = (RelativeLayout) findViewById(R.id.buttom);
         buttom.setOnClickListener(CallDetailActivity.this);
         messageList.setAdapter(adapter);
         contentText = (EditText) findViewById(R.id.content_text);
+        contentText.addTextChangedListener(this);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         adapter.noti();
         conversation = EMClient.getInstance().chatManager().getConversation(callPeople.getId());
@@ -90,7 +94,7 @@ public class CallDetailActivity extends CallCommentActivity implements RefreshLi
             if (TextUtils.isEmpty(contentText.getText().toString())) {
                 ToastUtil.makeTextShort(this, "通讯器发出呲呲呲的声音");
             } else {
-                ChatUtil.sendStringMessage(this,callPeople, userDetail, contentText.getText().toString(),adapter);
+                ChatUtil.sendStringMessage(this, callPeople, userDetail, contentText.getText().toString(), adapter);
                 contentText.setText("");
                 adapter.noti();
                 MoveToPosition(adapter.getList().size() - 1);
@@ -153,7 +157,7 @@ public class CallDetailActivity extends CallCommentActivity implements RefreshLi
             messageList.scrollBy(0, top);
         } else {
             messageList.scrollToPosition(n);
-            move=true;
+            move = true;
         }
     }
 
@@ -161,6 +165,25 @@ public class CallDetailActivity extends CallCommentActivity implements RefreshLi
 
         if (conversation != null)
             conversation.markAllMessagesAsRead();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if (TextUtils.isEmpty(contentText.getText())) {
+            send.setVisibility(View.GONE);
+        } else {
+            send.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 
 

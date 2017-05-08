@@ -62,12 +62,15 @@ public class CallListActivity extends CallCommentActivity {
 
     @Override
     public void initView() throws Exception {
+        showPross("正在登陆通讯器");
        new  SHCallUtil().toCall(APP.getInstance().getUser().getId().toLowerCase(),new SHCallUtil.CallBack(){
 
            @Override
            public void onSuccess() {runOnUiThread(new Runnable() {
                @Override
                public void run() {
+                   dissPross();
+
                    Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
                    Iterator it = conversations.entrySet().iterator();
                    while (it.hasNext()) {
@@ -108,6 +111,7 @@ public class CallListActivity extends CallCommentActivity {
                runOnUiThread(new Runnable() {
                    @Override
                    public void run() {
+                       dissPross();
                        ToastUtil.makeTextShort(CallListActivity.this,"通讯器发出呲呲呲的声音...");
                        CallListActivity.this.finish();
                    }

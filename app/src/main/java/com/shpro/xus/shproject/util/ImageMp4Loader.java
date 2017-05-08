@@ -35,36 +35,47 @@ import java.util.HashMap;
 
 public class ImageMp4Loader {
     private static ImageSize targetSize;
-private static Thread thread;
-    public static  void stopThread(){
-        if (thread!=null){
+    private static MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+
+    private static Thread thread;
+
+    public static void stopThread() {
+        if (thread != null) {
             thread.interrupt();
-            thread=null;        }
+            retriever.release();
+
+            thread = null;
+        }
     }
+
     public static void loadImage(final String path, final ImageView image, final Activity context) {
-        if (thread!=null){
+        if (thread != null) {
             thread.interrupt();
-            thread=null;
+            retriever.release();
+            thread = null;
         }
         File file = ImageLoader.getInstance().getDiskCache().get(path);
         if (file == null || !file.exists() || file.length() <= 0L) {
             //执行网络获取
-            thread=   new Thread(new Runnable() {
+            thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         final Bitmap bitmap = createVideoThumbnail(path);
-                        ImageLoader.getInstance().getDiskCache().save(path, bitmap);
-                        ImageLoader.getInstance().getMemoryCache().put(path, bitmap);
-                        bitmap.recycle();
-                        context.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                File file = ImageLoader.getInstance().getDiskCache().get(path);
-                                image.setImageURI(Uri.fromFile(file));
+                        if (bitmap != null) {
+                            ImageLoader.getInstance().getDiskCache().save(path, bitmap);
+                            ImageLoader.getInstance().getMemoryCache().put(path, bitmap);
+                            bitmap.recycle();
+                            context.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    File file = ImageLoader.getInstance().getDiskCache().get(path);
+                                    image.setImageURI(Uri.fromFile(file));
 //                                ImageLoader.getInstance().displayImage(path, image, deOptions);
-                            }
-                        });
+                                }
+                            });
+                        }
+
                     } catch (IOException e) {
                         e.printStackTrace();
 
@@ -81,7 +92,6 @@ private static Thread thread;
 
     public static Bitmap createVideoThumbnail(String filePath) {
         Bitmap bitmap = null;
-        MediaMetadataRetriever retriever = new MediaMetadataRetriever();
         int kind = MediaStore.Video.Thumbnails.MINI_KIND;
         try {
             if (Build.VERSION.SDK_INT >= 14) {

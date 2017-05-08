@@ -7,6 +7,7 @@
     android:padding="10dp">
 
     <RelativeLayout
+        android:id="@+id/content_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/avatars">
@@ -45,12 +46,13 @@
 
     <RelativeLayout
         android:id="@+id/avatars"
+        android:layout_below="@+id/content_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="27dp">
+  >
 
         <ImageView
             android:id="@+id/avatar"

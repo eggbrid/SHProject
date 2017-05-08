@@ -10,8 +10,8 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_above="@+id/buttom"
         android:layout_below="@+id/title">
 
@@ -26,8 +26,8 @@
                     android:background="@color/white" />-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/message_list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:background="@color/white" />
@@ -36,28 +36,40 @@
     <RelativeLayout
         android:id="@+id/buttom"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/black"
         android:orientation="horizontal"
         android:padding="10dp">
 
-        <EditText
-            android:id="@+id/content_text"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toLeftOf="@+id/send"
-            android:background="@color/white"
-            android:textColor="@color/bg_6444" />
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:background="@drawable/chat_edit_bg">
 
-        <Button
-            android:id="@+id/send"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="20dp"
-            android:background="@color/bg_6444"
-            android:text="发送"
-            android:textColor="@color/white" />
+            <EditText
+                android:id="@+id/content_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/send"
+                android:minHeight="30dp"
+                android:maxHeight="80dp"
+                android:background="@color/tr"
+                android:textSize="@dimen/comment_text_m"
+                android:textColor="@color/bg_6444" />
+
+            <ImageView
+                android:id="@+id/send"
+                android:visibility="gone"
+                android:layout_width="50dp"
+                android:layout_centerVertical="true"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/send"
+                android:text="发送"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
     </RelativeLayout>
 </RelativeLayout>
